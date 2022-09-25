@@ -4,22 +4,22 @@ import React from 'react';
 import colors from '../functions/colors'
 import { perHeight, perWidth } from '../functions/heigthWidth'
 
-export default function ExpenseCard() {
+export default function ExpenseCard({money, discription, date}) {
   return (
     <View style={styles.container}>
        <View style={styles.desccContainer}>
         <Text style={styles.descTitle}>شرح:</Text>
-        <Text style={styles.descText}>1000</Text>
+        <Text style={styles.descText}> {discription} </Text>
       </View>
       
       <View style={styles.descContainer}>
       <View style={styles.dateContainer}>
         <Text style={styles.dateTitle}>تاریخ</Text>
-        <Text style={styles.dateText}>01-01-2022</Text>
+        <Text style={styles.dateText}> {date} </Text>
       </View>
       <View style={styles.expenseContainer}>
         <Text style={styles.expenseTitle}>مصرف په افغانۍ</Text>
-        <Text style={styles.expenseText}>1000</Text>
+        <Text style={styles.expenseText}>{money}</Text>
       </View>     
       </View>
       
