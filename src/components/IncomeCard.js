@@ -4,23 +4,23 @@ import React from 'react';
 import colors from '../functions/colors'
 import { perHeight, perWidth } from '../functions/heigthWidth'
 
-export default function IncomeCard() {
+export default function IncomeCard({name, money, date}) {
   return (
     <View style={styles.container}>
       
       <View style={styles.descContainer}>
       <View style={styles.nameContainer}>
         <Text style={styles.nameTitle}>نوم</Text>
-        <Text style={styles.nameText}>احمد</Text>
+        <Text style={styles.nameText}>{name}</Text>
       </View>
       <View style={styles.moneyContainer}>
         <Text style={styles.moneyTitle}>مرسته په افغانۍ</Text>
-        <Text style={styles.moneyText}>1000</Text>
+        <Text style={styles.moneyText}>{money}</Text>
       </View>
       </View>
       <View style={styles.dateContainer}>
         <Text style={styles.dateTitle}>تاریخ</Text>
-        <Text style={styles.dateText}>01-01-2022</Text>
+        <Text style={styles.dateText}>{date}</Text>
       </View>
     </View>
   )
@@ -36,7 +36,8 @@ const styles = StyleSheet.create({
     height: perHeight(15),
     backgroundColor: colors.gray,
     borderRadius: perHeight(1),
-    padding: perHeight(1)
+    padding: perHeight(1),
+    marginBottom: 10
   },
   descContainer: {
     flex: 2,

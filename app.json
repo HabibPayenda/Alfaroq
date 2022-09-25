@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Alfaroq",
-    "slug": "Alfaroq",
+    "name": "Alfarooq",
+    "slug": "Alfarooq",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -25,7 +25,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.habibpayenda.Alfaroq"
+      "package": "com.habibpayenda.Alfarooq"
     },
     "web": {
       "favicon": "./assets/favicon.png"
