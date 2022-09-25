@@ -1,4 +1,4 @@
-import { StyleSheet, Text, SafeAreaView, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, View, ScrollView, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { Entypo } from '@expo/vector-icons'; 
 
@@ -7,12 +7,15 @@ import colors from '../functions/colors';
 import ExpenseCard from '../components/ExpensesCard';
 
 
-export default function ExpensesScreen() {
+export default function ExpensesScreen({navigation}) {
   return (
     <SafeAreaView>
       <View style={styles.topView}>
         <Text style={styles.topViewText}>ExpensesScreen</Text>
+        <TouchableOpacity style={styles.addIcon} onPress={() => navigation.navigate('Add Expense')}>
         <Entypo style={styles.addIcon} name="add-to-list" size={24} color="black" />
+
+        </TouchableOpacity>
 
       </View>
       <ScrollView style={{width: perWidth(100), marginTop: 10}}>
