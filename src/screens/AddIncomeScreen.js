@@ -6,7 +6,7 @@ import { perHeight, perWidth } from '../functions/heigthWidth';
 import colors from '../functions/colors';
 import Alfarooq from '../functions/Alfarooq';
 
-export default function AddIncomeScreen({ setNewData }) {
+export default function AddIncomeScreen() {
   const [name, setName] = useState('');
   const [money, setMoney] = useState('');
 
@@ -64,7 +64,6 @@ export default function AddIncomeScreen({ setNewData }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text> {current_date}</Text>
       <Text style={styles.title}>د نوې مرستې معلومات</Text>
       <TextInput
         value={name}
@@ -99,7 +98,7 @@ const styles = StyleSheet.create({
     borderColor: colors.darkGray,
     borderWidth: 1,
     width: perWidth(80),
-    height: perHeight(4),
+    height: 40,
     padding: 10,
     marginBottom: 10,
     borderRadius: 5,

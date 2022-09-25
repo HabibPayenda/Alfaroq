@@ -45,7 +45,7 @@ export default function IncomeScreen({ navigation }) {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.addIcon}
-          onPress={() => navigation.navigate('AddIncome', { setNewData })}
+          onPress={() => navigation.navigate('AddIncome')}
         >
           <Entypo style={{ color: colors.light }} name="add-to-list" size={24} color="black" />
         </TouchableOpacity>

@@ -38,8 +38,8 @@ export default function IncomeSearchScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>IncomeSearchScreen</Text>
-      <TextInput keyboardType='default' style={styles.input} value={name} onChangeText={(text) => setName(text)} />
+      <Text style={styles.title}>د مرستو لټون</Text>
+      <TextInput placeholder='د مرسته کوونکي نوم د ننه کړئ!' keyboardType='default' style={styles.input} value={name} onChangeText={(text) => setName(text)} />
       <Button title="لټون" onPress={() => searchIncome()} />
       <FlatList
         data={data}
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     borderColor: colors.darkGray,
     borderWidth: 1,
     width: perWidth(80),
-    height: perHeight(4),
+    height: 40,
     padding: 10,
     marginBottom: 10,
     borderRadius: 5,
