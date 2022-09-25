@@ -5,22 +5,24 @@ import colors from '../functions/colors'
 import { perHeight, perWidth } from '../functions/heigthWidth'
 
 export default function IncomeCard({name, money, date}) {
+  const newDate = date.split('-');
   return (
     <View style={styles.container}>
       
       <View style={styles.descContainer}>
       <View style={styles.nameContainer}>
         <Text style={styles.nameTitle}>نوم</Text>
-        <Text style={styles.nameText}>{name}</Text>
+        <Text style={styles.text}>{name}</Text>
       </View>
       <View style={styles.moneyContainer}>
-        <Text style={styles.moneyTitle}>مرسته په افغانۍ</Text>
-        <Text style={styles.moneyText}>{money}</Text>
+        <Text style={styles.moneyTitle}>مرسته</Text>
+        <Text style={styles.text}>{`${money} افغانۍ`}</Text>
       </View>
       </View>
       <View style={styles.dateContainer}>
-        <Text style={styles.dateTitle}>تاریخ</Text>
-        <Text style={styles.dateText}>{date}</Text>
+        <Text style={styles.dateDay}>{newDate[2]}</Text>
+        <Text style={styles.dateMonth}>{newDate[1]}</Text>
+        <Text style={styles.dateYear}>{newDate[0]}</Text>
       </View>
     </View>
   )
@@ -36,25 +38,45 @@ const styles = StyleSheet.create({
     height: perHeight(15),
     backgroundColor: colors.gray,
     borderRadius: perHeight(1),
-    padding: perHeight(1),
-    marginBottom: 10
+    marginBottom: 10,
+    elevation: 10
   },
   descContainer: {
     flex: 2,
     display: 'flex',
     alignItems: 'flex-end',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
+    backgroundColor: colors.lightGray,
+    padding: 10,
+    borderTopLeftRadius: 5,
+    borderBottomLeftRadius: 5,
   },
   dateContainer: {
     display: 'flex',
     flex: 1,
-    alignItems: 'flex-end',
+    alignItems: 'center',
     justifyContent: 'center',
     height: perHeight(10),
+    backgroundColor: colors.darkGray,
+    height: '100%',
+    padding: perHeight(1),
+    borderTopRightRadius: 5,
+    borderBottomRightRadius: 5,
   }, 
-  dateTitle: {
-    fontSize: 16,
+  dateDay: {
+    fontSize: 30,
     fontWeight: 'bold',
+    color: colors.light
+  },
+  dateMonth: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: colors.light
+  },
+  dateYear: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: colors.light
   },
   nameContainer: {
     flex: 1,
@@ -65,6 +87,7 @@ const styles = StyleSheet.create({
   nameTitle: {
     fontSize: 16,
     fontWeight: 'bold',
+    color: colors.light
   },
   moneyContainer: {
     flex: 1,
@@ -75,5 +98,9 @@ const styles = StyleSheet.create({
   moneyTitle: {
     fontSize: 16,
     fontWeight: 'bold',
+    color: colors.light
+  },
+  text: {
+    color: colors.light
   },
 })

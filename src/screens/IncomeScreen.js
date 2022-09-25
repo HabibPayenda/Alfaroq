@@ -58,7 +58,7 @@ export default function IncomeScreen({ navigation }) {
         }}
         refreshing={refreshing}
         onRefresh={() => fetchData()}
-        style={{ width: perWidth(100), height: perHeight(50) }}
+        style={{ width: perWidth(100), height: perHeight(50), backgroundColor: colors.light }}
         contentContainerStyle={styles.screen}
       />
     </SafeAreaView>
@@ -67,7 +67,7 @@ export default function IncomeScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   topView: {
-    backgroundColor: colors.blue,
+    backgroundColor: colors.darkGray,
     height: perHeight(30),
     width: perWidth(100),
     display: 'flex',
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     right: perWidth(5),
     fontSize: 30,
     color: colors.light,
-    backgroundColor: colors.blue,
+    backgroundColor: colors.green,
     padding: 10,
     borderRadius: 50,
     elevation: 10,
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     right: perWidth(20),
     fontSize: 30,
     color: colors.light,
-    backgroundColor: colors.blue,
+    backgroundColor: colors.yellow,
     padding: 10,
     borderRadius: 50,
     elevation: 10,
