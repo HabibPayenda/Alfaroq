@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Entypo } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import IncomeCard from '../components/IncomeCard';
 import { perHeight, perWidth } from '../functions/heigthWidth';
@@ -37,10 +38,16 @@ export default function IncomeScreen({ navigation }) {
       <View style={styles.topView}>
         <Text style={styles.topViewText}>IncomeScreen</Text>
         <TouchableOpacity
+          style={styles.searchIcon}
+          onPress={() => navigation.navigate('IncomeSearch')}
+        >
+          <MaterialCommunityIcons style={{color: colors.light}} name="database-search" size={24} color="black" />
+        </TouchableOpacity>
+        <TouchableOpacity
           style={styles.addIcon}
           onPress={() => navigation.navigate('AddIncome', { setNewData })}
         >
-          <Entypo style={{color: colors.light}} name="add-to-list" size={24} color="black" />
+          <Entypo style={{ color: colors.light }} name="add-to-list" size={24} color="black" />
         </TouchableOpacity>
       </View>
       <FlatList
@@ -82,6 +89,19 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: perHeight(5),
     right: perWidth(5),
+    fontSize: 30,
+    color: colors.light,
+    backgroundColor: colors.blue,
+    padding: 10,
+    borderRadius: 50,
+    elevation: 10,
+    borderWidth: 1,
+    borderColor: colors.light,
+  },
+  searchIcon: {
+    position: 'absolute',
+    bottom: perHeight(5),
+    right: perWidth(20),
     fontSize: 30,
     color: colors.light,
     backgroundColor: colors.blue,
