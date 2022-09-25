@@ -6,7 +6,7 @@ import colors from '../functions/colors'
 export default function AddExpenseScreen() {
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>د نوې مصرف معلومات</Text>
+      <Text style={styles.title}>د نوي مصرف معلومات</Text>
       <TextInput placeholder='د مصرف مقدار په افغانیو' style={styles.input} />
       <TextInput placeholder='د مصرف کولو وجه' style={styles.inputArea} />
       <Button title='ذخیره' />
