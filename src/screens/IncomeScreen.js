@@ -1,4 +1,4 @@
-import { StyleSheet, Text, SafeAreaView, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, View, ScrollView, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { Entypo } from '@expo/vector-icons'; 
 
@@ -7,12 +7,15 @@ import { perHeight, perWidth } from '../functions/heigthWidth';
 import colors from '../functions/colors';
 
 
-export default function IncomeScreen() {
+export default function IncomeScreen({navigation}) {
   return (
     <SafeAreaView>
       <View style={styles.topView}>
         <Text style={styles.topViewText}>IncomeScreen</Text>
-        <Entypo style={styles.addIcon} name="add-to-list" size={24} color="black" />
+        <TouchableOpacity style={styles.addIcon} onPress={() => navigation.navigate('AddIncome')} >
+        <Entypo  name="add-to-list" size={24} color="black" />
+
+        </TouchableOpacity>
 
       </View>
       <ScrollView style={{width: perWidth(100)}}>
