@@ -10,6 +10,8 @@ import IncomeScreen from './src/screens/IncomeScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import AddIncomeScreen from './src/screens/AddIncomeScreen';
 import AddExpenseScreen from './src/screens/AddExpensesScreen';
+import IncomeSearchScreen from './src/screens/IncomeSearchScreen';
+import ExpensesSearchScreen from './src/screens/ExpensesSearchScreen';
 
 export default function App() {
   const Drawer = createDrawerNavigator();
@@ -21,6 +23,7 @@ function IncomeStack() {
     <Stack.Navigator>
       <Stack.Screen name="All Incomes" component={IncomeScreen} />
       <Stack.Screen name="AddIncome" component={AddIncomeScreen} />
+      <Stack.Screen name="IncomeSearch" component={IncomeSearchScreen} />
     </Stack.Navigator>
   );
 }
@@ -29,6 +32,7 @@ function ExpenseStack() {
     <Stack.Navigator>
       <Stack.Screen name="All Expenses" component={ExpensesScreen} />
       <Stack.Screen name="Add Expense" component={AddExpenseScreen} />
+      <Stack.Screen name="ExpencesSearch" component={ExpensesSearchScreen} />
     </Stack.Navigator>
   );
 }
