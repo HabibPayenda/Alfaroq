@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
   loginScreen: {
     display: 'flex',
     justifyContent: 'center',
+    
     alignItems: 'center',
     height: '100%'
    },  
