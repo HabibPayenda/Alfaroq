@@ -4,6 +4,7 @@ import React, {useState} from 'react'
 import Alfarooq from '../functions/Alfarooq'
 import { perHeight, perWidth } from '../functions/heigthWidth'
 import colors from '../functions/colors'
+import Btn from '../components/Btn'
 
 export default function AddExpenseScreen() {
   const [desc, setDesc] = useState('');
@@ -68,7 +69,7 @@ export default function AddExpenseScreen() {
          setMoney(newValu);
       } } placeholder='د مصرف مقدار په افغانیو' style={styles.input} />
       <TextInput value={desc} onChangeText={(text) => setDesc(text)} placeholder='د مصرف کولو وجه' style={styles.inputArea} />
-      <Button title='ذخیره' onPress={AddExpense} />
+      <Btn text='ذخیره' onClick={AddExpense} />
     </SafeAreaView>
   )
 }
@@ -79,25 +80,28 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     height: perHeight(78),
-    paddingVertical: 30
+    paddingVertical: 30,
+    backgroundColor: colors.lightGray
   }, 
   input: {
-    borderColor: colors.darkGray,
-    borderWidth: 1,
     width: perWidth(80),
     height: 40,
     padding: 10,
+    paddingHorizontal: 20,
     marginBottom: 10,
-    borderRadius: 5,
+    borderRadius: 30,
+    backgroundColor: colors.light,
+    elevation: 10
   },
   inputArea: {
-    borderColor: colors.darkGray,
-    borderWidth: 1,
     width: perWidth(80),
     height: 100,
     padding: 10,
+    paddingHorizontal: 20,
     marginBottom: 10,
-    borderRadius: 5,
+    borderRadius: 20,
+    backgroundColor: colors.light,
+    elevation: 10,
     textAlign: 'right',
     textAlignVertical: 'top'
   },
