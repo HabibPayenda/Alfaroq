@@ -21,6 +21,8 @@ export default function IncomeScreen({ navigation }) {
   const [newData, setNewData] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
 
+  const toShow = data.reverse();
+
   const fetchData = async () => {
     try {
       const result = await Alfarooq.get('/income');
@@ -51,7 +53,7 @@ export default function IncomeScreen({ navigation }) {
         </TouchableOpacity>
       </View>
       <FlatList
-        data={data}
+        data={toShow}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
           return <IncomeCard name={item.name} money={item.amount} date={item.date} />;
