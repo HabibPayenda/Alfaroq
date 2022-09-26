@@ -10,8 +10,14 @@ import Btn from '../components/Btn';
 export default function IncomeSearchDateScreen() {
   const [dateOne, setDateOne] = useState('');
   const [dateTwo, setDateTwo] = useState('');
-  const [data, setData] = useState('');
+  const [data, setData] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
+
+  let betweenDates = 0;
+
+  for(var i = 0; i < data.length; i++) {
+    betweenDates += JSON.parse(data[i].amount);
+  }
 
   function showToast() {
     ToastAndroid.show('معلومات ذخیره شول!', ToastAndroid.SHORT);
@@ -41,9 +47,11 @@ export default function IncomeSearchDateScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>د مرستو لټون د نېټو په مرسته</Text>
+      
       <TextInput keyboardType="number-pad" placeholder='لومړۍ نېټه د ننه کړئ!' style={styles.input} value={dateOne} onChangeText={(text) => setDateOne(text)} />
       <TextInput keyboardType="number-pad" placeholder='دوهمه نېټه د ننه کړئ!' style={styles.input} value={dateTwo} onChangeText={(text) => setDateTwo(text)} />
       <Btn text="لټون" onClick={searchIncome} />
+      <Text style={styles.title}> {betweenDates ? `${betweenDates} افغانۍ` : ''} </Text> 
       <FlatList
         data={data}
         keyExtractor={(item) => item.id}
