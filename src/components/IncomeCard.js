@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   nameTitle: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: colors.light
+    color: colors.darkGray
   },
   moneyContainer: {
     flex: 1,
@@ -98,9 +98,9 @@ const styles = StyleSheet.create({
   moneyTitle: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: colors.light
+    color: colors.darkGray
   },
   text: {
-    color: colors.light
+    color: colors.darkGray
   },
 })

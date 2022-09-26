@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     height: perHeight(78),
     paddingVertical: 30,
-    backgroundColor: colors.darkGray
+    backgroundColor: colors.lightGray
   },
   input: {
     width: perWidth(80),
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 18,
     marginBottom: 20,
-    color: colors.light
+    color: colors.darkGray
   },
   btn: {
     backgroundColor: colors.green,

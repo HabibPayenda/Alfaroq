@@ -5,6 +5,7 @@ import { perHeight, perWidth } from '../functions/heigthWidth';
 import Alfarooq from '../functions/Alfarooq';
 import colors from '../functions/colors';
 import IncomeCard from '../components/IncomeCard';
+import Btn from '../components/Btn';
 
 export default function IncomeSearchScreen() {
   const [name, setName] = useState('');
@@ -40,7 +41,7 @@ export default function IncomeSearchScreen() {
     <View style={styles.container}>
       <Text style={styles.title}>د مرستو لټون</Text>
       <TextInput placeholder='د مرسته کوونکي نوم د ننه کړئ!' keyboardType='default' style={styles.input} value={name} onChangeText={(text) => setName(text)} />
-      <Button title="لټون" onPress={() => searchIncome()} />
+      <Btn text="لټون" onClick={searchIncome} />
       <FlatList
         data={data}
         keyExtractor={(item) => item.id}
@@ -61,23 +62,26 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    padding: perHeight(10),
+    paddingVertical: 30,
     height: perHeight(80),
     width: perWidth(100),
+    backgroundColor: colors.lightGray
   },
   input: {
-    borderColor: colors.darkGray,
-    borderWidth: 1,
     width: perWidth(80),
     height: 40,
     padding: 10,
+    paddingHorizontal: 20,
     marginBottom: 10,
-    borderRadius: 5,
+    borderRadius: 30,
+    backgroundColor: colors.light,
+    elevation: 10
   },
   title: {
     fontWeight: 'bold',
     fontSize: 18,
     marginBottom: 20,
+    color: colors.darkGray
   },
   screen: {
     display: 'flex',

@@ -23,7 +23,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10,
-    marginVertical: 10
+    marginVertical: 10,
+    elevation: 10
   },
   title: {
     fontWeight: 'bold',
