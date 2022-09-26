@@ -14,6 +14,8 @@ export default function ExpensesScreen({ navigation }) {
   const [newData, setNewData] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
 
+  const toUseData = data.reverse();
+
   const fetchData = async () => {
     try {
       const result = await Alfarooq.get('/expence');
@@ -41,7 +43,7 @@ export default function ExpensesScreen({ navigation }) {
         </TouchableOpacity>
       </View>
       <FlatList
-        data={data}
+        data={toUseData}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
           return <ExpenseCard discription={item.discription} money={item.amount} date={item.date} />;
