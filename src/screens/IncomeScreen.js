@@ -24,6 +24,7 @@ export default function IncomeScreen({ navigation }) {
   const [curPage, setCurPage] = useState(0);
   const [lastPage, setLastPage] = useState(0);
   const [total, setTotal] = useState(0);
+  const [etotal, setETotal] = useState(0);
 
 
   
@@ -34,6 +35,18 @@ export default function IncomeScreen({ navigation }) {
       console.log(`total result is : ${result}`)
       
       setTotal(result.data)
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchExpensesTotal = async () => {
+    try {
+      const result = await Alfarooq.get('/expence/total');
+      console.log(result)
+      console.log(`total result is : ${result}`)
+      
+      setETotal(result.data)
     } catch (error) {
       console.log(error);
     }
@@ -102,13 +115,22 @@ export default function IncomeScreen({ navigation }) {
 
   useEffect(() => {
     fetchTotal();
+    fetchExpensesTotal()
   }, [])
 
   return (
     <SafeAreaView>
       <View style={styles.topView}>
+        <View style={styles.totalExpenseContainer}>
       <Text style={styles.topViewText}>مجموعه مرستې</Text>
         <Text style={styles.topViewTextMoney}> {`${total} افغانۍ`}</Text>
+
+        </View>
+        <View style={styles.currentMoneyContainer}>
+      <Text style={styles.topViewText}>اوسنۍ پیسې</Text>
+        <Text style={styles.topViewTextMoney}> {`${total - etotal} افغانۍ`}</Text>
+
+        </View>
         <View style={styles.navigation} >
         <View style={styles.navigationNums} >
             <Btn text='1' onClick={fetchFirstData} color={ colors.blue} width={perWidth(13)} />
@@ -169,15 +191,33 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  totalExpenseContainer: {
+    padding: 10, 
+  },
+  currentMoneyContainer: {
+    padding: 10,
+    marginBottom: 40
+  },
   topViewText: {
     fontSize: 14,
     fontWeight: 'bold',
-    color: colors.light,
-    marginBottom: 10
+    color: colors.darkGray,
+    marginBottom: 10,
+    backgroundColor: colors.light,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    textAlign: 'center',
+    borderRadius: 5,
+    elevation: 10
   },
   topViewTextMoney: {
     fontSize: 20,
-    color: colors.light
+    color: colors.light,
+    backgroundColor: colors.red,
+    paddingVertical: 5, 
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    elevation: 10
   },
   screen: {
     display: 'flex',
