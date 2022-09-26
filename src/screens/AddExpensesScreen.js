@@ -4,6 +4,7 @@ import React, {useState} from 'react'
 import Alfarooq from '../functions/Alfarooq'
 import { perHeight, perWidth } from '../functions/heigthWidth'
 import colors from '../functions/colors'
+import Btn from '../components/Btn'
 
 export default function AddExpenseScreen() {
   const [desc, setDesc] = useState('');
@@ -16,6 +17,18 @@ export default function AddExpenseScreen() {
     discription: desc,
     amount: money,
     date: current_date,
+  };
+
+  var afghanNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
+  englishNumbers = [/0/g, /1/g, /2/g, /3/g, /4/g, /5/g, /6/g, /7/g, /8/g, /9/g],
+
+  changeNumbers = function (str) {
+    if (typeof str === 'string') {
+      for (var i = 0; i < 10; i++) {
+        str = str.replace(afghanNumbers[i], i).replace(englishNumbers[i], i);
+      }
+    }
+    return str;
   };
 
   function showToast() {
@@ -51,9 +64,12 @@ export default function AddExpenseScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>د نوي مصرف معلومات</Text>
-      <TextInput keyboardType='number-pad' value={money} onChangeText={ (text) => setMoney(text)} placeholder='د مصرف مقدار په افغانیو' style={styles.input} />
+      <TextInput keyboardType='number-pad' value={money} onChangeText={ (text) => {
+         const newValu = changeNumbers(text);
+         setMoney(newValu);
+      } } placeholder='د مصرف مقدار په افغانیو' style={styles.input} />
       <TextInput value={desc} onChangeText={(text) => setDesc(text)} placeholder='د مصرف کولو وجه' style={styles.inputArea} />
-      <Button title='ذخیره' onPress={AddExpense} />
+      <Btn text='ذخیره' onClick={AddExpense} />
     </SafeAreaView>
   )
 }
@@ -64,25 +80,28 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     height: perHeight(78),
-    paddingVertical: 30
+    paddingVertical: 30,
+    backgroundColor: colors.lightGray
   }, 
   input: {
-    borderColor: colors.darkGray,
-    borderWidth: 1,
     width: perWidth(80),
-    height: perHeight(4),
+    height: 40,
     padding: 10,
+    paddingHorizontal: 20,
     marginBottom: 10,
-    borderRadius: 5,
+    borderRadius: 30,
+    backgroundColor: colors.light,
+    elevation: 10
   },
   inputArea: {
-    borderColor: colors.darkGray,
-    borderWidth: 1,
     width: perWidth(80),
-    height: perHeight(10),
+    height: 100,
     padding: 10,
+    paddingHorizontal: 20,
     marginBottom: 10,
-    borderRadius: 5,
+    borderRadius: 20,
+    backgroundColor: colors.light,
+    elevation: 10,
     textAlign: 'right',
     textAlignVertical: 'top'
   },

@@ -5,8 +5,9 @@ import axios from 'axios';
 import { perHeight, perWidth } from '../functions/heigthWidth';
 import colors from '../functions/colors';
 import Alfarooq from '../functions/Alfarooq';
+import Btn from '../components/Btn';
 
-export default function AddIncomeScreen({ setNewData }) {
+export default function AddIncomeScreen() {
   const [name, setName] = useState('');
   const [money, setMoney] = useState('');
 
@@ -64,7 +65,6 @@ export default function AddIncomeScreen({ setNewData }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text> {current_date}</Text>
       <Text style={styles.title}>د نوې مرستې معلومات</Text>
       <TextInput
         value={name}
@@ -82,7 +82,7 @@ export default function AddIncomeScreen({ setNewData }) {
         placeholder="د مرستې مقدار په افغانیو"
         style={styles.input}
       />
-      <Button title="ذخیره" onPress={() => AddIncome()} />
+      <Btn onClick={AddIncome} text="ذخیره" />
     </SafeAreaView>
   );
 }
@@ -94,19 +94,26 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     height: perHeight(78),
     paddingVertical: 30,
+    backgroundColor: colors.lightGray
   },
   input: {
-    borderColor: colors.darkGray,
-    borderWidth: 1,
     width: perWidth(80),
-    height: perHeight(4),
+    height: 40,
     padding: 10,
+    paddingHorizontal: 20,
     marginBottom: 10,
-    borderRadius: 5,
+    borderRadius: 30,
+    backgroundColor: colors.light,
+    elevation: 10
   },
   title: {
     fontWeight: 'bold',
     fontSize: 18,
     marginBottom: 20,
+    color: colors.darkGray
   },
+  btn: {
+    backgroundColor: colors.green,
+    width: perWidth(30)
+  }
 });
