@@ -124,6 +124,12 @@ export default function IncomeScreen({ navigation }) {
           </View>
         </View>
         <TouchableOpacity
+          style={styles.searchDateIcon}
+          onPress={() => navigation.navigate('IncomeSearchDate')}
+        >
+          <MaterialCommunityIcons style={{color: colors.light}} name="archive-search" size={24} color="black" />
+        </TouchableOpacity>
+        <TouchableOpacity
           style={styles.searchIcon}
           onPress={() => navigation.navigate('IncomeSearch')}
         >
@@ -182,7 +188,7 @@ const styles = StyleSheet.create({
   },
   addIcon: {
     position: 'absolute',
-    bottom: perHeight(10),
+    bottom: perHeight(7),
     right: perWidth(5),
     fontSize: 30,
     color: colors.light,
@@ -195,11 +201,24 @@ const styles = StyleSheet.create({
   },
   searchIcon: {
     position: 'absolute',
-    bottom: perHeight(17),
+    bottom: perHeight(13),
     right: perWidth(5),
     fontSize: 30,
     color: colors.light,
     backgroundColor: colors.yellow,
+    padding: 10,
+    borderRadius: 50,
+    elevation: 10,
+    borderWidth: 1,
+    borderColor: colors.light,
+  },
+  searchDateIcon: {
+    position: 'absolute',
+    bottom: perHeight(19),
+    right: perWidth(5),
+    fontSize: 30,
+    color: colors.light,
+    backgroundColor: colors.blue,
     padding: 10,
     borderRadius: 50,
     elevation: 10,
