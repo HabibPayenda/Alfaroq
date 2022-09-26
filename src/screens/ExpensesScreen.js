@@ -8,24 +8,26 @@ import Alfarooq from '../functions/Alfarooq';
 import { perHeight, perWidth } from '../functions/heigthWidth';
 import colors from '../functions/colors';
 import ExpenseCard from '../components/ExpensesCard';
+import Btn from '../components/Btn';
 
 export default function ExpensesScreen({ navigation }) {
   const [data, setData] = useState([]);
   const [newData, setNewData] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [result, setResult ] = useState({});
 
-  const toUseData = data.reverse();
 
   let totalExpenses = 0;
-  for(var i = 0; i < data.length; i++) {
-    totalExpenses += JSON.parse(data[i].amount)
-  }
+  // for(var i = 0; i < data.length; i++) {
+  //   totalExpenses += JSON.parse(data[i].amount)
+  // }
 
   const fetchData = async () => {
     try {
       const result = await Alfarooq.get('/expence');
       console.log(result.data);
-      setData(result.data);
+      setResult(result.data);
+      setData(result.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -38,6 +40,7 @@ export default function ExpensesScreen({ navigation }) {
       <View style={styles.topView}>
         <Text style={styles.topViewText}>مجموعه مصارف</Text>
         <Text style={styles.topViewTextMoney}> {`${totalExpenses} افغانۍ`}</Text>
+        <Btn text="next" />
         <TouchableOpacity
           style={styles.searchIcon}
           onPress={() => navigation.navigate('ExpencesSearch')}
@@ -49,7 +52,7 @@ export default function ExpensesScreen({ navigation }) {
         </TouchableOpacity>
       </View>
       <FlatList
-        data={toUseData}
+        data={data}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
           return <ExpenseCard discription={item.discription} money={item.amount} date={item.date} />;
