@@ -95,10 +95,11 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'flex-end',
     justifyContent: 'flex-start',
-    backgroundColor: colors.gray,
+    backgroundColor: colors.lightGray,
     height: '100%',
     padding: 5,
-    borderRadius: 5
+    borderTopLeftRadius: 5,
+    borderBottomLeftRadius: 5
   },
   descTitle: {
     fontSize: 16,
