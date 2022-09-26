@@ -16,6 +16,11 @@ export default function ExpensesScreen({ navigation }) {
 
   const toUseData = data.reverse();
 
+  let totalExpenses = 0;
+  for(var i = 0; i < data.length; i++) {
+    totalExpenses += JSON.parse(data[i].amount)
+  }
+
   const fetchData = async () => {
     try {
       const result = await Alfarooq.get('/expence');
@@ -31,7 +36,8 @@ export default function ExpensesScreen({ navigation }) {
   return (
     <SafeAreaView>
       <View style={styles.topView}>
-        <Text style={styles.topViewText}>ExpensesScreen</Text>
+        <Text style={styles.topViewText}>مجموعه مصارف</Text>
+        <Text style={styles.topViewTextMoney}> {`${totalExpenses} افغانۍ`}</Text>
         <TouchableOpacity
           style={styles.searchIcon}
           onPress={() => navigation.navigate('ExpencesSearch')}
@@ -70,8 +76,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   topViewText: {
-    fontSize: 18,
-    color: 'white',
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: colors.light,
+    marginBottom: 10
+  },
+  topViewTextMoney: {
+    fontSize: 20,
+    color: colors.light
   },
   screen: {
     display: 'flex',
