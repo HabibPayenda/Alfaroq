@@ -50,10 +50,17 @@ export default function ExpensesScreen({ navigation }) {
 
   const fetchNextData = async () => {
     try {
-      const result = await Alfarooq.get(`/expence?page=${curPage + 1}`);
-      console.log(result.data);
-      setData(result.data.data);
-      setCurPage(result.data.current_page);
+      if(curPage === lastPage) {
+        const result = await Alfarooq.get(`/expence?page=${(curPage - lastPage) + 1}`);
+        console.log(result.data);
+        setData(result.data.data);
+        setCurPage(1);
+      } else {
+        const result = await Alfarooq.get(`/expence?page=${curPage + 1}`);
+        console.log(result.data);
+        setData(result.data.data);
+        setCurPage(result.data.current_page);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -164,7 +171,11 @@ export default function ExpensesScreen({ navigation }) {
           return <ExpenseCard discription={item.discription} money={item.amount} date={item.date} />;
         }}
         refreshing={refreshing}
-        onRefresh={() => fetchData()}
+        onRefresh={() => {
+          fetchData()
+          fetchETotal()
+          setCurPage(1);
+        } }
         style={{ width: perWidth(100), height: perHeight(50) }}
         contentContainerStyle={styles.screen}
       >
