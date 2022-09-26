@@ -21,16 +21,10 @@ export default function IncomeScreen({ navigation }) {
   const [data, setData] = useState([]);
   const [newData, setNewData] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
-  const [result, setResult ] = useState({});
   const [curPage, setCurPage] = useState(0);
   const [lastPage, setLastPage] = useState(0);
   const [total, setTotal] = useState(0);
 
-
-  let totalExpenses = 0;
-  // for(var i = 0; i < data.length; i++) {
-  //   totalExpenses += JSON.parse(data[i].amount)
-  // }
 
   
   const fetchTotal = async () => {

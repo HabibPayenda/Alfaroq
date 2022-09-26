@@ -14,7 +14,9 @@ export default function ExpensesScreen({ navigation }) {
   const [data, setData] = useState([]);
   const [newData, setNewData] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
-  const [result, setResult ] = useState({});
+  const [curPage, setCurPage] = useState(0);
+  const [lastPage, setLastPage] = useState(0);
+  const [total, setTotal] = useState(0);
 
 
   let totalExpenses = 0;
@@ -26,21 +28,96 @@ export default function ExpensesScreen({ navigation }) {
     try {
       const result = await Alfarooq.get('/expence');
       console.log(result.data);
-      setResult(result.data);
       setData(result.data.data);
     } catch (error) {
       console.log(error);
     }
   };
+
+  const fetchNextData = async () => {
+    try {
+      const result = await Alfarooq.get(`/expence?page=${curPage + 1}`);
+      console.log(result.data);
+      setData(result.data.data);
+      setCurPage(result.data.current_page);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchPrevData = async () => {
+    try {
+      const result = await Alfarooq.get(`/expence?page=${curPage - 1}`);
+      console.log(result.data);
+      setData(result.data.data);
+      setCurPage(result.data.current_page);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchLastData = async () => {
+    try {
+      const result = await Alfarooq.get(`/expence?page=${lastPage}`);
+      console.log(result.data);
+      setData(result.data.data);
+      setCurPage(result.data.current_page);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchTotal = async () => {
+    try {
+      const result = await Alfarooq.get('/expence/total');
+      console.log(result)
+      console.log(`total result is : ${result}`)
+      
+      setTotal(result.data)
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchFirstData = async () => {
+    try {
+      const result = await Alfarooq.get(`/expence?page=${1}`);
+      console.log(result.data);
+      setData(result.data.data);
+      setCurPage(result.data.current_page);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     fetchData();
   }, [newData]);
+
+  useEffect(() => {
+    fetchTotal();
+  }, [])
+
+
   return (
     <SafeAreaView>
       <View style={styles.topView}>
         <Text style={styles.topViewText}>مجموعه مصارف</Text>
-        <Text style={styles.topViewTextMoney}> {`${totalExpenses} افغانۍ`}</Text>
-        <Btn text="next" />
+        <Text style={styles.topViewTextMoney}> {`${total} افغانۍ`}</Text>
+        <View style={styles.navigation} >
+        <View style={styles.navigationNums} >
+            <Btn text='1' onClick={fetchFirstData} color={ colors.blue} width={perWidth(13)} />
+          </View>
+          <Btn text="Prev" onClick={fetchPrevData} color={colors.yellow} width={perWidth(13)} />
+          
+          <View style={styles.navigationNums} >
+            <Text style={styles.curPageNum} > {curPage} </Text>
+          </View>
+          <Btn text="Next" onClick={fetchNextData}  width={perWidth(13)} />
+          <View style={styles.navigationNums} >
+          <Btn text={lastPage} onClick={fetchLastData} color={ colors.blue} width={perWidth(13)} />
+          </View>
+        </View>
         <TouchableOpacity
           style={styles.searchIcon}
           onPress={() => navigation.navigate('ExpencesSearch')}
@@ -99,7 +176,7 @@ const styles = StyleSheet.create({
   },
   addIcon: {
     position: 'absolute',
-    bottom: perHeight(5),
+    bottom: perHeight(10),
     right: perWidth(5),
     fontSize: 30,
     color: colors.light,
@@ -112,8 +189,8 @@ const styles = StyleSheet.create({
   },
   searchIcon: {
     position: 'absolute',
-    bottom: perHeight(5),
-    right: perWidth(20),
+    bottom: perHeight(17),
+    right: perWidth(5),
     fontSize: 30,
     color: colors.light,
     backgroundColor: colors.yellow,
@@ -123,4 +200,22 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.light,
   },
+  navigation: {
+    display: 'flex',
+    flexDirection: 'row',
+    marginTop: 30,
+    position: 'absolute',
+    bottom: 0
+  },
+  navigationNums: {
+    paddingHorizontal: 10,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  curPageNum: {
+    color: colors.light,
+    fontWeight: 'bold',
+    fontSize: 18,
+  }
 });
