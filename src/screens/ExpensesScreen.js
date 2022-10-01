@@ -1,8 +1,7 @@
 import { StyleSheet, Text, SafeAreaView, View, FlatList, TouchableOpacity } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Entypo } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-
 
 import Alfarooq from '../functions/Alfarooq';
 import { perHeight, perWidth } from '../functions/heigthWidth';
@@ -30,8 +29,8 @@ export default function ExpensesScreen({ navigation }) {
 
   const fetchETotal = async () => {
     try {
-      const result = await Alfarooq.get('/income/total');      
-      setETotal(result.data)
+      const result = await Alfarooq.get('/income/total');
+      setETotal(result.data);
     } catch (error) {
       console.log(error);
     }
@@ -39,8 +38,8 @@ export default function ExpensesScreen({ navigation }) {
 
   const fetchNextData = async () => {
     try {
-      if(curPage === lastPage) {
-        const result = await Alfarooq.get(`/expence?page=${(curPage - lastPage) + 1}`);
+      if (curPage === lastPage) {
+        const result = await Alfarooq.get(`/expence?page=${curPage - lastPage + 1}`);
         setData(result.data.data);
         setCurPage(1);
       } else {
@@ -76,8 +75,8 @@ export default function ExpensesScreen({ navigation }) {
   const fetchTotal = async () => {
     try {
       const result = await Alfarooq.get('/expence/total');
-      console.log(`total result is : ${result}`)
-      setTotal(result.data)
+      console.log(`total result is : ${result}`);
+      setTotal(result.data);
     } catch (error) {
       console.log(error);
     }
@@ -99,65 +98,79 @@ export default function ExpensesScreen({ navigation }) {
 
   useEffect(() => {
     fetchTotal();
-    fetchETotal()
-  }, [])
-
+    fetchETotal();
+  }, []);
 
   return (
     <SafeAreaView>
       <View style={styles.topView}>
-      <View style={styles.totalExpenseContainer}>
-      <Text style={styles.topViewText}>مجموعه مصارف</Text>
-        <Text style={styles.topViewTextMoney}> {`${total} افغانۍ`}</Text>
-
+        <View style={styles.totalExpenseContainer}>
+          <Text style={styles.topViewText}>مجموعه مصارف</Text>
+          <Text style={styles.topViewTextMoney}> {`${total} افغانۍ`}</Text>
         </View>
         <View style={styles.currentMoneyContainer}>
-      <Text style={styles.topViewText}>اوسنۍ پیسې</Text>
-        <Text style={styles.topViewTextMoney}> {`${etotal - total} افغانۍ`}</Text>
-
+          <Text style={styles.topViewText}>اوسنۍ پیسې</Text>
+          <Text style={styles.topViewTextMoney}> {`${etotal - total} افغانۍ`}</Text>
         </View>
-        <View style={styles.navigation} >
-        <View style={styles.navigationNums} >
-            <Btn text='1' onClick={fetchFirstData} color={ colors.blue} width={perWidth(13)} />
+        <View style={styles.navigation}>
+          <View style={styles.navigationNums}>
+            <Btn text="1" onClick={fetchFirstData} color={colors.blue} width={perWidth(13)} />
           </View>
           <Btn text="Prev" onClick={fetchPrevData} color={colors.yellow} width={perWidth(13)} />
-          
-          <View style={styles.navigationNums} >
-            <Text style={styles.curPageNum} > {curPage} </Text>
+
+          <View style={styles.navigationNums}>
+            <Text style={styles.curPageNum}> {curPage} </Text>
           </View>
-          <Btn text="Next" onClick={fetchNextData}  width={perWidth(13)} />
-          <View style={styles.navigationNums} >
-          <Btn text={lastPage} onClick={fetchLastData} color={ colors.blue} width={perWidth(13)} />
+          <Btn text="Next" onClick={fetchNextData} width={perWidth(13)} />
+          <View style={styles.navigationNums}>
+            <Btn text={lastPage} onClick={fetchLastData} color={colors.blue} width={perWidth(13)} />
           </View>
         </View>
-        <TouchableOpacity
-          style={styles.searchDateIcon}
-          onPress={() => navigation.navigate('ExpencesSearchDate')}
-        >
-          <MaterialCommunityIcons style={{color: colors.light}} name="archive-search" size={24} color="black" />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.searchIcon}
-          onPress={() => navigation.navigate('ExpencesSearch')}
-        >
-          <MaterialCommunityIcons style={{color: colors.light}} name="database-search" size={24} color="black" />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.addIcon} onPress={() => navigation.navigate('Add Expense')}>
-          <Entypo style={{color: colors.light}} name="add-to-list" size={24} color="black" />
-        </TouchableOpacity>
+        <View style={styles.icons}>
+          <TouchableOpacity
+            style={styles.searchDateIcon}
+            onPress={() => navigation.navigate('ExpencesSearchDate')}
+          >
+            <MaterialCommunityIcons
+              style={{ color: colors.light }}
+              name="archive-search"
+              size={24}
+              color="black"
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.searchIcon}
+            onPress={() => navigation.navigate('ExpencesSearch')}
+          >
+            <MaterialCommunityIcons
+              style={{ color: colors.light }}
+              name="database-search"
+              size={24}
+              color="black"
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.addIcon}
+            onPress={() => navigation.navigate('Add Expense')}
+          >
+            <Entypo style={{ color: colors.light }} name="add-to-list" size={24} color="black" />
+          </TouchableOpacity>
+        </View>
       </View>
       <FlatList
         data={data}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
-          return <ExpenseCard discription={item.discription} money={item.amount} date={item.date} />;
+          return (
+            <ExpenseCard discription={item.discription} money={item.amount} date={item.date} />
+          );
         }}
         refreshing={refreshing}
         onRefresh={() => {
-          fetchData()
-          fetchETotal()
+          fetchData();
+          fetchETotal();
           setCurPage(1);
-        } }
+        }}
         style={{ width: perWidth(100), height: perHeight(50) }}
         contentContainerStyle={styles.screen}
       >
@@ -171,18 +184,18 @@ export default function ExpensesScreen({ navigation }) {
 const styles = StyleSheet.create({
   topView: {
     backgroundColor: colors.darkGray,
-    height: perHeight(30),
+    height: perHeight(40),
     width: perWidth(100),
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
   },
   totalExpenseContainer: {
-    padding: 10, 
+    padding: 10,
   },
   currentMoneyContainer: {
     padding: 10,
-    marginBottom: 40
+    marginBottom: 40,
   },
   topViewText: {
     fontSize: 14,
@@ -194,16 +207,16 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     textAlign: 'center',
     borderRadius: 5,
-    elevation: 10
+    elevation: 10,
   },
   topViewTextMoney: {
     fontSize: 20,
     color: colors.light,
     backgroundColor: colors.red,
-    paddingVertical: 5, 
+    paddingVertical: 5,
     paddingHorizontal: 10,
     borderRadius: 5,
-    elevation: 10
+    elevation: 10,
   },
   screen: {
     display: 'flex',
@@ -215,9 +228,6 @@ const styles = StyleSheet.create({
     padding: perHeight(1),
   },
   addIcon: {
-    position: 'absolute',
-    bottom: perHeight(7),
-    right: perWidth(5),
     fontSize: 30,
     color: colors.light,
     backgroundColor: colors.green,
@@ -228,9 +238,6 @@ const styles = StyleSheet.create({
     borderColor: colors.light,
   },
   searchIcon: {
-    position: 'absolute',
-    bottom: perHeight(13),
-    right: perWidth(5),
     fontSize: 30,
     color: colors.light,
     backgroundColor: colors.yellow,
@@ -239,11 +246,9 @@ const styles = StyleSheet.create({
     elevation: 10,
     borderWidth: 1,
     borderColor: colors.light,
+    marginBottom: 10,
   },
   searchDateIcon: {
-    position: 'absolute',
-    bottom: perHeight(19),
-    right: perWidth(5),
     fontSize: 30,
     color: colors.light,
     backgroundColor: colors.blue,
@@ -252,23 +257,29 @@ const styles = StyleSheet.create({
     elevation: 10,
     borderWidth: 1,
     borderColor: colors.light,
+    marginBottom: 10,
+  },
+  icons: {
+    position: 'absolute',
+    bottom: perHeight(10),
+    right: perWidth(5),
   },
   navigation: {
     display: 'flex',
     flexDirection: 'row',
     marginTop: 30,
     position: 'absolute',
-    bottom: 0
+    bottom: 0,
   },
   navigationNums: {
     paddingHorizontal: 10,
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   curPageNum: {
     color: colors.light,
     fontWeight: 'bold',
     fontSize: 18,
-  }
+  },
 });
