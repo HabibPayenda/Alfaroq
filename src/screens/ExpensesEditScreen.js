@@ -6,12 +6,16 @@ import colors from '../functions/colors';
 import Btn from '../components/Btn';
 import Alfarooq from '../functions/Alfarooq';
 
-export default function OneItemScreen({ route, navigation }) {
-  const { id, name, money } = route.params;
-  const [newName, setNewName] = useState(name);
+export default function ExpensesEditScreen({ route, navigation }) {
+  const { id, discription, money } = route.params;
+  const [newDiscription, setNewDiscription] = useState(discription);
   const [newMoney, setNewMoney] = useState(money);
 
   function showToast() {
+    ToastAndroid.show('معلومات ذخیره شول!', ToastAndroid.SHORT);
+  }
+
+  function showToastDelete() {
     ToastAndroid.show('معلومات حذف شول!', ToastAndroid.SHORT);
   }
 
@@ -33,10 +37,10 @@ export default function OneItemScreen({ route, navigation }) {
 
   const deleteIncome = async () => {
     try {
-      const result = await Alfarooq.delete(`/income/${id}`);
+      const result = await Alfarooq.delete(`/expence/${id}`);
       if (result.data === 1) {
-        showToast();
-        navigation.navigate('All Incomes')
+        showToastDelete();
+        navigation.navigate('All Expenses')
       }
       return result;
     } catch (error) {
@@ -48,11 +52,11 @@ export default function OneItemScreen({ route, navigation }) {
 
   const updateIncome = async () => {
     try {
-      const result = await Alfarooq.patch(`/income/${id}`, {name: newName, amount: newMoney}, {
+      const result = await Alfarooq.patch(`/expence/${id}`, {discription: newDiscription, amount: newMoney}, {
         onUploadProgress: (progress) => {
           if (progress.loaded / progress.total === 1) {
             showToast();
-            navigation.navigate('All Incomes');
+            navigation.navigate('All Expenses');
           }
         },
       });
@@ -68,18 +72,18 @@ export default function OneItemScreen({ route, navigation }) {
       <Text style={styles.title}>د بدلون راوستل</Text>
       <TextInput
         keyboardType="default"
-        value={newName}
-        onChangeText={(text) => setNewName(text)}
-        style={styles.input}
-      />
-      <TextInput
-        keyboardType="default"
         value={newMoney}
         onChangeText={(text) => {
           const updated = changeNumbers(text);
           setNewMoney(updated);
         }}
         style={styles.input}
+      />
+      <TextInput
+        keyboardType="default"
+        value={newDiscription}
+        onChangeText={(text) => setNewDiscription(text)}
+        style={styles.inputArea}
       />
       <Btn color={colors.yellow} onClick={updateIncome} text="بدلون" />
       <Btn color={colors.red} onClick={deleteIncome} text="حذف" />
@@ -112,5 +116,16 @@ const styles = StyleSheet.create({
     backgroundColor: colors.light,
     elevation: 10,
   },
- 
+  inputArea: {
+    width: perWidth(80),
+    height: 100,
+    padding: 10,
+    paddingHorizontal: 20,
+    marginBottom: 10,
+    borderRadius: 20,
+    backgroundColor: colors.light,
+    elevation: 10,
+    textAlign: 'right',
+    textAlignVertical: 'top'
+  }, 
 });

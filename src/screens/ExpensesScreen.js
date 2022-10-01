@@ -15,13 +15,16 @@ export default function ExpensesScreen({ navigation }) {
   const [refreshing, setRefreshing] = useState(false);
   const [curPage, setCurPage] = useState(0);
   const [lastPage, setLastPage] = useState(0);
-  const [total, setTotal] = useState(0);
-  const [etotal, setETotal] = useState(0);
+  const [expenseTotal, setExpenseTotal] = useState(0);
+  const [moneyTotal, setMoneyTotal] = useState(0);
 
   const fetchData = async () => {
     try {
       const result = await Alfarooq.get('/expence');
+      result.data.current_page ? setCurPage(result.data.current_page) : setCurPage(1);
+      result.data.last_page ? setLastPage(result.data.last_page) : setLastPage(1);
       setData(result.data.data);
+      console.log(result.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -30,7 +33,7 @@ export default function ExpensesScreen({ navigation }) {
   const fetchETotal = async () => {
     try {
       const result = await Alfarooq.get('/income/total');
-      setETotal(result.data);
+      setMoneyTotal(result.data);
     } catch (error) {
       console.log(error);
     }
@@ -75,8 +78,7 @@ export default function ExpensesScreen({ navigation }) {
   const fetchTotal = async () => {
     try {
       const result = await Alfarooq.get('/expence/total');
-      console.log(`total result is : ${result}`);
-      setTotal(result.data);
+      setExpenseTotal(result.data);
     } catch (error) {
       console.log(error);
     }
@@ -94,7 +96,7 @@ export default function ExpensesScreen({ navigation }) {
 
   useEffect(() => {
     fetchData();
-  }, [newData]);
+  }, []);
 
   useEffect(() => {
     fetchTotal();
@@ -106,11 +108,11 @@ export default function ExpensesScreen({ navigation }) {
       <View style={styles.topView}>
         <View style={styles.totalExpenseContainer}>
           <Text style={styles.topViewText}>مجموعه مصارف</Text>
-          <Text style={styles.topViewTextMoney}> {`${total} افغانۍ`}</Text>
+          <Text style={styles.topViewTextMoney}> {`${expenseTotal} افغانۍ`}</Text>
         </View>
         <View style={styles.currentMoneyContainer}>
           <Text style={styles.topViewText}>اوسنۍ پیسې</Text>
-          <Text style={styles.topViewTextMoney}> {`${etotal - total} افغانۍ`}</Text>
+          <Text style={styles.topViewTextMoney}> {`${moneyTotal - expenseTotal} افغانۍ`}</Text>
         </View>
         <View style={styles.navigation}>
           <View style={styles.navigationNums}>
@@ -162,12 +164,13 @@ export default function ExpensesScreen({ navigation }) {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
           return (
-            <ExpenseCard discription={item.discription} money={item.amount} date={item.date} />
+            <ExpenseCard navigation={navigation} id={item.id} discription={item.discription} money={item.amount} date={item.date} />
           );
         }}
         refreshing={refreshing}
         onRefresh={() => {
           fetchData();
+          fetchTotal();
           fetchETotal();
           setCurPage(1);
         }}

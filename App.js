@@ -12,6 +12,7 @@ import ExpensesSearchScreen from './src/screens/ExpensesSearchScreen';
 import IncomeSearchDateScreen from './src/screens/IncomeSearchDateScreen';
 import ExpensesSearchDateScreen from './src/screens/ExpensesSearchDateScreen';
 import OneItemScreen from './src/screens/OneItemScreen';
+import ExpensesEditScreen from './src/screens/ExpensesEditScreen';
 
 export default function App() {
   const Drawer = createDrawerNavigator();
@@ -44,6 +45,7 @@ export default function App() {
         <Stack.Screen name="Add Expense" component={AddExpenseScreen} />
         <Stack.Screen name="ExpencesSearch" component={ExpensesSearchScreen} />
         <Stack.Screen name="ExpencesSearchDate" component={ExpensesSearchDateScreen} />
+        <Stack.Screen name="ExpencesEdit" component={ExpensesEditScreen} />
       </Stack.Navigator>
     );
   }

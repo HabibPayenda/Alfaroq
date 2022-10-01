@@ -1,29 +1,30 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, TouchableWithoutFeedback } from 'react-native'
 import React from 'react';
 
 import colors from '../functions/colors'
 import { perHeight, perWidth } from '../functions/heigthWidth'
 
-export default function ExpenseCard({money, discription, date}) {
+export default function ExpenseCard({money, discription, date, navigation, id}) {
   const newDate = date.split('-');
   return (
-    <View style={styles.container}>
-       <View style={styles.desccContainer}>
-       <Text style={styles.expenseText}>{`${money} افغانۍ`}</Text>
-        <Text style={styles.descTitle}>شرح:</Text>
-        <Text style={styles.descText}> {discription} </Text>
+    <TouchableWithoutFeedback onLongPress={() => navigation.navigate('ExpencesEdit', {id, discription, money})}>
+      <View style={styles.container}>
+        <View style={styles.desccContainer}>
+          <Text style={styles.expenseText}>{`${money} افغانۍ`}</Text>
+          <Text style={styles.descTitle}>شرح:</Text>
+          <Text style={styles.descText}> {discription} </Text>
+        </View>
+
+        <View style={styles.descContainer}>
+          <View style={styles.dateContainer}>
+            <Text style={styles.dateDay}>{newDate[2]}</Text>
+            <Text style={styles.dateMonth}>{newDate[1]}</Text>
+            <Text style={styles.dateYear}>{newDate[0]}</Text>
+          </View>
+        </View>
       </View>
-      
-      <View style={styles.descContainer}>
-      <View style={styles.dateContainer}>
-      <Text style={styles.dateDay}>{newDate[2]}</Text>
-        <Text style={styles.dateMonth}>{newDate[1]}</Text>
-        <Text style={styles.dateYear}>{newDate[0]}</Text>
-      </View>   
-      </View>
-      
-    </View>
-  )
+    </TouchableWithoutFeedback>
+  );
 }
 
 const styles = StyleSheet.create({

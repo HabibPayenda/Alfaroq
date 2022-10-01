@@ -14,13 +14,13 @@ export default function AddIncomeScreen() {
   var date = new Date();
   var current_date = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
 
-  var afghanNumbers = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g],
-    englishNumbers = [/0/g, /1/g, /2/g, /3/g, /4/g, /5/g, /6/g, /7/g, /8/g, /9/g],
+  var afghanNumbers = ['۰', '۱', /۲/g, /۳/g, /٤/g, /۴/g, /۵/g, /٦/g, /۶/g, /۷/g, /۸/g, /۹/g],
+  englishNumbers = [0, 1, 2, 3, 4, 4, 5, 6, 6, 7, 8, 9],
 
     changeNumbers = function (str) {
       if (typeof str === 'string') {
-        for (var i = 0; i < 10; i++) {
-          str = str.replace(afghanNumbers[i], i).replace(englishNumbers[i], i);
+        for (var i = 0; i < 13; i++) {
+          str = str.replace(afghanNumbers[i], englishNumbers[i]);
         }
       }
       return str;
