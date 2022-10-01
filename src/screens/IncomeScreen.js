@@ -178,7 +178,7 @@ export default function IncomeScreen({ navigation }) {
         data={data}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
-          return <IncomeCard name={item.name} money={item.amount} date={item.date} />;
+          return <IncomeCard navigation={navigation} id={item.id} name={item.name} money={item.amount} date={item.date} />;
         }}
         refreshing={refreshing}
         onRefresh={() => {
