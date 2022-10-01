@@ -3,7 +3,6 @@ import {
   Text,
   SafeAreaView,
   View,
-  ScrollView,
   TouchableOpacity,
   FlatList,
 } from 'react-native';
@@ -19,8 +18,8 @@ import Btn from '../components/Btn';
 
 export default function IncomeScreen({ navigation }) {
   const [data, setData] = useState([]);
-  const [newData, setNewData] = useState(false);
-  const [refreshing, setRefreshing] = useState(false);
+  const [newData] = useState(false);
+  const [refreshing] = useState(false);
   const [curPage, setCurPage] = useState(0);
   const [lastPage, setLastPage] = useState(0);
   const [total, setTotal] = useState(0);
@@ -153,6 +152,7 @@ export default function IncomeScreen({ navigation }) {
           <Btn text={lastPage} onClick={fetchLastData} color={ colors.blue} width={perWidth(13)} />
           </View>
         </View>
+        <View style={styles.icons}>
         <TouchableOpacity
           style={styles.searchDateIcon}
           onPress={() => navigation.navigate('IncomeSearchDate')}
@@ -171,6 +171,8 @@ export default function IncomeScreen({ navigation }) {
         >
           <Entypo style={{ color: colors.light }} name="add-to-list" size={24} color="black" />
         </TouchableOpacity>
+
+        </View>
       </View>
       <FlatList
         data={data}
@@ -194,7 +196,7 @@ export default function IncomeScreen({ navigation }) {
 const styles = StyleSheet.create({
   topView: {
     backgroundColor: colors.darkGray,
-    height: perHeight(30),
+    height: perHeight(40),
     width: perWidth(100),
     display: 'flex',
     alignItems: 'center',
@@ -236,9 +238,6 @@ const styles = StyleSheet.create({
     padding: perHeight(1),
   },
   addIcon: {
-    position: 'absolute',
-    bottom: perHeight(7),
-    right: perWidth(5),
     fontSize: 30,
     color: colors.light,
     backgroundColor: colors.green,
@@ -249,9 +248,6 @@ const styles = StyleSheet.create({
     borderColor: colors.light,
   },
   searchIcon: {
-    position: 'absolute',
-    bottom: perHeight(13),
-    right: perWidth(5),
     fontSize: 30,
     color: colors.light,
     backgroundColor: colors.yellow,
@@ -260,11 +256,9 @@ const styles = StyleSheet.create({
     elevation: 10,
     borderWidth: 1,
     borderColor: colors.light,
+    marginBottom: 10
   },
   searchDateIcon: {
-    position: 'absolute',
-    bottom: perHeight(19),
-    right: perWidth(5),
     fontSize: 30,
     color: colors.light,
     backgroundColor: colors.blue,
@@ -273,6 +267,12 @@ const styles = StyleSheet.create({
     elevation: 10,
     borderWidth: 1,
     borderColor: colors.light,
+    marginBottom: 10
+  },
+  icons: {
+    position: 'absolute',
+    bottom: perHeight(10),
+    right: perWidth(5),
   },
   navigation: {
     display: 'flex',
