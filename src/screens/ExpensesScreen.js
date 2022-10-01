@@ -19,17 +19,9 @@ export default function ExpensesScreen({ navigation }) {
   const [total, setTotal] = useState(0);
   const [etotal, setETotal] = useState(0);
 
-
-
-  let totalExpenses = 0;
-  // for(var i = 0; i < data.length; i++) {
-  //   totalExpenses += JSON.parse(data[i].amount)
-  // }
-
   const fetchData = async () => {
     try {
       const result = await Alfarooq.get('/expence');
-      console.log(result.data);
       setData(result.data.data);
     } catch (error) {
       console.log(error);
@@ -38,10 +30,7 @@ export default function ExpensesScreen({ navigation }) {
 
   const fetchETotal = async () => {
     try {
-      const result = await Alfarooq.get('/income/total');
-      console.log(result)
-      console.log(`total result is : ${result}`)
-      
+      const result = await Alfarooq.get('/income/total');      
       setETotal(result.data)
     } catch (error) {
       console.log(error);
@@ -52,12 +41,10 @@ export default function ExpensesScreen({ navigation }) {
     try {
       if(curPage === lastPage) {
         const result = await Alfarooq.get(`/expence?page=${(curPage - lastPage) + 1}`);
-        console.log(result.data);
         setData(result.data.data);
         setCurPage(1);
       } else {
         const result = await Alfarooq.get(`/expence?page=${curPage + 1}`);
-        console.log(result.data);
         setData(result.data.data);
         setCurPage(result.data.current_page);
       }
@@ -69,7 +56,6 @@ export default function ExpensesScreen({ navigation }) {
   const fetchPrevData = async () => {
     try {
       const result = await Alfarooq.get(`/expence?page=${curPage - 1}`);
-      console.log(result.data);
       setData(result.data.data);
       setCurPage(result.data.current_page);
     } catch (error) {
@@ -80,7 +66,6 @@ export default function ExpensesScreen({ navigation }) {
   const fetchLastData = async () => {
     try {
       const result = await Alfarooq.get(`/expence?page=${lastPage}`);
-      console.log(result.data);
       setData(result.data.data);
       setCurPage(result.data.current_page);
     } catch (error) {
@@ -91,9 +76,7 @@ export default function ExpensesScreen({ navigation }) {
   const fetchTotal = async () => {
     try {
       const result = await Alfarooq.get('/expence/total');
-      console.log(result)
       console.log(`total result is : ${result}`)
-      
       setTotal(result.data)
     } catch (error) {
       console.log(error);
@@ -103,7 +86,6 @@ export default function ExpensesScreen({ navigation }) {
   const fetchFirstData = async () => {
     try {
       const result = await Alfarooq.get(`/expence?page=${1}`);
-      console.log(result.data);
       setData(result.data.data);
       setCurPage(result.data.current_page);
     } catch (error) {

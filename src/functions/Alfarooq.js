@@ -1,15 +1,16 @@
 import axios from 'axios';
+import { api } from '../../env'
 
 // eslint-disable-next-line import/no-mutable-exports
 
 const Alfarooq = axios.create({
   baseURL:
-    'http://10.10.10.248:8000/api',
+    api,
   headers: {
-    // Accept: 'application/json',
-    // 'X-Requested-With': 'XMLHttpRequest',
+    Accept: 'application/json',
+    'X-Requested-With': 'XMLHttpRequest',
     "Content-Type": "application/json",
-    // Connection: 'keep-alive'
+    Connection: 'keep-alive'
   },
 });
 
