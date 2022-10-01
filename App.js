@@ -1,19 +1,16 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import ExpensesScreen from './src/screens/ExpensesScreen';
 import IncomeScreen from './src/screens/IncomeScreen';
-import LoginScreen from './src/screens/LoginScreen';
 import AddIncomeScreen from './src/screens/AddIncomeScreen';
 import AddExpenseScreen from './src/screens/AddExpensesScreen';
 import IncomeSearchScreen from './src/screens/IncomeSearchScreen';
 import ExpensesSearchScreen from './src/screens/ExpensesSearchScreen';
 import IncomeSearchDateScreen from './src/screens/IncomeSearchDateScreen';
 import ExpensesSearchDateScreen from './src/screens/ExpensesSearchDateScreen';
-import { Header } from 'react-native/Libraries/NewAppScreen';
 
 export default function App() {
   const Drawer = createDrawerNavigator();
