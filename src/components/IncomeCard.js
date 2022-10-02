@@ -1,31 +1,32 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, TouchableWithoutFeedback } from 'react-native';
 import React from 'react';
 
-import colors from '../functions/colors'
-import { perHeight, perWidth } from '../functions/heigthWidth'
+import colors from '../functions/colors';
+import { perHeight, perWidth } from '../functions/heigthWidth';
 
-export default function IncomeCard({name, money, date}) {
+export default function IncomeCard({ id, name, money, date, navigation }) {
   const newDate = date.split('-');
   return (
-    <View style={styles.container}>
-      
-      <View style={styles.descContainer}>
-      <View style={styles.nameContainer}>
-        <Text style={styles.nameTitle}>نوم</Text>
-        <Text style={styles.text}>{name}</Text>
+    <TouchableWithoutFeedback onLongPress={() => navigation.navigate('IncomeOneItem', {id, name, money})} >
+      <View style={styles.container}>
+        <View style={styles.descContainer}>
+          <View style={styles.nameContainer}>
+            <Text style={styles.nameTitle}>نوم</Text>
+            <Text style={styles.text}>{name}</Text>
+          </View>
+          <View style={styles.moneyContainer}>
+            <Text style={styles.moneyTitle}>مرسته</Text>
+            <Text style={styles.text}>{`${money} افغانۍ`}</Text>
+          </View>
+        </View>
+        <View style={styles.dateContainer}>
+          <Text style={styles.dateDay}>{newDate[2]}</Text>
+          <Text style={styles.dateMonth}>{newDate[1]}</Text>
+          <Text style={styles.dateYear}>{newDate[0]}</Text>
+        </View>
       </View>
-      <View style={styles.moneyContainer}>
-        <Text style={styles.moneyTitle}>مرسته</Text>
-        <Text style={styles.text}>{`${money} افغانۍ`}</Text>
-      </View>
-      </View>
-      <View style={styles.dateContainer}>
-        <Text style={styles.dateDay}>{newDate[2]}</Text>
-        <Text style={styles.dateMonth}>{newDate[1]}</Text>
-        <Text style={styles.dateYear}>{newDate[0]}</Text>
-      </View>
-    </View>
-  )
+    </TouchableWithoutFeedback>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.gray,
     borderRadius: perHeight(1),
     marginBottom: 10,
-    elevation: 10
+    elevation: 10,
   },
   descContainer: {
     flex: 2,
@@ -62,45 +63,45 @@ const styles = StyleSheet.create({
     padding: perHeight(1),
     borderTopRightRadius: 5,
     borderBottomRightRadius: 5,
-  }, 
+  },
   dateDay: {
     fontSize: 30,
     fontWeight: 'bold',
-    color: colors.light
+    color: colors.light,
   },
   dateMonth: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: colors.light
+    color: colors.light,
   },
   dateYear: {
     fontSize: 14,
     fontWeight: 'bold',
-    color: colors.light
+    color: colors.light,
   },
   nameContainer: {
     flex: 1,
     display: 'flex',
-    alignItems: 'flex-end', 
+    alignItems: 'flex-end',
     justifyContent: 'center',
-  }, 
+  },
   nameTitle: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: colors.darkGray
+    color: colors.darkGray,
   },
   moneyContainer: {
     flex: 1,
     display: 'flex',
     alignItems: 'flex-end',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   moneyTitle: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: colors.darkGray
+    color: colors.darkGray,
   },
   text: {
-    color: colors.darkGray
+    color: colors.darkGray,
   },
-})
+});
