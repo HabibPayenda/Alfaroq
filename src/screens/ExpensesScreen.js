@@ -129,6 +129,7 @@ export default function ExpensesScreen({ navigation }) {
           </View>
         </View>
         <View style={styles.icons}>
+
           <TouchableOpacity
             style={styles.searchDateIcon}
             onPress={() => navigation.navigate('ExpencesSearchDate')}
