@@ -32,7 +32,6 @@ export default function App() {
         <Stack.Screen name="IncomeSearch" component={IncomeSearchScreen} />
         <Stack.Screen name="IncomeSearchDate" component={IncomeSearchDateScreen} />
         <Stack.Screen name="IncomeOneItem" component={OneItemScreen} />
-        <Stack.Screen name="Login" component={LoginScreen} />
       </Stack.Navigator>
     );
   }
@@ -42,12 +41,24 @@ export default function App() {
         screenOptions={{
           headerShown: false,
         }}
-      >
+        >
         <Stack.Screen name="All Expenses" component={ExpensesScreen} />
         <Stack.Screen name="Add Expense" component={AddExpenseScreen} />
         <Stack.Screen name="ExpencesSearch" component={ExpensesSearchScreen} />
         <Stack.Screen name="ExpencesSearchDate" component={ExpensesSearchDateScreen} />
         <Stack.Screen name="ExpencesEdit" component={ExpensesEditScreen} />
+      </Stack.Navigator>
+    );
+  }
+  function UsersStack() {
+    return (
+      <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+      >
+        <Stack.Screen name="Login" component={LoginScreen} />
+
       </Stack.Navigator>
     );
   }
@@ -57,6 +68,7 @@ export default function App() {
       <Drawer.Navigator defaultScreenOptions={IncomeStack}>
         <Drawer.Screen name="مرستې" component={IncomeStack} />
         <Drawer.Screen name="مصارف" component={ExpenseStack} />
+        <Drawer.Screen name="داخلي کاروونکي" component={UsersStack} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
