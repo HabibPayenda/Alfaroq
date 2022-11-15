@@ -65,11 +65,18 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Drawer.Navigator defaultScreenOptions={IncomeStack}>
+      <Stack.Navigator
+       screenOptions={{
+        headerShown: false,
+      }}
+      >
+        <Stack.Screen name="login" component={LoginScreen} />
+      </Stack.Navigator>
+      {/* <Drawer.Navigator defaultScreenOptions={IncomeStack}>
         <Drawer.Screen name="مرستې" component={IncomeStack} />
         <Drawer.Screen name="مصارف" component={ExpenseStack} />
         <Drawer.Screen name="داخلي کاروونکي" component={UsersStack} />
-      </Drawer.Navigator>
+      </Drawer.Navigator> */}
     </NavigationContainer>
   );
 }
