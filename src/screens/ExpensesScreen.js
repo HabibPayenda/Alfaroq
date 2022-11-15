@@ -17,6 +17,18 @@ export default function ExpensesScreen({ navigation }) {
   const [lastPage, setLastPage] = useState(0);
   const [expenseTotal, setExpenseTotal] = useState(0);
   const [moneyTotal, setMoneyTotal] = useState(0);
+  const [role, setRoll] = useState(null);
+const getUser = async () => {
+  const user = AsyncStorage.getItem('user');
+  console.log(user)
+  if(user) {
+    setRoll(user.isAdmin)
+  }
+}
+
+useEffect(() => {
+  getUser()
+}, role)
 
   const fetchData = async () => {
     try {

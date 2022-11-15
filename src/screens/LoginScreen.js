@@ -7,7 +7,7 @@ import colors from '../functions/colors'
 import Btn from '../components/Btn'
 import Alfarooq from '../functions/Alfarooq'
 
-export default function LoginScreen() {
+export default function LoginScreen({setLocal}) {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
 
@@ -32,12 +32,13 @@ export default function LoginScreen() {
           }
         },
       });
-      console.log(result)
-      console.log(result.data)
+      result.data.token ? setLocal(true) : false;
+      console.log(result.data.user)
       await AsyncStorage.setItem('token', result.data.token);
-      await AsyncStorage.setItem('userId', JSON.stringify(result.data.user.id))
-
+      await AsyncStorage.setItem('userId', JSON.stringify( result.data.user.id));
+      await AsyncStorage.setItem('user', JSON.stringify( result.data.user));
     } catch (error) {
+      console.log(error)
       showToastError();
       return error;
     }
