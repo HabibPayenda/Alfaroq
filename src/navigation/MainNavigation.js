@@ -13,6 +13,7 @@ import ExpensesSearchScreen from "../screens/ExpensesSearchScreen";
 import ExpensesSearchDateScreen from "../screens/ExpensesSearchDateScreen";
 import ExpensesEditScreen from "../screens/ExpensesEditScreen";
 import LoginScreen from "../screens/LoginScreen";
+import AddUserScreen from "../screens/AddUserScreen";
 const Stack = createStackNavigator();
 
 function IncomeStack() {
@@ -45,18 +46,6 @@ function ExpenseStack() {
     </Stack.Navigator>
   );
 }
-function UsersStack() {
-  return (
-    <Stack.Navigator
-    screenOptions={{
-      headerShown: false,
-    }}
-    >
-      <Stack.Screen name="Login" component={LoginScreen} />
-
-    </Stack.Navigator>
-  );
-}
 
 const Drawer = createDrawerNavigator();
 
@@ -67,7 +56,7 @@ const DrawerNavigator = ({ setLocal }) => (
    >
   <Drawer.Screen name="مرستې" component={IncomeStack} />
   <Drawer.Screen name="مصارف" component={ExpenseStack} />
-  <Drawer.Screen name="داخلي کاروونکي" component={UsersStack} />
+  <Drawer.Screen name="کارونکی" component={AddUserScreen} />
 </Drawer.Navigator>
 );
 

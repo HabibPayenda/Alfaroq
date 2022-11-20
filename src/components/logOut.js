@@ -6,6 +6,7 @@ import colors from '../functions/colors'
 
 export default function Logout({setLocal}) {
   const logout = async () => {
+    await AsyncStorage.removeItem('user')
     await AsyncStorage.removeItem('token')
     setLocal(false)
   }
