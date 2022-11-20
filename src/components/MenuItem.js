@@ -4,7 +4,7 @@ import colors from '../functions/colors'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
-export default function MenuItem({navigation, path, name}) {
+export default function MenuItem({navigation, path, name, iconName}) {
   return (
     <TouchableWithoutFeedback
     onPress={() => navigation.navigate(path)}
@@ -12,7 +12,7 @@ export default function MenuItem({navigation, path, name}) {
     <View style={styles.container}>
     <MaterialCommunityIcons
               style={{ color: colors.darkGray }}
-              name="database-search"
+              name={iconName}
               size={32}
               color="black"
             />
@@ -21,7 +21,6 @@ export default function MenuItem({navigation, path, name}) {
     </TouchableWithoutFeedback>
   )
 }
-
 const styles = StyleSheet.create({
   container: {
     display: 'flex',

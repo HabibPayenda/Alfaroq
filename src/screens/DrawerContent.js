@@ -32,7 +32,7 @@ if(!role) {
 const adminOptions = () => {
   if(role === 1) {
     return (
-      <MenuItem name='کارونکی' path='کارونکی' navigation={navigation} />
+      <MenuItem iconName='account' name='کاروونکي' path='کارونکی' navigation={navigation} />
       )
   }
 }
@@ -46,10 +46,10 @@ const adminOptions = () => {
         <Image style={styles.logo} source={require('./../../assets/logo.png')} />
 
         </View>
-        <MenuItem name='مرستې' path='مرستې' navigation={navigation} />
-        <MenuItem name='مصارف' path='مصارف' navigation={navigation} />
+        <MenuItem iconName='cash-plus' name='مرستې' path='مرستې' navigation={navigation} />
+        <MenuItem iconName='cash-minus' name='لګونې' path='مصارف' navigation={navigation} />
         {adminOptions()}
-        <Logout setLocal={setLocal} />
+        <Logout iconName='logout' setLocal={setLocal} />
       </View>
 
 
@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '100%',
     alignItems: 'center',
+    backgroundColor: colors.light,
   },
   logoContainer: {
     backgroundColor: colors.darkGray,
@@ -72,7 +73,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 10
+    marginBottom: 30
   },
   logo: {
     height: 100,
