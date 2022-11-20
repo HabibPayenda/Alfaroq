@@ -29,8 +29,6 @@ export default function LoginScreen({setLocal}) {
         },
       });
       result.data.token ? setLocal(true) : false;
-      console.log('user is :')
-      console.log(result.data.user)
       await AsyncStorage.setItem('token', result.data.token);
       await AsyncStorage.setItem('userId', JSON.stringify( result.data.user.id));
       await AsyncStorage.setItem('user', JSON.stringify( result.data.user));
