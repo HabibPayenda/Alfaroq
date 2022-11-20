@@ -9,6 +9,8 @@ import { perHeight, perWidth } from '../functions/heigthWidth';
 import colors from '../functions/colors';
 import Alfarooq from '../functions/Alfarooq';
 import Btn from '../components/Btn';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default function IncomeScreen({ navigation }) {
   const [isConnected, setIsConnected] = useState(true);
@@ -19,6 +21,18 @@ export default function IncomeScreen({ navigation }) {
   const [lastPage, setLastPage] = useState(0);
   const [total, setTotal] = useState(0);
   const [etotal, setETotal] = useState(0);
+  const [role, setRoll] = useState(null);
+  const getUser = async () => {
+    let user = await AsyncStorage.getItem('user');
+    user = JSON.parse(user)
+    if(user) {
+      setRoll(user.isAdmin)
+    }
+  }
+
+  useEffect(() => {
+    getUser()
+  }, [role])
 
   const getNetworkStatus = async () => {
     const { isInternetReachable } = await Network.getNetworkStateAsync();
@@ -113,70 +127,95 @@ export default function IncomeScreen({ navigation }) {
     fetchExpensesTotal();
   }, []);
 
-  return (
-    <SafeAreaView>
-      <View style={styles.topView}>
-        <View style={styles.totalExpenseContainer}>
-          <Text style={styles.topViewText}>مجموعه مرستې</Text>
-          <Text style={styles.topViewTextMoney}> {`${total} افغانۍ`}</Text>
-        </View>
-        <View style={styles.currentMoneyContainer}>
-          <Text style={styles.topViewText}>اوسنۍ پیسې</Text>
-          <Text style={styles.topViewTextMoney}> {`${total - etotal} افغانۍ`}</Text>
-        </View>
-        <View style={styles.navigation}>
-          <View style={styles.navigationNums}>
-            <Btn text="1" onClick={fetchFirstData} color={colors.blue} width={perWidth(13)} />
-          </View>
-          <Btn text="Prev" onClick={fetchPrevData} color={colors.yellow} width={perWidth(13)} />
 
-          <View style={styles.navigationNums}>
-            <Text style={styles.curPageNum}> {curPage} </Text>
-          </View>
-          <Btn text="Next" onClick={fetchNextData} width={perWidth(13)} />
-          <View style={styles.navigationNums}>
-            <Btn text={lastPage} onClick={fetchLastData} color={colors.blue} width={perWidth(13)} />
-          </View>
+  const showScreen = () => {
+    if(role === 3) {return(
+      <View style={styles.topViewUser}>
+      <View style={styles.navigationUser}>
+        <View style={styles.navigationNums}>
+          <Btn text="1" onClick={fetchFirstData} color={colors.blue} width={perWidth(13)} />
         </View>
-        <View style={styles.icons}>
-        <TouchableOpacity
-            style={styles.loginIcon}
-            onPress={() => navigation.navigate('Login')}
-          >
-            <MaterialCommunityIcons
-              style={{ color: colors.darkGray }}
-              name="login"
-              size={24}
-              color="black"
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.searchDateIcon}
-            onPress={() => navigation.navigate('IncomeSearchDate')}
-          >
-            <MaterialCommunityIcons
-              style={{ color: colors.light }}
-              name="archive-search"
-              size={24}
-              color="black"
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.searchIcon}
-            onPress={() => navigation.navigate('IncomeSearch')}
-          >
-            <MaterialCommunityIcons
-              style={{ color: colors.light }}
-              name="database-search"
-              size={24}
-              color="black"
-            />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.addIcon} onPress={() => navigation.navigate('AddIncome')}>
-            <Entypo style={{ color: colors.light }} name="add-to-list" size={24} color="black" />
-          </TouchableOpacity>
+        <Btn text="Prev" onClick={fetchPrevData} color={colors.yellow} width={perWidth(13)} />
+
+        <View style={styles.navigationNums}>
+          <Text style={styles.curPageNum}> {curPage} </Text>
+        </View>
+        <Btn text="Next" onClick={fetchNextData} width={perWidth(13)} />
+        <View style={styles.navigationNums}>
+          <Btn text={lastPage} onClick={fetchLastData} color={colors.blue} width={perWidth(13)} />
         </View>
       </View>
+    </View>)
+    } else { return(
+      <View style={styles.topView}>
+      <View style={styles.totalExpenseContainer}>
+        <Text style={styles.topViewText}>مجموعه مرستې</Text>
+        <Text style={styles.topViewTextMoney}> {`${total} افغانۍ`}</Text>
+      </View>
+      <View style={styles.currentMoneyContainer}>
+        <Text style={styles.topViewText}>اوسنۍ پیسې</Text>
+        <Text style={styles.topViewTextMoney}> {`${total - etotal} افغانۍ`}</Text>
+      </View>
+      <View style={styles.navigation}>
+        <View style={styles.navigationNums}>
+          <Btn text="1" onClick={fetchFirstData} color={colors.blue} width={perWidth(13)} />
+        </View>
+        <Btn text="Prev" onClick={fetchPrevData} color={colors.yellow} width={perWidth(13)} />
+
+        <View style={styles.navigationNums}>
+          <Text style={styles.curPageNum}> {curPage} </Text>
+        </View>
+        <Btn text="Next" onClick={fetchNextData} width={perWidth(13)} />
+        <View style={styles.navigationNums}>
+          <Btn text={lastPage} onClick={fetchLastData} color={colors.blue} width={perWidth(13)} />
+        </View>
+      </View>
+      <View style={styles.icons}>
+      <TouchableOpacity
+          style={styles.loginIcon}
+          onPress={() => navigation.navigate('Login')}
+        >
+          <MaterialCommunityIcons
+            style={{ color: colors.darkGray }}
+            name="login"
+            size={24}
+            color="black"
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.searchDateIcon}
+          onPress={() => navigation.navigate('IncomeSearchDate')}
+        >
+          <MaterialCommunityIcons
+            style={{ color: colors.light }}
+            name="archive-search"
+            size={24}
+            color="black"
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.searchIcon}
+          onPress={() => navigation.navigate('IncomeSearch')}
+        >
+          <MaterialCommunityIcons
+            style={{ color: colors.light }}
+            name="database-search"
+            size={24}
+            color="black"
+          />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.addIcon} onPress={() => navigation.navigate('AddIncome')}>
+          <Entypo style={{ color: colors.light }} name="add-to-list" size={24} color="black" />
+        </TouchableOpacity>
+      </View>
+    </View>)
+    }
+  }
+
+
+  return (
+    <SafeAreaView>
+      {showScreen()}
       {!isConnected ? (
         <Text
           style={{
@@ -215,7 +254,11 @@ export default function IncomeScreen({ navigation }) {
           fetchTotal();
           setCurPage(1);
         }}
-        style={{ width: perWidth(100), height: perHeight(50), backgroundColor: colors.light }}
+        style={{
+          width: perWidth(100),
+           height: role === 3 ? perHeight(100) : perHeight(50),
+           marginTop: role === 3 ? perHeight(5) : 0
+          }}
         contentContainerStyle={styles.screen}
       />
     </SafeAreaView>
@@ -223,6 +266,14 @@ export default function IncomeScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  topViewUser: {
+    backgroundColor: colors.darkGray,
+    height: perHeight(10),
+    width: perWidth(100),
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   topView: {
     backgroundColor: colors.darkGray,
     height: perHeight(40),
@@ -265,6 +316,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     backgroundColor: 'white',
     padding: perHeight(1),
+    height: perHeight(100)
   },
   addIcon: {
     fontSize: 30,
@@ -313,6 +365,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: perHeight(10),
     right: perWidth(5),
+  },
+  navigationUser: {
+    display: 'flex',
+    flexDirection: 'row',
   },
   navigation: {
     display: 'flex',
