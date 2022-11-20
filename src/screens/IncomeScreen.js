@@ -171,17 +171,6 @@ export default function IncomeScreen({ navigation }) {
         </View>
       </View>
       <View style={styles.icons}>
-      <TouchableOpacity
-          style={styles.loginIcon}
-          onPress={() => navigation.navigate('Login')}
-        >
-          <MaterialCommunityIcons
-            style={{ color: colors.darkGray }}
-            name="login"
-            size={24}
-            color="black"
-          />
-        </TouchableOpacity>
         <TouchableOpacity
           style={styles.searchDateIcon}
           onPress={() => navigation.navigate('IncomeSearchDate')}
