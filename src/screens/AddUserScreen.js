@@ -4,8 +4,8 @@ import { Picker } from '@react-native-picker/picker';
 
 import Btn from '../components/Btn';
 import colors from '../functions/colors';
-import Alfarooq from '../functions/Alfarooq';
 import { perWidth } from '../functions/heigthWidth';
+import AlfarooqLogin from '../functions/AlfarooqLogin';
 
 export default function AddUserScreen() {
   const [name, setName] = useState('');
@@ -26,7 +26,7 @@ export default function AddUserScreen() {
 
   const handleRegister = async () => {
     try {
-      const result = await Alfarooq.post('/register', {name: name, password: password, isAdmin: isAdmin}, {
+      const result = await AlfarooqLogin.post('/register', {name: name, password: password, isAdmin: isAdmin}, {
         onUploadProgress: (progress) => {
           if (progress.loaded / progress.total === 1) {
             showToast();
@@ -45,9 +45,6 @@ export default function AddUserScreen() {
     }
   };
 
-  const registerUser = async () => {
-    const user = await Alfarooq.post('/register', {name: name, password: password, isAdmin: isAdmin});
-  };
   return (
     <View style={styles.container}>
       <View style={styles.form}>

@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { perWidth } from '../functions/heigthWidth'
 import colors from '../functions/colors'
 import Btn from '../components/Btn'
-import Alfarooq from '../functions/Alfarooq'
+import AlfarooqLogin from '../functions/AlfarooqLogin';
 
 export default function LoginScreen({setLocal}) {
   const [name, setName] = useState('');
@@ -21,7 +21,7 @@ export default function LoginScreen({setLocal}) {
 
   const handleLogin = async () => {
     try {
-      const result = await Alfarooq.post('/login', {name: name, password: password}, {
+      const result = await AlfarooqLogin.post('/login', {name: name, password: password}, {
         onUploadProgress: (progress) => {
           if (progress.loaded / progress.total === 1) {
             showToast();

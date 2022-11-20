@@ -8,6 +8,7 @@ import { perHeight, perWidth } from '../functions/heigthWidth';
 import colors from '../functions/colors';
 import ExpenseCard from '../components/ExpensesCard';
 import Btn from '../components/Btn';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function ExpensesScreen({ navigation }) {
   const [data, setData] = useState([]);
@@ -19,8 +20,8 @@ export default function ExpensesScreen({ navigation }) {
   const [moneyTotal, setMoneyTotal] = useState(0);
   const [role, setRoll] = useState(null);
 const getUser = async () => {
-  const user = AsyncStorage.getItem('user');
-  console.log(user)
+  let user = await AsyncStorage.getItem('user');
+  user = JSON.parse(user)
   if(user) {
     setRoll(user.isAdmin)
   }
@@ -115,9 +116,10 @@ useEffect(() => {
     fetchETotal();
   }, []);
 
+
   return (
     <SafeAreaView>
-      <View style={styles.topView}>
+    <View style={styles.topView}>
         <View style={styles.totalExpenseContainer}>
           <Text style={styles.topViewText}>مجموعه مصارف</Text>
           <Text style={styles.topViewTextMoney}> {`${expenseTotal} افغانۍ`}</Text>
@@ -187,7 +189,12 @@ useEffect(() => {
           fetchETotal();
           setCurPage(1);
         }}
-        style={{ width: perWidth(100), height: perHeight(50) }}
+        style={{
+          width: perWidth(100),
+           height: role === 3 ? perHeight(100) : perHeight(50),
+           marginTop: role === 3 ? perHeight(10) : 0
+          }
+          }
         contentContainerStyle={styles.screen}
       >
         <ExpenseCard />
