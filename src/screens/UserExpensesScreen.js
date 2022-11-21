@@ -10,7 +10,7 @@ import ExpenseCard from '../components/ExpensesCard';
 import Btn from '../components/Btn';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function ExpensesScreen({ navigation }) {
+export default function UserExpensesScreen({ navigation }) {
   const [data, setData] = useState([]);
   const [newData, setNewData] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
@@ -18,7 +18,7 @@ export default function ExpensesScreen({ navigation }) {
   const [lastPage, setLastPage] = useState(0);
   const [expenseTotal, setExpenseTotal] = useState(0);
   const [moneyTotal, setMoneyTotal] = useState(0);
-  const [role, setRoll] = useState(null);
+  const [role, setRoll] = useState(0);
 const getUser = async () => {
   let user = await AsyncStorage.getItem('user');
   user = JSON.parse(user)
@@ -116,11 +116,11 @@ useEffect(() => {
     fetchETotal();
   }, []);
 
-  const showScreen = () => {
-    if(role === 3 ) {
-      return (
-<View style={styles.topViewUser}>
-        <View style={styles.navigationUser}>
+
+  return (
+    <SafeAreaView>
+    <View style={styles.topView}>
+        <View style={styles.navigation}>
           <View style={styles.navigationNums}>
             <Btn text="1" onClick={fetchFirstData} color={colors.blue} width={perWidth(13)} />
           </View>
@@ -134,70 +134,9 @@ useEffect(() => {
             <Btn text={lastPage} onClick={fetchLastData} color={colors.blue} width={perWidth(13)} />
           </View>
         </View>
-        </View>)
-    } else { return(
-      <View style={styles.topView}>
-      <View style={styles.totalExpenseContainer}>
-        <Text style={styles.topViewText}>مجموعه مصارف</Text>
-        <Text style={styles.topViewTextMoney}> {`${expenseTotal} افغانۍ`}</Text>
-      </View>
-      <View style={styles.currentMoneyContainer}>
-        <Text style={styles.topViewText}>اوسنۍ پیسې</Text>
-        <Text style={styles.topViewTextMoney}> {`${moneyTotal - expenseTotal} افغانۍ`}</Text>
-      </View>
-      <View style={styles.navigation}>
-        <View style={styles.navigationNums}>
-          <Btn text="1" onClick={fetchFirstData} color={colors.blue} width={perWidth(13)} />
         </View>
-        <Btn text="Prev" onClick={fetchPrevData} color={colors.yellow} width={perWidth(13)} />
-
-        <View style={styles.navigationNums}>
-          <Text style={styles.curPageNum}> {curPage} </Text>
-        </View>
-        <Btn text="Next" onClick={fetchNextData} width={perWidth(13)} />
-        <View style={styles.navigationNums}>
-          <Btn text={lastPage} onClick={fetchLastData} color={colors.blue} width={perWidth(13)} />
-        </View>
-      </View>
-      <View style={styles.icons}>
-
-        <TouchableOpacity
-          style={styles.searchDateIcon}
-          onPress={() => navigation.navigate('ExpencesSearchDate')}
-        >
-          <MaterialCommunityIcons
-            style={{ color: colors.light }}
-            name="archive-search"
-            size={24}
-            color="black"
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.searchIcon}
-          onPress={() => navigation.navigate('ExpencesSearch')}
-        >
-          <MaterialCommunityIcons
-            style={{ color: colors.light }}
-            name="database-search"
-            size={24}
-            color="black"
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.addIcon}
-          onPress={() => navigation.navigate('Add Expense')}
-        >
-          <Entypo style={{ color: colors.light }} name="add-to-list" size={24} color="black" />
-        </TouchableOpacity>
-      </View>
-    </View>)
-    }
-  }
 
 
-  return (
-    <SafeAreaView>
-      {showScreen()}
       <FlatList
         data={data}
         keyExtractor={(item) => item.id}
@@ -216,7 +155,7 @@ useEffect(() => {
         style={{
           width: perWidth(100),
            height: role === 3 ? perHeight(100) : perHeight(50),
-           marginTop: role === 3 ? perHeight(5) : 0
+           marginTop: role === 3 ? perHeight(10) : 0
           }
           }
         contentContainerStyle={styles.screen}
@@ -229,7 +168,7 @@ useEffect(() => {
 }
 
 const styles = StyleSheet.create({
-  topViewUser: {
+  topView: {
     backgroundColor: colors.darkGray,
     height: perHeight(10),
     width: perWidth(100),
@@ -237,98 +176,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  topView: {
-    backgroundColor: colors.darkGray,
-    height: perHeight(40),
-    width: perWidth(100),
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  totalExpenseContainer: {
-    padding: 10,
-  },
-  currentMoneyContainer: {
-    padding: 10,
-    marginBottom: 40,
-  },
-  topViewText: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: colors.darkGray,
-    marginBottom: 10,
-    backgroundColor: colors.light,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    textAlign: 'center',
-    borderRadius: 5,
-    elevation: 10,
-  },
-  topViewTextMoney: {
-    fontSize: 20,
-    color: colors.light,
-    backgroundColor: colors.red,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    borderRadius: 5,
-    elevation: 10,
-  },
-  screen: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    backgroundColor: colors.white,
-    height: perHeight(100),
-    width: perWidth(100),
-    padding: perHeight(1),
-  },
-  addIcon: {
-    fontSize: 30,
-    color: colors.light,
-    backgroundColor: colors.green,
-    padding: 10,
-    borderRadius: 50,
-    elevation: 10,
-    borderWidth: 1,
-    borderColor: colors.light,
-  },
-  searchIcon: {
-    fontSize: 30,
-    color: colors.light,
-    backgroundColor: colors.yellow,
-    padding: 10,
-    borderRadius: 50,
-    elevation: 10,
-    borderWidth: 1,
-    borderColor: colors.light,
-    marginBottom: 10,
-  },
-  searchDateIcon: {
-    fontSize: 30,
-    color: colors.light,
-    backgroundColor: colors.blue,
-    padding: 10,
-    borderRadius: 50,
-    elevation: 10,
-    borderWidth: 1,
-    borderColor: colors.light,
-    marginBottom: 10,
-  },
-  icons: {
-    position: 'absolute',
-    bottom: perHeight(10),
-    right: perWidth(5),
-  },
-  navigationUser: {
-    display: 'flex',
-    flexDirection: 'row',
-  },
   navigation: {
     display: 'flex',
     flexDirection: 'row',
-    marginTop: 30,
-    position: 'absolute',
-    bottom: 0,
+
   },
   navigationNums: {
     paddingHorizontal: 10,

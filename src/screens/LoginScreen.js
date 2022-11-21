@@ -1,14 +1,52 @@
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, Image, View, TextInput, Button, ToastAndroid, AsyncStorageStatic } from 'react-native'
+import React, {useState} from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function LoginScreen() {
+import { perWidth } from '../functions/heigthWidth'
+import colors from '../functions/colors'
+import Btn from '../components/Btn'
+import AlfarooqLogin from '../functions/AlfarooqLogin';
+
+export default function LoginScreen({setLocal}) {
+  const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
+
+  function showToast() {
+    ToastAndroid.show('صبر وکړئ!', ToastAndroid.SHORT);
+  }
+
+  function showToastError() {
+    ToastAndroid.show('اشتباه!', ToastAndroid.SHORT);
+  }
+
+  const handleLogin = async () => {
+    try {
+      const result = await AlfarooqLogin.post('/login', {name: name, password: password}, {
+        onUploadProgress: (progress) => {
+          if (progress.loaded / progress.total === 1) {
+            showToast();
+          }
+        },
+      });
+      result.data.token ? setLocal(true) : false;
+      await AsyncStorage.setItem('token', result.data.token);
+      await AsyncStorage.setItem('userId', JSON.stringify( result.data.user.id));
+      await AsyncStorage.setItem('user', JSON.stringify( result.data.user));
+    } catch (error) {
+      console.log(error)
+      showToastError();
+      return error;
+    }
+  };
+
+
   return (
     <View style={styles.loginScreen}>
-      <Text style={styles.logo}>الفاروق</Text>
-      <View>
-        <TextInput style={styles.input} placeholder='Email' />
-        <TextInput style={styles.input} placeholder='Password' />
-        <Button title='Login'>Login</Button>
+      <Image style={styles.logo} source={require('../../assets/logo.png')} />
+      <View style={styles.form}>
+        <TextInput style={styles.input} value={name} onChangeText={(text) => setName(text)} placeholder='نوم' />
+        <TextInput style={styles.input} value={password} onChangeText={(text) => setPassword(text)} placeholder='پټه کلیمه' />
+        <Btn color={colors.midGray} text="ننوتل" onClick={() => handleLogin()}/>
       </View>
     </View>
   )
@@ -18,20 +56,28 @@ const styles = StyleSheet.create({
   loginScreen: {
     display: 'flex',
     justifyContent: 'center',
-    
     alignItems: 'center',
     height: '100%'
-   },  
+   },
   logo: {
-    fontSize: 18,
-    color: 'red'
+    height: 100,
+    width: 100,
+    borderRadius: 100,
+    marginBottom: 30
+  },
+  form: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   input: {
-    borderWidth: 1,
-    borderColor: 'black',
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    marginVertical: 10,
-    width: 200,
-  }
+    width: perWidth(80),
+    height: 40,
+    padding: 10,
+    paddingHorizontal: 20,
+    marginBottom: 10,
+    borderRadius: 30,
+    backgroundColor: colors.light,
+    elevation: 10,
+  },
 })
