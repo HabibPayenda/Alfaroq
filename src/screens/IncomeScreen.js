@@ -1,7 +1,8 @@
-import { StyleSheet, Text, SafeAreaView, View, TouchableOpacity, FlatList } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, View, TouchableOpacity, FlatList, Image, ImageBackground } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Entypo } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 import * as Network from 'expo-network';
 
 import IncomeCard from '../components/IncomeCard';
@@ -148,14 +149,30 @@ export default function IncomeScreen({ navigation }) {
         </View>)
     } else {
       return (
-        <View style={styles.topView}>
+        <ImageBackground source={require('../img/bg.jpg')} style={styles.topView}>
           <View style={styles.totalExpenseContainer}>
-            <Text style={styles.topViewText}>مجموعه مرستې</Text>
-            <Text style={styles.topViewTextMoney}> {`${total} افغانۍ`}</Text>
+            <View style={styles.totalExpenseContainerLeft}>
+            <MaterialCommunityIcons
+              style={styles.totalMoneyIcon}
+              name='cash-plus'
+              size={45}
+              color={colors.light}
+            />
+            </View>
+            <View style={styles.totalExpenseContainerRight}>
+              <Text style={styles.topViewText}>مجموعه مرستې</Text>
+              <Text style={styles.topViewTextMoney}> {`${total} افغانۍ`}</Text>
+            </View> 
           </View>
           <View style={styles.currentMoneyContainer}>
+            <View style={styles.currentMoneyContainerLeft}>
+              <FontAwesome5 style={styles.totalMoneyIcon} name="wallet" size={24} color={colors.light} />
+            </View>
+            <View style={styles.currentMoneyContainerRight}>
             <Text style={styles.topViewText}>اوسنۍ پیسې</Text>
             <Text style={styles.topViewTextMoney}> {`${total - etotal} افغانۍ`}</Text>
+            </View>
+            
           </View>
           <View style={styles.navigation}>
             <View style={styles.navigationNums}>
@@ -198,7 +215,7 @@ export default function IncomeScreen({ navigation }) {
               <Entypo style={{ color: colors.light }} name="add-to-list" size={24} color="black" />
             </TouchableOpacity>
           </View>
-        </View>)
+        </ImageBackground>)
     }
   }
 
@@ -273,32 +290,53 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   totalExpenseContainer: {
-    padding: 10,
+    padding: 5,
+    backgroundColor: colors.darkGray,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderTopLeftRadius: 40,
+    borderBottomLeftRadius: 40,
+    borderBottomRightRadius: 7,
+    borderTopRightRadius: 7,
+    paddingRight: 20,
+    paddingLeft: 5,
+    width: 210,
+    marginBottom: 5
   },
   currentMoneyContainer: {
+    padding: 5,
+    backgroundColor: colors.darkGray,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderTopLeftRadius: 40,
+    borderBottomLeftRadius: 40,
+    borderBottomRightRadius: 7,
+    borderTopRightRadius: 7,
+    paddingRight: 20,
+    paddingLeft: 5,
+    width: 210
+  },
+  totalMoneyIcon: {
+    fontSize: 30,
+    marginRight: 15,
+    borderWidth: 1,
+    borderColor: colors.light,
     padding: 10,
-    marginBottom: 40,
+    textAlign: 'center',
+    borderRadius: 30,
+    alignSelf: 'flex-start',
   },
   topViewText: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: colors.darkGray,
-    marginBottom: 10,
-    backgroundColor: colors.light,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    textAlign: 'center',
-    borderRadius: 5,
-    elevation: 10,
+    color: colors.light,
+    fontSize: 18
   },
   topViewTextMoney: {
-    fontSize: 20,
     color: colors.light,
-    backgroundColor: colors.red,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    borderRadius: 5,
-    elevation: 10,
+    textAlign: 'right'
   },
   screen: {
     display: 'flex',
