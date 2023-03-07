@@ -65,6 +65,7 @@ export default function OneItemScreen({ route, navigation }) {
 
   return (
     <View style={styles.container}>
+      <View style={styles.contentContainer}>
       <Text style={styles.title}>د بدلون راوستل</Text>
       <TextInput
         keyboardType="default"
@@ -81,8 +82,11 @@ export default function OneItemScreen({ route, navigation }) {
         }}
         style={styles.input}
       />
-      <Btn color={colors.yellow} onClick={updateIncome} text="بدلون" />
-      <Btn color={colors.red} onClick={deleteIncome} text="حذف" />
+      <View style={styles.btnContainer}>
+        <Btn color={colors.light} textColor={colors.dark} width={80} onClick={updateIncome} text="بدلون" />
+        <Btn color={colors.light} textColor={colors.dark} width={80} onClick={deleteIncome} text="حذف" />
+      </View>
+      </View>
     </View>
   );
 }
@@ -94,13 +98,26 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     height: perHeight(90),
     paddingVertical: 30,
-    backgroundColor: colors.lightGray,
+    backgroundColor: colors.white,
+  },
+  contentContainer: {
+    backgroundColor: colors.darkGray,
+    marginTop: perHeight(10),
+    padding: 10,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 10,
+    borderRadius: 7
   },
   title: {
     fontWeight: 'bold',
     fontSize: 18,
     marginBottom: 20,
-    color: colors.darkGray,
+    color: colors.light,
+    borderColor: colors.light,
+    borderBottomWidth: 1,
+    width: "100%"
   },
   input: {
     width: perWidth(80),
@@ -112,5 +129,12 @@ const styles = StyleSheet.create({
     backgroundColor: colors.light,
     elevation: 10,
   },
+  btnContainer: {
+    display: 'flex',
+    width: 200,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  }
  
 });
