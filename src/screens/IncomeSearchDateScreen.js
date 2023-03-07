@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     paddingVertical: 30,
-    height: perHeight(80),
+    height: '100%',
     width: perWidth(100),
     backgroundColor: colors.lightGray
   },

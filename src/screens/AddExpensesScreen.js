@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    height: perHeight(78),
+    height: '100%',
     paddingVertical: 30,
     backgroundColor: colors.lightGray
   }, 
