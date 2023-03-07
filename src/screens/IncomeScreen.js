@@ -159,7 +159,7 @@ export default function IncomeScreen({ navigation }) {
           </View>
           <View style={styles.navigation}>
             <View style={styles.navigationNums}>
-              <Btn text="1" onClick={fetchFirstData} color={colors.darkGray} width={perWidth(13)} />
+              <Btn text="1" onClick={fetchFirstData} color={colors.darkGray} width={30} height={30} />
             </View>
             <Btn text={<MaterialCommunityIcons name="page-previous" size={24} color={colors.light} />} onClick={fetchPrevData} color={colors.darkGray} width={perWidth(13)} />
 
@@ -168,7 +168,7 @@ export default function IncomeScreen({ navigation }) {
             </View>
             <Btn text={<MaterialCommunityIcons name="page-next" size={24} color={colors.light} />} color={colors.darkGray} onClick={fetchNextData} width={perWidth(13)} />
             <View style={styles.navigationNums}>
-              <Btn text={lastPage} onClick={fetchLastData} color={colors.darkGray} width={perWidth(13)} />
+              <Btn text={lastPage} onClick={fetchLastData} color={colors.darkGray} width={30} height={30} />
             </View>
           </View>
           <View style={styles.icons}>

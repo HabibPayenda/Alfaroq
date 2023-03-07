@@ -3,10 +3,10 @@ import React from 'react'
 import colors from '../functions/colors'
 import { perWidth } from '../functions/heigthWidth'
 
-export default function Btn({onClick, text, color, width }) {
+export default function Btn({onClick, text, color, width, height }) {
   return (
     <TouchableOpacity onPress={onClick}>
-    <View style={[styles.container, {backgroundColor: color ? color : colors.green, width: width ? width : perWidth(40) }]}>
+    <View style={[styles.container, {backgroundColor: color ? color : colors.green, width: width ? width : perWidth(40), height: height ? height : 40 }]}>
       <Text style={styles.title}>{text}</Text>
     </View>
 
