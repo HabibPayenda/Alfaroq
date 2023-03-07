@@ -25,7 +25,7 @@ export default function IncomeScreen({ navigation }) {
   const getUser = async () => {
     let user = await AsyncStorage.getItem('user');
     user = JSON.parse(user)
-    if(user) {
+    if (user) {
       setRoll(user.isAdmin)
     }
   }
@@ -129,75 +129,76 @@ export default function IncomeScreen({ navigation }) {
 
 
   const showScreen = () => {
-    if(role === 3) {return(
-      <View style={styles.topViewUser}>
-      <View style={styles.navigationUser}>
-        <View style={styles.navigationNums}>
-          <Btn text="1" onClick={fetchFirstData} color={colors.blue} width={perWidth(13)} />
-        </View>
-        <Btn text="Prev" onClick={fetchPrevData} color={colors.yellow} width={perWidth(13)} />
+    if (role === 3) {
+      return (
+        <View style={styles.topViewUser}>
+          <View style={styles.navigationUser}>
+            <View style={styles.navigationNums}>
+              <Btn text="1" onClick={fetchFirstData} color={colors.blue} width={perWidth(13)} />
+            </View>
+            <Btn text="Prev" onClick={fetchPrevData} color={colors.yellow} width={perWidth(13)} />
 
-        <View style={styles.navigationNums}>
-          <Text style={styles.curPageNum}> {curPage} </Text>
-        </View>
-        <Btn text="Next" onClick={fetchNextData} width={perWidth(13)} />
-        <View style={styles.navigationNums}>
-          <Btn text={lastPage} onClick={fetchLastData} color={colors.blue} width={perWidth(13)} />
-        </View>
-      </View>
-    </View>)
-    } else { return(
-      <View style={styles.topView}>
-      <View style={styles.totalExpenseContainer}>
-        <Text style={styles.topViewText}>مجموعه مرستې</Text>
-        <Text style={styles.topViewTextMoney}> {`${total} افغانۍ`}</Text>
-      </View>
-      <View style={styles.currentMoneyContainer}>
-        <Text style={styles.topViewText}>اوسنۍ پیسې</Text>
-        <Text style={styles.topViewTextMoney}> {`${total - etotal} افغانۍ`}</Text>
-      </View>
-      <View style={styles.navigation}>
-        <View style={styles.navigationNums}>
-          <Btn text="1" onClick={fetchFirstData} color={colors.blue} width={perWidth(13)} />
-        </View>
-        <Btn text="Prev" onClick={fetchPrevData} color={colors.yellow} width={perWidth(13)} />
+            <View style={styles.navigationNums}>
+              <Text style={styles.curPageNum}> {curPage} </Text>
+            </View>
+            <MaterialCommunityIcons name="page-next" size={24} color="black" />        <View style={styles.navigationNums}>
+              <Btn text={lastPage} onClick={fetchLastData} color={colors.blue} width={perWidth(13)} />
+            </View>
+          </View>
+        </View>)
+    } else {
+      return (
+        <View style={styles.topView}>
+          <View style={styles.totalExpenseContainer}>
+            <Text style={styles.topViewText}>مجموعه مرستې</Text>
+            <Text style={styles.topViewTextMoney}> {`${total} افغانۍ`}</Text>
+          </View>
+          <View style={styles.currentMoneyContainer}>
+            <Text style={styles.topViewText}>اوسنۍ پیسې</Text>
+            <Text style={styles.topViewTextMoney}> {`${total - etotal} افغانۍ`}</Text>
+          </View>
+          <View style={styles.navigation}>
+            <View style={styles.navigationNums}>
+              <Btn text="1" onClick={fetchFirstData} color={colors.darkGray} width={perWidth(13)} />
+            </View>
+            <Btn text={<MaterialCommunityIcons name="page-previous" size={24} color={colors.light} />} onClick={fetchPrevData} color={colors.darkGray} width={perWidth(13)} />
 
-        <View style={styles.navigationNums}>
-          <Text style={styles.curPageNum}> {curPage} </Text>
-        </View>
-        <Btn text="Next" onClick={fetchNextData} width={perWidth(13)} />
-        <View style={styles.navigationNums}>
-          <Btn text={lastPage} onClick={fetchLastData} color={colors.blue} width={perWidth(13)} />
-        </View>
-      </View>
-      <View style={styles.icons}>
-        <TouchableOpacity
-          style={styles.searchDateIcon}
-          onPress={() => navigation.navigate('IncomeSearchDate')}
-        >
-          <MaterialCommunityIcons
-            style={{ color: colors.light }}
-            name="archive-search"
-            size={24}
-            color="black"
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.searchIcon}
-          onPress={() => navigation.navigate('IncomeSearch')}
-        >
-          <MaterialCommunityIcons
-            style={{ color: colors.light }}
-            name="database-search"
-            size={24}
-            color="black"
-          />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.addIcon} onPress={() => navigation.navigate('AddIncome')}>
-          <Entypo style={{ color: colors.light }} name="add-to-list" size={24} color="black" />
-        </TouchableOpacity>
-      </View>
-    </View>)
+            <View style={styles.navigationNums}>
+              <Text style={[styles.curPageNum]}> {curPage} </Text>
+            </View>
+            <Btn text={<MaterialCommunityIcons name="page-next" size={24} color={colors.light} />} color={colors.darkGray} onClick={fetchNextData} width={perWidth(13)} />
+            <View style={styles.navigationNums}>
+              <Btn text={lastPage} onClick={fetchLastData} color={colors.darkGray} width={perWidth(13)} />
+            </View>
+          </View>
+          <View style={styles.icons}>
+            <TouchableOpacity
+              style={styles.searchDateIcon}
+              onPress={() => navigation.navigate('IncomeSearchDate')}
+            >
+              <MaterialCommunityIcons
+                style={{ color: colors.light }}
+                name="archive-search"
+                size={24}
+                color="black"
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.searchIcon}
+              onPress={() => navigation.navigate('IncomeSearch')}
+            >
+              <MaterialCommunityIcons
+                style={{ color: colors.light }}
+                name="database-search"
+                size={24}
+                color="black"
+              />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.addIcon} onPress={() => navigation.navigate('AddIncome')}>
+              <Entypo style={{ color: colors.light }} name="add-to-list" size={24} color="black" />
+            </TouchableOpacity>
+          </View>
+        </View>)
     }
   }
 
@@ -245,9 +246,9 @@ export default function IncomeScreen({ navigation }) {
         }}
         style={{
           width: perWidth(100),
-           height: role === 3 ? perHeight(100) : perHeight(50),
-           marginTop: role === 3 ? perHeight(5) : 0
-          }}
+          height: role === 3 ? perHeight(100) : perHeight(50),
+          marginTop: role === 3 ? perHeight(5) : 0
+        }}
         contentContainerStyle={styles.screen}
       />
     </SafeAreaView>
@@ -364,6 +365,11 @@ const styles = StyleSheet.create({
     marginTop: 30,
     position: 'absolute',
     bottom: 0,
+    backgroundColor: colors.white,
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+    borderBottomColor: colors.gray,
+    borderBottomWidth: 1
   },
   navigationNums: {
     paddingHorizontal: 10,
@@ -374,6 +380,9 @@ const styles = StyleSheet.create({
   curPageNum: {
     color: colors.light,
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: 14,
+    backgroundColor: colors.darkGray,
+    paddingHorizontal: 3,
+    borderRadius: 10
   },
 });
