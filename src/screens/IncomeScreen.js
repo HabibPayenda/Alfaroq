@@ -354,6 +354,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: perHeight(10),
     right: perWidth(5),
+    backgroundColor: colors.white,
+    paddingVertical: 20,
+    paddingHorizontal: 5,
+    borderRadius: 15
   },
   navigationUser: {
     display: 'flex',
