@@ -305,7 +305,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     backgroundColor: 'white',
     padding: perHeight(1),
-    height: perHeight(100)
   },
   addIcon: {
     fontSize: 30,
