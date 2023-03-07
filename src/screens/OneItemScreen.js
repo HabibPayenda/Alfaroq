@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, TextInput, ToastAndroid } from 'react-native';
 import React, { useState } from 'react';
+import { FontAwesome } from '@expo/vector-icons';
 
 import { perHeight, perWidth } from '../functions/heigthWidth';
 import colors from '../functions/colors';
@@ -66,7 +67,9 @@ export default function OneItemScreen({ route, navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.contentContainer}>
-      <Text style={styles.title}>د بدلون راوستل</Text>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>د بدلون راوستل</Text>
+        </View>
       <TextInput
         keyboardType="default"
         value={newName}
@@ -83,8 +86,8 @@ export default function OneItemScreen({ route, navigation }) {
         style={styles.input}
       />
       <View style={styles.btnContainer}>
-        <Btn color={colors.light} textColor={colors.dark} width={80} onClick={updateIncome} text="بدلون" />
-        <Btn color={colors.light} textColor={colors.dark} width={80} onClick={deleteIncome} text="حذف" />
+        <Btn icon={<FontAwesome name="edit" size={24} color={colors.darkGray} />} color={colors.light} textColor={colors.dark} width={80} onClick={updateIncome} text="بدلون" />
+        <Btn icon={<FontAwesome name="remove" size={24} color={colors.darkGray} />} color={colors.light} textColor={colors.dark} width={80} onClick={deleteIncome} text="حذف" />
       </View>
       </View>
     </View>
@@ -99,6 +102,7 @@ const styles = StyleSheet.create({
     height: perHeight(90),
     paddingVertical: 30,
     backgroundColor: colors.white,
+    position: 'relative'
   },
   contentContainer: {
     backgroundColor: colors.darkGray,
@@ -115,9 +119,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginBottom: 20,
     color: colors.light,
-    borderColor: colors.light,
-    borderBottomWidth: 1,
-    width: "100%"
   },
   input: {
     width: perWidth(80),
