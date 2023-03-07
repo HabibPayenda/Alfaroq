@@ -2,7 +2,7 @@ import { StyleSheet, Text, SafeAreaView, View, TouchableOpacity, FlatList, Image
 import React, { useState, useEffect } from 'react';
 import { Entypo } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import * as Network from 'expo-network';
 
 import IncomeCard from '../components/IncomeCard';
@@ -155,7 +155,7 @@ export default function IncomeScreen({ navigation }) {
             <MaterialCommunityIcons
               style={styles.totalMoneyIcon}
               name='cash-plus'
-              size={45}
+              size={30}
               color={colors.light}
             />
             </View>
@@ -166,7 +166,7 @@ export default function IncomeScreen({ navigation }) {
           </View>
           <View style={styles.currentMoneyContainer}>
             <View style={styles.currentMoneyContainerLeft}>
-              <FontAwesome5 style={styles.totalMoneyIcon} name="wallet" size={24} color={colors.light} />
+            <Ionicons  style={styles.totalMoneyIcon} color={colors.light} name="ios-wallet" size={30} />
             </View>
             <View style={styles.currentMoneyContainerRight}>
             <Text style={styles.topViewText}>اوسنۍ پیسې</Text>
@@ -321,7 +321,6 @@ const styles = StyleSheet.create({
     width: 210
   },
   totalMoneyIcon: {
-    fontSize: 30,
     marginRight: 15,
     borderWidth: 1,
     borderColor: colors.light,
