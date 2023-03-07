@@ -159,16 +159,16 @@ export default function IncomeScreen({ navigation }) {
           </View>
           <View style={styles.navigation}>
             <View style={styles.navigationNums}>
-              <Btn text="1" onClick={fetchFirstData} color={colors.darkGray} width={30} height={30} />
+              <Btn borderWidth={1} borderColor={colors.light} text="1" onClick={fetchFirstData} color={colors.darkGray} width={30} height={30} />
             </View>
-            <Btn text={<MaterialCommunityIcons name="page-previous" size={24} color={colors.light} />} onClick={fetchPrevData} color={colors.darkGray} width={perWidth(13)} />
+            <Btn borderWidth={1} borderColor={colors.light} text={<MaterialCommunityIcons name="page-previous" size={24} color={colors.light} />} onClick={fetchPrevData} color={colors.darkGray} width={perWidth(13)} />
 
             <View style={styles.navigationNums}>
               <Text style={[styles.curPageNum]}> {curPage} </Text>
             </View>
-            <Btn text={<MaterialCommunityIcons name="page-next" size={24} color={colors.light} />} color={colors.darkGray} onClick={fetchNextData} width={perWidth(13)} />
+            <Btn borderWidth={1} borderColor={colors.light} text={<MaterialCommunityIcons name="page-next" size={24} color={colors.light} />} color={colors.darkGray} onClick={fetchNextData} width={perWidth(13)} />
             <View style={styles.navigationNums}>
-              <Btn text={lastPage} onClick={fetchLastData} color={colors.darkGray} width={30} height={30} />
+              <Btn borderWidth={1} borderColor={colors.light} text={lastPage} onClick={fetchLastData} color={colors.darkGray} width={30} height={30} />
             </View>
           </View>
           <View style={styles.icons}>
@@ -257,7 +257,7 @@ export default function IncomeScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   topViewUser: {
-    backgroundColor: colors.darkGray,
+    backgroundColor: colors.light,
     height: perHeight(10),
     width: perWidth(100),
     display: 'flex',
@@ -265,7 +265,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   topView: {
-    backgroundColor: colors.darkGray,
+    backgroundColor: colors.light,
     height: perHeight(40),
     width: perWidth(100),
     display: 'flex',
@@ -310,7 +310,7 @@ const styles = StyleSheet.create({
   addIcon: {
     fontSize: 30,
     color: colors.light,
-    backgroundColor: colors.green,
+    backgroundColor: colors.darkGray,
     padding: 10,
     borderRadius: 50,
     elevation: 10,
@@ -320,7 +320,7 @@ const styles = StyleSheet.create({
   searchIcon: {
     fontSize: 30,
     color: colors.light,
-    backgroundColor: colors.yellow,
+    backgroundColor: colors.darkGray,
     padding: 10,
     borderRadius: 50,
     elevation: 10,
@@ -331,7 +331,7 @@ const styles = StyleSheet.create({
   loginIcon: {
     fontSize: 30,
     color: colors.darkGray,
-    backgroundColor: colors.lightGray,
+    backgroundColor: colors.darkGray,
     padding: 10,
     borderRadius: 50,
     elevation: 10,
@@ -342,7 +342,7 @@ const styles = StyleSheet.create({
   searchDateIcon: {
     fontSize: 30,
     color: colors.light,
-    backgroundColor: colors.blue,
+    backgroundColor: colors.darkGray,
     padding: 10,
     borderRadius: 50,
     elevation: 10,
@@ -354,10 +354,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: perHeight(10),
     right: perWidth(5),
-    backgroundColor: colors.white,
-    paddingVertical: 20,
+    backgroundColor: colors.darkGray,
+    paddingVertical: 5,
     paddingHorizontal: 5,
-    borderRadius: 15
+    borderRadius: 15,
   },
   navigationUser: {
     display: 'flex',
@@ -369,7 +369,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
     position: 'absolute',
     bottom: 0,
-    backgroundColor: colors.white,
+    backgroundColor: colors.darkGray,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
     borderBottomColor: colors.gray,
@@ -387,6 +387,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     backgroundColor: colors.darkGray,
     paddingHorizontal: 3,
-    borderRadius: 10
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: colors.light,
+    textAlign: 'center'
   },
 });
