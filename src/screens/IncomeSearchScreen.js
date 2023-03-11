@@ -36,7 +36,7 @@ export default function IncomeSearchScreen() {
       showToastError();
     }
   };
-  
+
   return (
     <View style={styles.container}>
       <View style={styles.contenttContainer} >
@@ -68,13 +68,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     height: perHeight(90),
-    paddingVertical: 30,
     backgroundColor: colors.white,
     position: 'relative'
   },
   contenttContainer: {
     backgroundColor: colors.darkGray,
-    marginTop: perHeight(10),
+    marginTop: perHeight(5),
     padding: 10,
     display: 'flex',
     alignItems: 'center',
