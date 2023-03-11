@@ -39,9 +39,14 @@ export default function IncomeSearchScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>د مرستو لټون</Text>
+      <View style={styles.contenttContainer} >
+        <View style={styles.titleContainer} >
+          <Text style={styles.title}>د مرستو لټون</Text>
+        </View>
       <TextInput placeholder='د مرسته کوونکي نوم د ننه کړئ!' keyboardType='default' style={styles.input} value={name} onChangeText={(text) => setName(text)} />
-      <Btn text="لټون" onClick={searchIncome} />
+      <Btn text="لټون" color={colors.light} textColor={colors.dark} width={80} onClick={searchIncome} />
+      </View>
+
       <FlatList
         data={data}
         keyExtractor={(item) => item.id}
@@ -62,10 +67,26 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-start',
+    height: perHeight(90),
     paddingVertical: 30,
-    height: '100%',
-    width: perWidth(100),
-    backgroundColor: colors.lightGray
+    backgroundColor: colors.white,
+    position: 'relative'
+  },
+  contenttContainer: {
+    backgroundColor: colors.darkGray,
+    marginTop: perHeight(10),
+    padding: 10,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 10,
+    borderRadius: 7
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginBottom: 20,
+    color: colors.light,
   },
   input: {
     width: perWidth(80),
@@ -77,16 +98,11 @@ const styles = StyleSheet.create({
     backgroundColor: colors.light,
     elevation: 10
   },
-  title: {
-    fontWeight: 'bold',
-    fontSize: 18,
-    marginBottom: 20,
-    color: colors.darkGray
-  },
   screen: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-start',
     padding: perHeight(1),
+    backgroundColor: colors.light
   },
 });
