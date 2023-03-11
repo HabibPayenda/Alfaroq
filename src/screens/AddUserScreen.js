@@ -1,6 +1,5 @@
 import { StyleSheet, View, TextInput, ToastAndroid, Modal, Text,TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
-import { Picker } from '@react-native-picker/picker';
 import { AntDesign } from '@expo/vector-icons';
 
 import Btn from '../components/Btn';
@@ -11,7 +10,6 @@ import AlfarooqLogin from '../functions/AlfarooqLogin';
 export default function AddUserScreen() {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
-  const [isAdmin, setIsAdmin] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [userType, setUserType] = useState(3);
 
@@ -28,8 +26,14 @@ export default function AddUserScreen() {
   }
 
   const handleRegister = async () => {
+    const data = {
+      name: name,
+      password: password,
+      isAdmin: userType
+    }
+    console.log(data)
     try {
-      const result = await AlfarooqLogin.post('/register', {name: name, password: password, isAdmin: isAdmin}, {
+      const result = await AlfarooqLogin.post('/Newregister', data, {
         onUploadProgress: (progress) => {
           if (progress.loaded / progress.total === 1) {
             showToast();
@@ -69,7 +73,7 @@ export default function AddUserScreen() {
       />
       <TextInput
         style={styles.input}
-        value={isAdmin}
+        value={password}
         onChangeText={(text) => setPassword(text)}
         placeholder="پټه کلیمه"
       />
@@ -99,14 +103,6 @@ export default function AddUserScreen() {
         </View>
       </Modal>
       
-      <Picker
-        style={styles.select}
-        selectedValue={isAdmin}
-        onValueChange={(itemValue, itemIndex) => setIsAdmin(itemValue)}
-      >
-        <Picker.Item label="کتونکی" value={3} />
-        <Picker.Item label="بدلون راوستونکی" value={2} />
-      </Picker>
       <Btn color={colors.midGray} text="اضافه کول" onClick={() => handleRegister()} />
 
       </View>
