@@ -1,6 +1,8 @@
 import { StyleSheet, View, TextInput, ToastAndroid, Modal, Text,TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
 import { AntDesign } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
+
 
 import Btn from '../components/Btn';
 import colors from '../functions/colors';
@@ -106,10 +108,8 @@ export default function AddUserScreen() {
           </View>
         </View>
       </Modal>
-      
-      <Btn color={colors.midGray} text="اضافه کول" onClick={() => handleRegister()} />
-
        </View>
+       <Btn icon={<FontAwesome5 name="check-circle" size={24} color={colors.darkGray} />} color={colors.light} textColor={colors.dark} width={90} text="ذخیره" onClick={() => handleRegister()} />
       </View>
     </View>
   );
@@ -138,7 +138,10 @@ const styles = StyleSheet.create({
   form: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    borderBottomWidth: 0.5,
+    borderColor: colors.light,
+    marginBottom: 10
   },
   title: {
     fontWeight: 'bold',
@@ -161,7 +164,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    width: perWidth(70)
+    width: perWidth(70),
+    marginBottom: 10
   },
   userTypeText: {
     color: colors.light,
