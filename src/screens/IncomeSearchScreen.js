@@ -44,7 +44,7 @@ export default function IncomeSearchScreen() {
           <Text style={styles.title}>د مرستو لټون</Text>
         </View>
       <TextInput placeholder='د مرسته کوونکي نوم د ننه کړئ!' keyboardType='default' style={styles.input} value={name} onChangeText={(text) => setName(text)} />
-      <Btn icon={<FontAwesome name="search" size={24} color="black" />} text="لټون" color={colors.light} textColor={colors.dark} width={80} onClick={searchIncome} />
+      <Btn icon={<FontAwesome name="search" size={24} color={colors.darkGray} />} text="لټون" color={colors.light} textColor={colors.dark} width={80} onClick={searchIncome} />
       </View>
 
       <FlatList

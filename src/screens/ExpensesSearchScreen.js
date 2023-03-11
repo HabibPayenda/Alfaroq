@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, TextInput, Button, FlatList } from 'react-native';
 import React, { useState, useEffect } from 'react';
+import { FontAwesome } from '@expo/vector-icons';
 
 import { perHeight, perWidth } from '../functions/heigthWidth';
 import Alfarooq from '../functions/Alfarooq';
@@ -41,10 +42,10 @@ export default function ExpensesSearchScreen() {
     <View style={styles.container}>
       <View style={styles.contenttContainer}>
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>د مصارفو لټون</Text>
+          <Text style={styles.title}>د لګونو لټون</Text>
         </View>
-          <TextInput placeholder='د مصرف تاریخ دننه کړئ!' keyboardType='numeric' style={styles.input} value={name} onChangeText={(text) => setName(text)} />
-          <Btn text="لټون" onClick={searchIncome} />
+          <TextInput placeholder='د لګونې تاریخ دننه کړئ!' keyboardType='numeric' style={styles.input} value={name} onChangeText={(text) => setName(text)} />
+          <Btn icon={<FontAwesome name="search" size={24} color={colors.darkGray} />} text="لټون" color={colors.light} textColor={colors.dark} width={80} onClick={searchIncome} />
       </View>
       <FlatList
         data={data}
