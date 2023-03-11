@@ -1,4 +1,4 @@
-import { StyleSheet, Text, ToastAndroid, TextInput, SafeAreaView, Button } from 'react-native';
+import { StyleSheet, Text, ToastAndroid, TextInput, SafeAreaView, Button, View } from 'react-native';
 import React, { useState } from 'react';
 import axios from 'axios';
 
@@ -65,8 +65,11 @@ export default function AddIncomeScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>د نوې مرستې معلومات</Text>
-      <TextInput
+      <View style={styles.contenttContainer}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>د نوې مرستې معلومات</Text>
+        </View>
+        <TextInput
         value={name}
         onChangeText={(text) => setName(text)}
         placeholder="د مرستې کونکي نوم"
@@ -83,6 +86,7 @@ export default function AddIncomeScreen() {
         style={styles.input}
       />
       <Btn onClick={AddIncome} text="ذخیره" />
+      </View>
     </SafeAreaView>
   );
 }
@@ -96,24 +100,31 @@ const styles = StyleSheet.create({
     paddingVertical: 30,
     backgroundColor: colors.lightGray
   },
+  contenttContainer: {
+    backgroundColor: colors.darkGray,
+    marginTop: perHeight(5),
+    padding: 10,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 10,
+    borderRadius: 7,
+    marginBottom: perHeight(1)
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginBottom: 20,
+    color: colors.light,
+  },
   input: {
     width: perWidth(80),
     height: 40,
     padding: 10,
     paddingHorizontal: 20,
     marginBottom: 10,
-    borderRadius: 30,
-    backgroundColor: colors.light,
+    borderRadius: 5,
+    backgroundColor: colors.white,
     elevation: 10
   },
-  title: {
-    fontWeight: 'bold',
-    fontSize: 18,
-    marginBottom: 20,
-    color: colors.darkGray
-  },
-  btn: {
-    backgroundColor: colors.green,
-    width: perWidth(30)
-  }
 });
