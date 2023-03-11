@@ -1,6 +1,6 @@
 import { StyleSheet, Text, ToastAndroid, TextInput, SafeAreaView, Button, View } from 'react-native';
 import React, { useState } from 'react';
-import axios from 'axios';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 import { perHeight, perWidth } from '../functions/heigthWidth';
 import colors from '../functions/colors';
@@ -85,7 +85,7 @@ export default function AddIncomeScreen() {
         placeholder="د مرستې مقدار په افغانیو"
         style={styles.input}
       />
-      <Btn onClick={AddIncome} text="ذخیره" />
+      <Btn icon={<FontAwesome5 name="check-circle" size={24} color={colors.darkGray} />} onClick={AddIncome} text="ذخیره" color={colors.light} textColor={colors.dark} width={90} />
       </View>
     </SafeAreaView>
   );
