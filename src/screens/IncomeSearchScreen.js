@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, TextInput, Button, FlatList } from 'react-native';
 import React, { useState, useEffect } from 'react';
+import { FontAwesome } from '@expo/vector-icons';
 
 import { perHeight, perWidth } from '../functions/heigthWidth';
 import Alfarooq from '../functions/Alfarooq';
@@ -35,8 +36,7 @@ export default function IncomeSearchScreen() {
       showToastError();
     }
   };
-
-
+  
   return (
     <View style={styles.container}>
       <View style={styles.contenttContainer} >
@@ -44,7 +44,7 @@ export default function IncomeSearchScreen() {
           <Text style={styles.title}>د مرستو لټون</Text>
         </View>
       <TextInput placeholder='د مرسته کوونکي نوم د ننه کړئ!' keyboardType='default' style={styles.input} value={name} onChangeText={(text) => setName(text)} />
-      <Btn text="لټون" color={colors.light} textColor={colors.dark} width={80} onClick={searchIncome} />
+      <Btn icon={<FontAwesome name="search" size={24} color="black" />} text="لټون" color={colors.light} textColor={colors.dark} width={80} onClick={searchIncome} />
       </View>
 
       <FlatList
@@ -80,7 +80,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     elevation: 10,
-    borderRadius: 7
+    borderRadius: 7,
+    marginBottom: perHeight(1)
   },
   title: {
     fontWeight: 'bold',
@@ -103,6 +104,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     padding: perHeight(1),
-    backgroundColor: colors.light
   },
 });
