@@ -49,7 +49,7 @@ export default function ExpensesSearchDateScreen() {
     <View style={styles.container}>
       <View style={styles.contenttContainer}>
         <View style={styles.titleContianer}>
-          <Text style={styles.title}>د مصارفو لټون د نېټو په مرسته</Text>
+          <Text style={styles.title}>د لګونو لټون د نېټو په مرسته</Text>
         </View>
           <TextInput keyboardType="number-pad" placeholder='لومړۍ نېټه د ننه کړئ!' style={styles.input} value={dateOne} onChangeText={(text) => setDateOne(text)} />
           <TextInput keyboardType="number-pad" placeholder='دوهمه نېټه د ننه کړئ!' style={styles.input} value={dateTwo} onChangeText={(text) => setDateTwo(text)} />

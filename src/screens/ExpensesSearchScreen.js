@@ -39,9 +39,13 @@ export default function ExpensesSearchScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>د مصارفو لټون</Text>
-      <TextInput placeholder='د مصرف تاریخ دننه کړئ!' keyboardType='numeric' style={styles.input} value={name} onChangeText={(text) => setName(text)} />
-      <Btn text="لټون" onClick={searchIncome} />
+      <View style={styles.contenttContainer}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>د مصارفو لټون</Text>
+        </View>
+          <TextInput placeholder='د مصرف تاریخ دننه کړئ!' keyboardType='numeric' style={styles.input} value={name} onChangeText={(text) => setName(text)} />
+          <Btn text="لټون" onClick={searchIncome} />
+      </View>
       <FlatList
         data={data}
         keyExtractor={(item) => item.discription}
@@ -62,10 +66,26 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    paddingVertical: 30,
-    height: '100%',
-    width: perWidth(100),
-    backgroundColor: colors.lightGray
+    height: perHeight(90),
+    backgroundColor: colors.white,
+    position: 'relative'
+  },
+  contenttContainer: {
+    backgroundColor: colors.darkGray,
+    marginTop: perHeight(5),
+    padding: 10,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 10,
+    borderRadius: 7,
+    marginBottom: perHeight(1)
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginBottom: 20,
+    color: colors.light,
   },
   input: {
     width: perWidth(80),
@@ -73,14 +93,9 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingHorizontal: 20,
     marginBottom: 10,
-    borderRadius: 30,
-    backgroundColor: colors.light,
+    borderRadius: 5,
+    backgroundColor: colors.white,
     elevation: 10
-  },
-  title: {
-    fontWeight: 'bold',
-    fontSize: 18,
-    marginBottom: 20,
   },
   screen: {
     display: 'flex',
