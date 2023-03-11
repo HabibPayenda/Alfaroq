@@ -1,4 +1,4 @@
-import { StyleSheet, Text, ToastAndroid, TextInput, SafeAreaView, Button } from 'react-native'
+import { StyleSheet, Text, ToastAndroid, TextInput, SafeAreaView, Button, View } from 'react-native'
 import React, {useState} from 'react'
 
 import Alfarooq from '../functions/Alfarooq'
@@ -63,13 +63,17 @@ export default function AddExpenseScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>د نوي مصرف معلومات</Text>
-      <TextInput keyboardType='number-pad' value={money} onChangeText={ (text) => {
-         const newValu = changeNumbers(text);
-         setMoney(newValu);
-      } } placeholder='د مصرف مقدار په افغانیو' style={styles.input} />
-      <TextInput value={desc} onChangeText={(text) => setDesc(text)} placeholder='د مصرف کولو وجه' style={styles.inputArea} />
-      <Btn text='ذخیره' onClick={AddExpense} />
+      <View style={styles.contenttContainer}>
+        <View style={styles.titleContainer}>
+           <Text style={styles.title}>د نوي لګونې معلومات</Text>
+        </View>
+          <TextInput keyboardType='number-pad' value={money} onChangeText={ (text) => {
+            const newValu = changeNumbers(text);
+            setMoney(newValu);
+          } } placeholder='د لګونې مقدار په افغانیو' style={styles.input} />
+          <TextInput value={desc} onChangeText={(text) => setDesc(text)} placeholder='د لګونې معلومات' style={styles.inputArea} />
+          <Btn text='ذخیره' onClick={AddExpense} />
+      </View>
     </SafeAreaView>
   )
 }
@@ -82,32 +86,43 @@ const styles = StyleSheet.create({
     height: '100%',
     paddingVertical: 30,
     backgroundColor: colors.lightGray
-  }, 
+  },
+  contenttContainer: {
+    backgroundColor: colors.darkGray,
+    marginTop: perHeight(5),
+    padding: 10,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 10,
+    borderRadius: 7,
+    marginBottom: perHeight(1)
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginBottom: 20,
+    color: colors.light,
+  },
   input: {
     width: perWidth(80),
     height: 40,
     padding: 10,
     paddingHorizontal: 20,
     marginBottom: 10,
-    borderRadius: 30,
-    backgroundColor: colors.light,
+    borderRadius: 5,
+    backgroundColor: colors.white,
     elevation: 10
   },
   inputArea: {
     width: perWidth(80),
-    height: 100,
+    height: 80,
     padding: 10,
     paddingHorizontal: 20,
     marginBottom: 10,
-    borderRadius: 20,
-    backgroundColor: colors.light,
+    borderRadius: 5,
+    backgroundColor: colors.white,
     elevation: 10,
-    textAlign: 'right',
     textAlignVertical: 'top'
-  },
-  title: {
-    fontWeight: 'bold',
-    fontSize: 18,
-    marginBottom: 20
-  },
+  }
 })
