@@ -46,11 +46,15 @@ export default function ExpensesSearchDateScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>د مصارفو لټون د نېټو په مرسته</Text>
-      <TextInput keyboardType="number-pad" placeholder='لومړۍ نېټه د ننه کړئ!' style={styles.input} value={dateOne} onChangeText={(text) => setDateOne(text)} />
-      <TextInput keyboardType="number-pad" placeholder='دوهمه نېټه د ننه کړئ!' style={styles.input} value={dateTwo} onChangeText={(text) => setDateTwo(text)} />
-      <Btn text="لټون" onClick={searchIncome} />
-      <Text style={styles.title}> {betweenDates ? `${betweenDates} افغانۍ` : ''} </Text> 
+      <View style={styles.contenttContainer}>
+        <View style={styles.titleContianer}>
+          <Text style={styles.title}>د مصارفو لټون د نېټو په مرسته</Text>
+        </View>
+          <TextInput keyboardType="number-pad" placeholder='لومړۍ نېټه د ننه کړئ!' style={styles.input} value={dateOne} onChangeText={(text) => setDateOne(text)} />
+          <TextInput keyboardType="number-pad" placeholder='دوهمه نېټه د ننه کړئ!' style={styles.input} value={dateTwo} onChangeText={(text) => setDateTwo(text)} />
+          <Btn text="لټون" onClick={searchIncome} />
+          <Text style={[styles.title, {marginBottom: 0, color: colors.white}]}> {betweenDates ? `${betweenDates} افغانۍ` : '0 افغانۍ'} </Text> 
+      </View>
 
       <FlatList
         data={data}
@@ -72,10 +76,26 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    paddingVertical: 30,
-    height: '100%',
-    width: perWidth(100),
-    backgroundColor: colors.lightGray
+    height: perHeight(90),
+    backgroundColor: colors.white,
+    position: 'relative'
+  },
+  contenttContainer: {
+    backgroundColor: colors.darkGray,
+    marginTop: perHeight(5),
+    padding: 10,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 10,
+    borderRadius: 7,
+    marginBottom: perHeight(1)
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginBottom: 20,
+    color: colors.light,
   },
   input: {
     width: perWidth(80),
@@ -83,15 +103,9 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingHorizontal: 20,
     marginBottom: 10,
-    borderRadius: 30,
-    backgroundColor: colors.light,
+    borderRadius: 5,
+    backgroundColor: colors.white,
     elevation: 10
-  },
-  title: {
-    fontWeight: 'bold',
-    fontSize: 18,
-    marginBottom: 20,
-    color: colors.darkGray
   },
   screen: {
     display: 'flex',
