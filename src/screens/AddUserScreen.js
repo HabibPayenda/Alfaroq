@@ -1,12 +1,12 @@
-import { StyleSheet, View, TextInput, ToastAndroid, Modal, Text } from 'react-native';
+import { StyleSheet, View, TextInput, ToastAndroid, Modal, Text,TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
 import { Picker } from '@react-native-picker/picker';
+import { AntDesign } from '@expo/vector-icons';
 
 import Btn from '../components/Btn';
 import colors from '../functions/colors';
 import { perHeight, perWidth } from '../functions/heigthWidth';
 import AlfarooqLogin from '../functions/AlfarooqLogin';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function AddUserScreen() {
   const [name, setName] = useState('');
@@ -65,7 +65,7 @@ export default function AddUserScreen() {
       />
       <View style={styles.selectUserTypeContainer}>
         <Text>{userType === 2 ? 'کاروونکی' : 'کتونکی'}</Text>
-        <Btn onClick={() => setShowModal(true)} text="د کاروونکي بڼه وټاکې!" />
+        <Btn color={colors.light} textColor={colors.dark} width={180} onClick={() => setShowModal(true)} text="د کاروونکي بڼه وټاکئ!" />
       </View>
 
       <Modal
@@ -76,8 +76,15 @@ export default function AddUserScreen() {
       >
         <View style={styles.modal}>
           <View style={styles.modalContent}>
-            <Btn color={colors.light} textColor={colors.dark} width={90} text="کاروونکی" />
-            <Btn color={colors.light} textColor={colors.dark} width={90} text="کتونکی" />
+            <View style={styles.modalContentTop}>
+              <TouchableOpacity onPress={() => setShowModal(false)}>
+                 <AntDesign name="closecircleo" size={24} color={colors.light} />
+              </TouchableOpacity>
+            </View>
+            <View style={styles.modalContentBottom}>
+              <Btn color={colors.light} textColor={colors.dark} width={90} text="کاروونکی" />
+              <Btn color={colors.light} textColor={colors.dark} width={90} text="کتونکی" />
+            </View>
           </View>
         </View>
       </Modal>
@@ -136,8 +143,13 @@ const styles = StyleSheet.create({
   modalContent: {
     backgroundColor: colors.darkGray,
     padding: 15, 
-    paddingHorizontal: 40,
     borderRadius: 5
+  },
+  modalContentTop: {
+    alignItems: 'flex-end'
+  },
+  modalContentBottom: {
+    paddingHorizontal: 40
   },
   select: {
     width: perWidth(80),
