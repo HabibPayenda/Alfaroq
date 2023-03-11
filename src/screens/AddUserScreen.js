@@ -64,7 +64,11 @@ export default function AddUserScreen() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.form}>
+      <View style={styles.contenttContainer}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>د نوي کاروونکي اضافه کول</Text>
+        </View>
+        <View style={styles.form}>
       <TextInput
         style={styles.input}
         value={name}
@@ -78,7 +82,7 @@ export default function AddUserScreen() {
         placeholder="پټه کلیمه"
       />
       <View style={styles.selectUserTypeContainer}>
-        <Text>{userType === 2 ? 'کاروونکی' : 'کتونکی'}</Text>
+        <Text style={styles.userTypeText}>{userType === 2 ? 'کاروونکی' : 'کتونکی'}</Text>
         <Btn color={colors.light} textColor={colors.dark} width={180} onClick={() => setShowModal(true)} text="د کاروونکي بڼه وټاکئ!" />
       </View>
 
@@ -105,6 +109,7 @@ export default function AddUserScreen() {
       
       <Btn color={colors.midGray} text="اضافه کول" onClick={() => handleRegister()} />
 
+       </View>
       </View>
     </View>
   );
@@ -113,14 +118,33 @@ export default function AddUserScreen() {
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    justifyContent: 'center',
     alignItems: 'center',
-    height: '100%'
-   },
+    justifyContent: 'flex-start',
+    height: '100%',
+    paddingVertical: 30,
+    backgroundColor: colors.lightGray
+  },
+  contenttContainer: {
+    backgroundColor: colors.darkGray,
+    marginTop: perHeight(5),
+    padding: 10,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 10,
+    borderRadius: 7,
+    marginBottom: perHeight(1)
+  },
   form: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginBottom: 20,
+    color: colors.light,
   },
   input: {
     width: perWidth(80),
@@ -128,9 +152,9 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingHorizontal: 20,
     marginBottom: 10,
-    borderRadius: 30,
-    backgroundColor: colors.light,
-    elevation: 10,
+    borderRadius: 5,
+    backgroundColor: colors.white,
+    elevation: 10
   },
   selectUserTypeContainer: {
     display: 'flex',
@@ -138,6 +162,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     width: perWidth(70)
+  },
+  userTypeText: {
+    color: colors.light,
+    fontSize: 16,
+    fontWeight: 'bold'
   },
   modal: {
     width: perWidth(100),
@@ -157,9 +186,5 @@ const styles = StyleSheet.create({
   modalContentBottom: {
     paddingHorizontal: 40
   },
-  select: {
-    width: perWidth(80),
-    backgroundColor: colors.light,
-    elevation: 10,
-  },
+
 });
