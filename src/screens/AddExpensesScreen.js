@@ -1,5 +1,6 @@
 import { StyleSheet, Text, ToastAndroid, TextInput, SafeAreaView, Button, View } from 'react-native'
-import React, {useState} from 'react'
+import React, {useState} from 'react';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 import Alfarooq from '../functions/Alfarooq'
 import { perHeight, perWidth } from '../functions/heigthWidth'
@@ -65,14 +66,14 @@ export default function AddExpenseScreen() {
     <SafeAreaView style={styles.container}>
       <View style={styles.contenttContainer}>
         <View style={styles.titleContainer}>
-           <Text style={styles.title}>د نوي لګونې معلومات</Text>
+           <Text style={styles.title}>د نوې لګونې معلومات</Text>
         </View>
           <TextInput keyboardType='number-pad' value={money} onChangeText={ (text) => {
             const newValu = changeNumbers(text);
             setMoney(newValu);
           } } placeholder='د لګونې مقدار په افغانیو' style={styles.input} />
           <TextInput value={desc} onChangeText={(text) => setDesc(text)} placeholder='د لګونې معلومات' style={styles.inputArea} />
-          <Btn text='ذخیره' onClick={AddExpense} />
+          <Btn icon={<FontAwesome5 name="check-circle" size={24} color={colors.darkGray} />}  text="ذخیره" color={colors.light} textColor={colors.dark} width={90} onClick={AddExpense} />
       </View>
     </SafeAreaView>
   )
