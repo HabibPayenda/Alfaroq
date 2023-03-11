@@ -1,5 +1,7 @@
 import { StyleSheet, Text, View, TextInput, Button, FlatList } from 'react-native';
 import React, { useState, useEffect } from 'react';
+import { FontAwesome } from '@expo/vector-icons';
+
 
 import { perHeight, perWidth } from '../functions/heigthWidth';
 import Alfarooq from '../functions/Alfarooq';
@@ -52,8 +54,8 @@ export default function IncomeSearchDateScreen() {
         </View>
           <TextInput keyboardType="number-pad" placeholder='لومړۍ نېټه د ننه کړئ!' style={styles.input} value={dateOne} onChangeText={(text) => setDateOne(text)} />
           <TextInput keyboardType="number-pad" placeholder='دوهمه نېټه د ننه کړئ!' style={styles.input} value={dateTwo} onChangeText={(text) => setDateTwo(text)} />
-          <Btn text="لټون" onClick={searchIncome} />
-          <Text style={styles.title}> {betweenDates ? `${betweenDates} افغانۍ` : ''} </Text> 
+          <Btn icon={<FontAwesome name="search" size={24} color="black" />} text="لټون" color={colors.light} textColor={colors.dark} width={80} onClick={searchIncome} />
+          <Text style={[styles.title, {marginBottom: 0, color: colors.white}]}> {betweenDates ? `${betweenDates} افغانۍ` : '0 افغانۍ'} </Text> 
       </View> 
       <FlatList
         data={data}
