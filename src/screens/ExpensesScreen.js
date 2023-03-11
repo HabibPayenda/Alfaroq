@@ -1,7 +1,9 @@
-import { StyleSheet, Text, SafeAreaView, View, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, View, FlatList, TouchableOpacity, ImageBackground } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Entypo } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
+
 
 import Alfarooq from '../functions/Alfarooq';
 import { perHeight, perWidth } from '../functions/heigthWidth';
@@ -135,28 +137,44 @@ useEffect(() => {
           </View>
         </View>
         </View>)
-    } else { return(
-      <View style={styles.topView}>
+    } else { 
+      return(
+        <ImageBackground source={require('../img/bg.jpg')} style={styles.topView}>
       <View style={styles.totalExpenseContainer}>
-        <Text style={styles.topViewText}>مجموعه مصارف</Text>
-        <Text style={styles.topViewTextMoney}> {`${expenseTotal} افغانۍ`}</Text>
+        <View style={styles.totalExpenseContainerLeft}>
+          <MaterialCommunityIcons
+                style={styles.totalMoneyIcon}
+                name='cash-plus'
+                size={30}
+                color={colors.light}
+              />
+        </View>
+        <View style={styles.totalExpenseContainerRight}>
+          <Text style={styles.topViewText}>ټولې لګونې </Text>
+          <Text style={styles.topViewTextMoney}> {`${expenseTotal} افغانۍ`}</Text>
+        </View>
       </View>
       <View style={styles.currentMoneyContainer}>
-        <Text style={styles.topViewText}>اوسنۍ پیسې</Text>
-        <Text style={styles.topViewTextMoney}> {`${moneyTotal - expenseTotal} افغانۍ`}</Text>
+        <View style={styles.currentMoneyContainerLeft}>
+        <Ionicons  style={styles.totalMoneyIcon} color={colors.light} name="ios-wallet" size={30} />
+        </View>
+        <View style={styles.currentMoneyContainerRight}>
+          <Text style={styles.topViewText}>اوسنۍ پیسې</Text>
+          <Text style={styles.topViewTextMoney}> {`${moneyTotal - expenseTotal} افغانۍ`}</Text>
+        </View>
       </View>
       <View style={styles.navigation}>
         <View style={styles.navigationNums}>
-          <Btn text="1" onClick={fetchFirstData} color={colors.blue} width={perWidth(13)} />
+          <Btn borderWidth={1} borderColor={colors.light} textColor={colors.light} text="1" onClick={fetchFirstData} color={colors.darkGray} width={30} height={30} />
         </View>
-        <Btn text="Prev" onClick={fetchPrevData} color={colors.yellow} width={perWidth(13)} />
+        <Btn borderWidth={1} borderColor={colors.light} text={<MaterialCommunityIcons name="page-previous" size={24} color={colors.light} />} onClick={fetchPrevData} color={colors.darkGray} width={perWidth(13)} />
 
         <View style={styles.navigationNums}>
           <Text style={styles.curPageNum}> {curPage} </Text>
         </View>
-        <Btn text="Next" onClick={fetchNextData} width={perWidth(13)} />
+        <Btn borderWidth={1} borderColor={colors.light} text={<MaterialCommunityIcons name="page-next" size={24} color={colors.light} />} color={colors.darkGray} onClick={fetchNextData} width={perWidth(13)} />
         <View style={styles.navigationNums}>
-          <Btn text={lastPage} onClick={fetchLastData} color={colors.blue} width={perWidth(13)} />
+          <Btn  borderWidth={1} borderColor={colors.light} textColor={colors.light} text={lastPage} onClick={fetchLastData} color={colors.darkGray} width={30} height={30} />
         </View>
       </View>
       <View style={styles.icons}>
@@ -190,7 +208,7 @@ useEffect(() => {
           <Entypo style={{ color: colors.light }} name="add-to-list" size={24} color="black" />
         </TouchableOpacity>
       </View>
-    </View>)
+    </ImageBackground>)
     }
   }
 
@@ -230,7 +248,7 @@ useEffect(() => {
 
 const styles = StyleSheet.create({
   topViewUser: {
-    backgroundColor: colors.darkGray,
+    backgroundColor: colors.light,
     height: perHeight(10),
     width: perWidth(100),
     display: 'flex',
@@ -238,7 +256,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   topView: {
-    backgroundColor: colors.darkGray,
+    backgroundColor: colors.light,
     height: perHeight(40),
     width: perWidth(100),
     display: 'flex',
@@ -246,45 +264,64 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   totalExpenseContainer: {
-    padding: 10,
+    padding: 5,
+    backgroundColor: colors.darkGray,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderTopLeftRadius: 40,
+    borderBottomLeftRadius: 40,
+    borderBottomRightRadius: 7,
+    borderTopRightRadius: 7,
+    paddingRight: 20,
+    paddingLeft: 5,
+    width: 210,
+    marginBottom: 5
   },
   currentMoneyContainer: {
+    padding: 5,
+    backgroundColor: colors.darkGray,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderTopLeftRadius: 40,
+    borderBottomLeftRadius: 40,
+    borderBottomRightRadius: 7,
+    borderTopRightRadius: 7,
+    paddingRight: 20,
+    paddingLeft: 5,
+    width: 210
+  },
+  totalMoneyIcon: {
+    marginRight: 15,
+    borderWidth: 1,
+    borderColor: colors.light,
     padding: 10,
-    marginBottom: 40,
+    textAlign: 'center',
+    borderRadius: 30,
+    alignSelf: 'flex-start',
   },
   topViewText: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: colors.darkGray,
-    marginBottom: 10,
-    backgroundColor: colors.light,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    textAlign: 'center',
-    borderRadius: 5,
-    elevation: 10,
+    color: colors.light,
+    fontSize: 18
   },
   topViewTextMoney: {
-    fontSize: 20,
     color: colors.light,
-    backgroundColor: colors.red,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    borderRadius: 5,
-    elevation: 10,
+    textAlign: 'right'
   },
   screen: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    backgroundColor: colors.white,
-    width: perWidth(100),
+    backgroundColor: 'white',
     padding: perHeight(1),
   },
   addIcon: {
     fontSize: 30,
     color: colors.light,
-    backgroundColor: colors.green,
+    backgroundColor: colors.darkGray,
     padding: 10,
     borderRadius: 50,
     elevation: 10,
@@ -294,7 +331,7 @@ const styles = StyleSheet.create({
   searchIcon: {
     fontSize: 30,
     color: colors.light,
-    backgroundColor: colors.yellow,
+    backgroundColor: colors.darkGray,
     padding: 10,
     borderRadius: 50,
     elevation: 10,
@@ -302,10 +339,21 @@ const styles = StyleSheet.create({
     borderColor: colors.light,
     marginBottom: 10,
   },
+  loginIcon: {
+    fontSize: 30,
+    color: colors.darkGray,
+    backgroundColor: colors.darkGray,
+    padding: 10,
+    borderRadius: 50,
+    elevation: 10,
+    borderWidth: 1,
+    borderColor: colors.light,
+    marginBottom: 15,
+  },
   searchDateIcon: {
     fontSize: 30,
     color: colors.light,
-    backgroundColor: colors.blue,
+    backgroundColor: colors.darkGray,
     padding: 10,
     borderRadius: 50,
     elevation: 10,
@@ -317,6 +365,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: perHeight(10),
     right: perWidth(5),
+    backgroundColor: colors.darkGray,
+    paddingVertical: 5,
+    paddingHorizontal: 5,
+    borderRadius: 15,
   },
   navigationUser: {
     display: 'flex',
@@ -328,6 +380,11 @@ const styles = StyleSheet.create({
     marginTop: 30,
     position: 'absolute',
     bottom: 0,
+    backgroundColor: colors.darkGray,
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+    borderBottomColor: colors.gray,
+    borderBottomWidth: 1
   },
   navigationNums: {
     paddingHorizontal: 10,
@@ -338,6 +395,12 @@ const styles = StyleSheet.create({
   curPageNum: {
     color: colors.light,
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: 14,
+    backgroundColor: colors.darkGray,
+    paddingHorizontal: 3,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: colors.light,
+    textAlign: 'center'
   },
 });
