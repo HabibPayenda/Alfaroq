@@ -48,6 +48,16 @@ export default function AddUserScreen() {
     }
   };
 
+  const setViewer = () => {
+    setUserType(3);
+    setShowModal(false);
+  }
+
+  const setUser = () => {
+    setUserType(2);
+    setShowModal(false);
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.form}>
@@ -82,8 +92,8 @@ export default function AddUserScreen() {
               </TouchableOpacity>
             </View>
             <View style={styles.modalContentBottom}>
-              <Btn color={colors.light} textColor={colors.dark} width={90} text="کاروونکی" />
-              <Btn color={colors.light} textColor={colors.dark} width={90} text="کتونکی" />
+              <Btn color={colors.light} textColor={colors.dark} width={90} text="کاروونکی" onClick={() => setUser()} />
+              <Btn color={colors.light} textColor={colors.dark} width={90} text="کتونکی" onClick={() => setViewer()}/>
             </View>
           </View>
         </View>
