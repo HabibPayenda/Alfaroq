@@ -174,15 +174,19 @@ const styles = StyleSheet.create({
   },
   modal: {
     width: perWidth(100),
-    height: perHeight(100),
+    height: perHeight(80),
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    marginTop: perHeight(20)
   },
   modalContent: {
     backgroundColor: colors.darkGray,
     padding: 15, 
-    borderRadius: 5
+    borderRadius: 5,
+    borderColor: colors.light,
+    borderWidth: 1,
+    elevation: 10
   },
   modalContentTop: {
     alignItems: 'flex-end'
