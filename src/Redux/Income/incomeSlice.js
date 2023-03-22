@@ -50,6 +50,17 @@ export const fetchPageWithUrl = createAsyncThunk('incomes/fetchPageWithUrl', asy
   }
 });
 
+export const fetchPageWithPageNumber = createAsyncThunk('incomes/fetchPageWithPageNumber', async (pageNumber) => {
+ // Code 
+  try {
+    const result = await Alfarooq.get(`/income?page=${number}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+
 
 const initialState = {
   incomes: [],
