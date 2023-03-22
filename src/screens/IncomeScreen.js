@@ -43,10 +43,11 @@ export default function IncomeScreen({ navigation }) {
   // loading: 'idle',
 
   const dispatch = useDispatch();
-  const { totalIncome, prevPageUrl, nextPageUrl, incomes, currPage, lastPage, loading } = useSelector((state) => state.incomeSlice);
-
+  const { totalIncome, prevPageUrl, nextPageUrl, incomes, currPage, lastPage, firstPage, loading } = useSelector((state) => state.incomeSlice);
 
   console.log("total income is ", totalIncome)
+  console.log( "prev", prevPageUrl);
+  console.log("next", nextPageUrl);
 
   useEffect(() => {
     dispatch(getTotalIncome());

@@ -40,10 +40,22 @@ export const removeIncome = createAsyncThunk('incomes/removeIncome', async (id) 
  // Code 
 });
 
+export const fetchPageWithUrl = createAsyncThunk('incomes/fetchPageWithUrl', async (url) => {
+ // Code 
+  try {
+    const response = await Alfarooq.get(url);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+
 const initialState = {
   incomes: [],
   currPage: 0,
   lastPage: 0,
+  firstPage: 1,
   nextPageUrl: '',
   prevPageUrl: '',
   totalIncome: 0,
@@ -62,8 +74,19 @@ export const incomeSlice = createSlice({
       state.currPage = action.payload.current_page;
       state.lastPage = action.payload.last_page;
       state.incomes = action.payload.data;
-      state.nextPageUrl = action.payload.next_page_url;
-      state.prevPageUrl = action.payload.prev_page_url;
+
+      if (action.payload.next_page_url !== null) {
+        state.nextPageUrl = action.payload.next_page_url.slice(31);
+      } else {
+        state.nextPageUrl = action.payload.next_page_url;
+      }
+
+      if (action.payload.prev_page_url !== null) {
+        state.prevPageUrl = action.payload.prev_page_url.slice(31);
+      } else {
+        state.prevPageUrl = action.payload.prev_page_url;
+      }
+
     });
 
     builder.addCase(addIncome.fulfilled, (state, action) => {
@@ -72,6 +95,11 @@ export const incomeSlice = createSlice({
 
     builder.addCase(removeIncome.fulfilled, (state, action) => {
       // Code
+    });
+
+    builder.addCase(fetchPageWithUrl.fulfilled, (state, action) => {
+      // Code
+      console.log(action.payload)
     });
   },
 });
