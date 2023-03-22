@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Entypo } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import Lottie from 'lottie-react-native';
 
 
 import { perHeight, perWidth } from '../functions/heigthWidth';
@@ -97,9 +98,9 @@ useEffect(() => {
         <View style={styles.navigationNums}>
           <Text style={styles.curPageNum}> {currPage} </Text>
         </View>
-        <Btn onClick={() => prevPageUrl !== null ? dispatch(fetchExpencePageWithUrl(nextPageUrl)) : ToastMaker('همدا آخري صفحه ده!') } borderWidth={1} borderColor={colors.light} text={<MaterialCommunityIcons name="page-next" size={24} color={colors.light} />} color={colors.darkGray} width={perWidth(13)} />
+        <Btn onClick={() => nextPageUrl !== null ? dispatch(fetchExpencePageWithUrl(nextPageUrl)) : ToastMaker('همدا آخري صفحه ده!') } borderWidth={1} borderColor={colors.light} text={<MaterialCommunityIcons name="page-next" size={24} color={colors.light} />} color={colors.darkGray} width={perWidth(13)} />
         <View style={styles.navigationNums}>
-          <Btn onClick={() => prevPageUrl !== null ? dispatch(fetchExpencePageWithPageNumber(lastPage)) : ToastMaker('همدا آخري صفحه ده!') }  borderWidth={1} borderColor={colors.light} textColor={colors.light} text={lastPage} color={colors.darkGray} width={30} height={30} />
+          <Btn onClick={() => nextPageUrl !== null ? dispatch(fetchExpencePageWithPageNumber(lastPage)) : ToastMaker('همدا آخري صفحه ده!') }  borderWidth={1} borderColor={colors.light} textColor={colors.light} text={lastPage} color={colors.darkGray} width={30} height={30} />
         </View>
       </View>
       <View style={styles.icons}>
@@ -141,6 +142,14 @@ useEffect(() => {
   return (
     <SafeAreaView>
       {showScreen()}
+      <View style={{alignItems: 'center'}}>
+      {loading === "loading" ?
+        <Lottie
+        autoPlay
+        loop 
+        source={require('../../assets/lottie/loadingLottieLine.json')}
+        style={{zIndex: 100}}
+       />  : null}
       <FlatList
         data={expences}
         keyExtractor={(item) => item.id}
@@ -164,6 +173,7 @@ useEffect(() => {
         <ExpenseCard />
         <ExpenseCard />
       </FlatList>
+      </View>
     </SafeAreaView>
   );
 }

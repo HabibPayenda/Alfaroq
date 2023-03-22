@@ -7,7 +7,7 @@ export const getTotalExpences = createAsyncThunk(
   async () => {
    // Code 
    try {
-    const result = await Alfarooq.get('/income/total');
+    const result = await Alfarooq.get('/expence/total');
     return result.data;
   } catch (error) {
     console.log(error);
@@ -53,7 +53,7 @@ export const fetchExpencePageWithUrl = createAsyncThunk('expences/fetchExpencePa
 export const fetchExpencePageWithPageNumber = createAsyncThunk('expences/fetchExpencePageWithPageNumber', async (pageNumber) => {
  // Code 
   try {
-    const response = await Alfarooq.get(`/income?page=${pageNumber}`);
+    const response = await Alfarooq.get(`/expence?page=${pageNumber}`);
     return response.data;
   } catch (error) {
     console.log(error);
