@@ -142,7 +142,8 @@ export default function IncomeScreen({ navigation }) {
             <View style={styles.navigationNums}>
               <Text style={styles.curPageNum}> {curPage} </Text>
             </View>
-            <MaterialCommunityIcons name="page-next" size={24} color="black" />        <View style={styles.navigationNums}>
+            <MaterialCommunityIcons name="page-next" size={24} color="black" />
+            <View style={styles.navigationNums}>
               <Btn text={lastPage} onClick={fetchLastData} color={colors.blue} width={perWidth(13)} />
             </View>
           </View>
@@ -152,27 +153,27 @@ export default function IncomeScreen({ navigation }) {
         <ImageBackground source={require('../img/bg.jpg')} style={styles.topView}>
           <View style={styles.totalExpenseContainer}>
             <View style={styles.totalExpenseContainerLeft}>
-            <MaterialCommunityIcons
-              style={styles.totalMoneyIcon}
-              name='cash-plus'
-              size={30}
-              color={colors.light}
-            />
+              <MaterialCommunityIcons
+                style={styles.totalMoneyIcon}
+                name='cash-plus'
+                size={30}
+                color={colors.light}
+              />
             </View>
             <View style={styles.totalExpenseContainerRight}>
               <Text style={styles.topViewText}>مجموعه مرستې</Text>
               <Text style={styles.topViewTextMoney}> {`${total} افغانۍ`}</Text>
-            </View> 
+            </View>
           </View>
           <View style={styles.currentMoneyContainer}>
             <View style={styles.currentMoneyContainerLeft}>
-            <Ionicons  style={styles.totalMoneyIcon} color={colors.light} name="ios-wallet" size={30} />
+              <Ionicons style={styles.totalMoneyIcon} color={colors.light} name="ios-wallet" size={30} />
             </View>
             <View style={styles.currentMoneyContainerRight}>
-            <Text style={styles.topViewText}>اوسنۍ پیسې</Text>
-            <Text style={styles.topViewTextMoney}> {`${total - etotal} افغانۍ`}</Text>
+              <Text style={styles.topViewText}>اوسنۍ پیسې</Text>
+              <Text style={styles.topViewTextMoney}> {`${total - etotal} افغانۍ`}</Text>
             </View>
-            
+
           </View>
           <View style={styles.navigation}>
             <View style={styles.navigationNums}>
