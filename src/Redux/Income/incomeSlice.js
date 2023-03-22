@@ -42,6 +42,10 @@ export const removeIncome = createAsyncThunk('incomes/removeIncome', async (id) 
 
 const initialState = {
   incomes: [],
+  currPage: 0,
+  lastPage: 0,
+  nextPageUrl: '',
+  prevPageUrl: '',
   totalIncome: 0,
   loading: 'idle',
 };
@@ -55,7 +59,10 @@ export const incomeSlice = createSlice({
     });
 
     builder.addCase(getIncomes.fulfilled, (state, action) => {
-      console.log(action);
+      state.currPage = action.payload.current_page;
+      state.incomes = action.payload.data;
+      state.nextPageUrl = action.payload.next_page_url;
+      state.prevPageUrl = action.payload.prev_page_url;
     });
 
     builder.addCase(addIncome.fulfilled, (state, action) => {

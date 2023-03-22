@@ -12,7 +12,7 @@ import Alfarooq from '../functions/Alfarooq';
 import Btn from '../components/Btn';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { getTotalIncome } from '../Redux/Income/incomeSlice';
+import { getTotalIncome, getIncomes } from '../Redux/Income/incomeSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 
@@ -34,13 +34,23 @@ export default function IncomeScreen({ navigation }) {
     }
   }
 
+  // incomes: [],
+  // currPage: 0,
+  // lastPage: 0,
+  // nextPageUrl: '',
+  // prevPageUrl: '',
+  // totalIncome: 0,
+  // loading: 'idle',
+
   const dispatch = useDispatch();
-  const totalIncome = useSelector((state) => state.incomeSlice.totalIncome);
+  const { totalIncome, prevPageUrl, nextPageUrl, incomes, currPage, loading } = useSelector((state) => state.incomeSlice);
+
 
   console.log("total income is ", totalIncome)
 
   useEffect(() => {
     dispatch(getTotalIncome());
+    dispatch(getIncomes());
   }, [dispatch]);
 
   useEffect(() => {
@@ -246,7 +256,7 @@ export default function IncomeScreen({ navigation }) {
         </Text>
       ) : null}
       <FlatList
-        data={data}
+        data={incomes}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
           return (
