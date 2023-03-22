@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { Provider } from 'react-redux';
 
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -6,6 +7,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import MainNavigation from './src/navigation/MainNavigation'
 import AuthNavigation from './src/navigation/AuthNavigation'
+
+import store from './src/Redux/configureStore';
 
 export default function App() {
   const [local, setLocal] = useState(false);
@@ -22,15 +25,19 @@ export default function App() {
 
   if(local) {
     return (
-      <NavigationContainer>
-       <MainNavigation setLocal={setLocal}/>
-      </NavigationContainer>
+      <Provider store={store}>
+        <NavigationContainer>
+        <MainNavigation setLocal={setLocal}/>
+        </NavigationContainer>
+      </Provider>
     );
   } else {
     return (
-      <NavigationContainer>
-        <AuthNavigation setLocal={setLocal} />
-      </NavigationContainer>
+      <Provider store={store}>
+        <NavigationContainer>
+          <AuthNavigation setLocal={setLocal} />
+        </NavigationContainer>
+      </Provider>
     );
   }
 }
