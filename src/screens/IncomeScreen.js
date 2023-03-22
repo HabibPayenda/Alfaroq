@@ -12,6 +12,9 @@ import Alfarooq from '../functions/Alfarooq';
 import Btn from '../components/Btn';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { getTotalIncome } from '../Redux/Income/incomeSlice';
+import { useDispatch, useSelector } from 'react-redux';
+
 
 export default function IncomeScreen({ navigation }) {
   const [isConnected, setIsConnected] = useState(true);
@@ -31,6 +34,15 @@ export default function IncomeScreen({ navigation }) {
     }
   }
 
+  const dispatch = useDispatch();
+  const totalIncome = useSelector((state) => state.incomeSlice.totalIncome);
+
+  console.log("total income is ", totalIncome)
+
+  useEffect(() => {
+    dispatch(getTotalIncome());
+  }, [dispatch]);
+
   useEffect(() => {
     getUser()
   }, [role])
@@ -44,14 +56,6 @@ export default function IncomeScreen({ navigation }) {
     getNetworkStatus();
   });
 
-  const fetchTotal = async () => {
-    try {
-      const result = await Alfarooq.get('/income/total');
-      setTotal(result.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const fetchExpensesTotal = async () => {
     try {
@@ -124,7 +128,6 @@ export default function IncomeScreen({ navigation }) {
   }, [newData]);
 
   useEffect(() => {
-    fetchTotal();
     fetchExpensesTotal();
   }, []);
 
@@ -162,7 +165,7 @@ export default function IncomeScreen({ navigation }) {
             </View>
             <View style={styles.totalExpenseContainerRight}>
               <Text style={styles.topViewText}>مجموعه مرستې</Text>
-              <Text style={styles.topViewTextMoney}> {`${total} افغانۍ`}</Text>
+              <Text style={styles.topViewTextMoney}> {`${totalIncome} افغانۍ`}</Text>
             </View>
           </View>
           <View style={styles.currentMoneyContainer}>
@@ -171,7 +174,7 @@ export default function IncomeScreen({ navigation }) {
             </View>
             <View style={styles.currentMoneyContainerRight}>
               <Text style={styles.topViewText}>اوسنۍ پیسې</Text>
-              <Text style={styles.topViewTextMoney}> {`${total - etotal} افغانۍ`}</Text>
+              <Text style={styles.topViewTextMoney}> {`${totalIncome - etotal} افغانۍ`}</Text>
             </View>
 
           </View>
