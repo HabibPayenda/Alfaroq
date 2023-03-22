@@ -1,5 +1,5 @@
 import { StyleSheet, Text, SafeAreaView, View, TouchableOpacity, FlatList, Image, ImageBackground, ToastAndroid } from 'react-native';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Entypo } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
@@ -23,8 +23,6 @@ export default function IncomeScreen({ navigation }) {
   const [refreshing] = useState(false);
   const [etotal, setETotal] = useState(0);
   const [role, setRoll] = useState(null);
-
-  const animation = useRef(null);
 
   const getUser = async () => {
     let user = await AsyncStorage.getItem('user');
