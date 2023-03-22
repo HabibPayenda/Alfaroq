@@ -188,13 +188,14 @@ export default function IncomeScreen({ navigation }) {
           له انټرنېټ سره اړیکه نشته!
         </Text>
       ) : null}
-      <View>
-      {loading === "loading" ? <Lottie
-       autoPlay
-       loop 
-       source={require('../../assets/lottie/loadingLottie.json')}
-       style={{zIndex: 100}}
-      /> : null}
+      <View style={{alignItems: 'center'}}>
+      {loading === "loading" ?
+        <Lottie
+        autoPlay
+        loop 
+        source={require('../../assets/lottie/loadingLottieLine.json')}
+        style={{zIndex: 100}}
+       />  : null}
       <FlatList
         data={incomes}
         keyExtractor={(item) => item.id}

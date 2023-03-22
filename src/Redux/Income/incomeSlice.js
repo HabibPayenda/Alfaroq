@@ -107,7 +107,13 @@ export const incomeSlice = createSlice({
       // Code
     });
 
+
+    builder.addCase(fetchPageWithUrl.pending, (state, action) => {
+      state.loading = "loading";
+    });
+    
     builder.addCase(fetchPageWithUrl.fulfilled, (state, action) => {
+      state.loading = "ideal";
       state.currPage = action.payload.current_page;
       state.lastPage = action.payload.last_page;
       state.incomes = action.payload.data;
@@ -125,7 +131,12 @@ export const incomeSlice = createSlice({
       }
     });
 
+    builder.addCase(fetchPageWithPageNumber.pending, (state, action) => {
+      state.loading = "loading";
+    });
+
     builder.addCase(fetchPageWithPageNumber.fulfilled, (state, action) => {
+      state.loading = "ideal"
       state.currPage = action.payload.current_page;
       state.lastPage = action.payload.last_page;
       state.incomes = action.payload.data;
