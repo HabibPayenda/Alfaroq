@@ -60,6 +60,7 @@ export const incomeSlice = createSlice({
 
     builder.addCase(getIncomes.fulfilled, (state, action) => {
       state.currPage = action.payload.current_page;
+      state.lastPage = action.payload.last_page;
       state.incomes = action.payload.data;
       state.nextPageUrl = action.payload.next_page_url;
       state.prevPageUrl = action.payload.prev_page_url;

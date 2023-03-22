@@ -21,8 +21,8 @@ export default function IncomeScreen({ navigation }) {
   const [data, setData] = useState([]);
   const [newData] = useState(false);
   const [refreshing] = useState(false);
-  const [curPage, setCurPage] = useState(0);
-  const [lastPage, setLastPage] = useState(0);
+  // const [curPage, setCurPage] = useState(0);
+  // const [lastPage, setLastPage] = useState(0);
   const [total, setTotal] = useState(0);
   const [etotal, setETotal] = useState(0);
   const [role, setRoll] = useState(null);
@@ -43,7 +43,7 @@ export default function IncomeScreen({ navigation }) {
   // loading: 'idle',
 
   const dispatch = useDispatch();
-  const { totalIncome, prevPageUrl, nextPageUrl, incomes, currPage, loading } = useSelector((state) => state.incomeSlice);
+  const { totalIncome, prevPageUrl, nextPageUrl, incomes, currPage, lastPage, loading } = useSelector((state) => state.incomeSlice);
 
 
   console.log("total income is ", totalIncome)
@@ -76,66 +76,52 @@ export default function IncomeScreen({ navigation }) {
     }
   };
 
-  const fetchData = async () => {
-    try {
-      const result = await Alfarooq.get('/income');
-      result.data.current_page ? setCurPage(result.data.current_page) : setCurPage(1);
-      result.data.last_page ? setLastPage(result.data.last_page) : setLastPage(1);
-      setData(result.data.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
-  const fetchNextData = async () => {
-    try {
-      if (curPage === lastPage) {
-        const result = await Alfarooq.get(`/income?page=${curPage - lastPage + 1}`);
-        setData(result.data.data);
-        setCurPage(1);
-      } else {
-        const result = await Alfarooq.get(`/income?page=${curPage + 1}`);
-        setData(result.data.data);
-        setCurPage(result.data.current_page);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const fetchNextData = async () => {
+  //   try {
+  //     if (curPage === lastPage) {
+  //       const result = await Alfarooq.get(`/income?page=${curPage - lastPage + 1}`);
+  //       setData(result.data.data);
+  //       setCurPage(1);
+  //     } else {
+  //       const result = await Alfarooq.get(`/income?page=${curPage + 1}`);
+  //       setData(result.data.data);
+  //       setCurPage(result.data.current_page);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  const fetchPrevData = async () => {
-    try {
-      const result = await Alfarooq.get(`/income?page=${curPage - 1}`);
-      setData(result.data.data);
-      setCurPage(result.data.current_page);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const fetchPrevData = async () => {
+  //   try {
+  //     const result = await Alfarooq.get(`/income?page=${curPage - 1}`);
+  //     setData(result.data.data);
+  //     setCurPage(result.data.current_page);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  const fetchLastData = async () => {
-    try {
-      const result = await Alfarooq.get(`/income?page=${lastPage}`);
-      setData(result.data.data);
-      setCurPage(result.data.current_page);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const fetchLastData = async () => {
+  //   try {
+  //     const result = await Alfarooq.get(`/income?page=${lastPage}`);
+  //     setData(result.data.data);
+  //     setCurPage(result.data.current_page);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  const fetchFirstData = async () => {
-    try {
-      const result = await Alfarooq.get(`/income?page=${1}`);
-      setData(result.data.data);
-      setCurPage(result.data.current_page);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, [newData]);
+  // const fetchFirstData = async () => {
+  //   try {
+  //     const result = await Alfarooq.get(`/income?page=${1}`);
+  //     setData(result.data.data);
+  //     setCurPage(result.data.current_page);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   useEffect(() => {
     fetchExpensesTotal();
@@ -148,16 +134,16 @@ export default function IncomeScreen({ navigation }) {
         <View style={styles.topViewUser}>
           <View style={styles.navigationUser}>
             <View style={styles.navigationNums}>
-              <Btn text="1" onClick={fetchFirstData} color={colors.blue} width={perWidth(13)} />
+              <Btn text="1"  color={colors.blue} width={perWidth(13)} />
             </View>
-            <Btn text="Prev" onClick={fetchPrevData} color={colors.yellow} width={perWidth(13)} />
+            <Btn text="Prev"  color={colors.yellow} width={perWidth(13)} />
 
             <View style={styles.navigationNums}>
-              <Text style={styles.curPageNum}> {curPage} </Text>
+              <Text style={styles.curPageNum}> {currPage} </Text>
             </View>
             <MaterialCommunityIcons name="page-next" size={24} color="black" />
             <View style={styles.navigationNums}>
-              <Btn text={lastPage} onClick={fetchLastData} color={colors.blue} width={perWidth(13)} />
+              <Btn text={lastPage}  color={colors.blue} width={perWidth(13)} />
             </View>
           </View>
         </View>)
@@ -190,16 +176,16 @@ export default function IncomeScreen({ navigation }) {
           </View>
           <View style={styles.navigation}>
             <View style={styles.navigationNums}>
-              <Btn borderWidth={1} borderColor={colors.light} textColor={colors.light} text="1" onClick={fetchFirstData} color={colors.darkGray} width={30} height={30} />
+              <Btn borderWidth={1} borderColor={colors.light} textColor={colors.light} text="1" color={colors.darkGray} width={30} height={30} />
             </View>
-            <Btn borderWidth={1} borderColor={colors.light} text={<MaterialCommunityIcons name="page-previous" size={24} color={colors.light} />} onClick={fetchPrevData} color={colors.darkGray} width={perWidth(13)} />
+            <Btn borderWidth={1} borderColor={colors.light} text={<MaterialCommunityIcons name="page-previous" size={24} color={colors.light} />}  color={colors.darkGray} width={perWidth(13)} />
 
             <View style={styles.navigationNums}>
-              <Text style={[styles.curPageNum]}> {curPage} </Text>
+              <Text style={[styles.curPageNum]}> {currPage} </Text>
             </View>
-            <Btn borderWidth={1} borderColor={colors.light} text={<MaterialCommunityIcons name="page-next" size={24} color={colors.light} />} color={colors.darkGray} onClick={fetchNextData} width={perWidth(13)} />
+            <Btn borderWidth={1} borderColor={colors.light} text={<MaterialCommunityIcons name="page-next" size={24} color={colors.light} />} color={colors.darkGray}  width={perWidth(13)} />
             <View style={styles.navigationNums}>
-              <Btn borderWidth={1} borderColor={colors.light} textColor={colors.light} text={lastPage} onClick={fetchLastData} color={colors.darkGray} width={30} height={30} />
+              <Btn borderWidth={1} borderColor={colors.light} textColor={colors.light} text={lastPage}  color={colors.darkGray} width={30} height={30} />
             </View>
           </View>
           <View style={styles.icons}>
@@ -271,9 +257,8 @@ export default function IncomeScreen({ navigation }) {
         }}
         refreshing={refreshing}
         onRefresh={() => {
-          fetchData();
-          fetchTotal();
-          setCurPage(1);
+          dispatch(getTotalIncome);
+          dispatch(getIncomes);
         }}
         style={{
           width: perWidth(100),
