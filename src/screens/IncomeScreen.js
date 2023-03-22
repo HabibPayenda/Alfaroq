@@ -19,12 +19,7 @@ import ToastMaker from '../functions/ToastMaker';
 
 export default function IncomeScreen({ navigation }) {
   const [isConnected, setIsConnected] = useState(true);
-  const [data, setData] = useState([]);
-  const [newData] = useState(false);
   const [refreshing] = useState(false);
-  // const [curPage, setCurPage] = useState(0);
-  // const [lastPage, setLastPage] = useState(0);
-  const [total, setTotal] = useState(0);
   const [etotal, setETotal] = useState(0);
   const [role, setRoll] = useState(null);
   const getUser = async () => {
@@ -34,14 +29,6 @@ export default function IncomeScreen({ navigation }) {
       setRoll(user.isAdmin)
     }
   }
-
-  // incomes: [],
-  // currPage: 0,
-  // lastPage: 0,
-  // nextPageUrl: '',
-  // prevPageUrl: '',
-  // totalIncome: 0,
-  // loading: 'idle',
 
   const dispatch = useDispatch();
   const { totalIncome, prevPageUrl, nextPageUrl, incomes, currPage, lastPage, firstPage, loading } = useSelector((state) => state.incomeSlice);
@@ -78,53 +65,6 @@ export default function IncomeScreen({ navigation }) {
       console.log(error);
     }
   };
-
-
-  // const fetchNextData = async () => {
-  //   try {
-  //     if (curPage === lastPage) {
-  //       const result = await Alfarooq.get(`/income?page=${curPage - lastPage + 1}`);
-  //       setData(result.data.data);
-  //       setCurPage(1);
-  //     } else {
-  //       const result = await Alfarooq.get(`/income?page=${curPage + 1}`);
-  //       setData(result.data.data);
-  //       setCurPage(result.data.current_page);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // const fetchPrevData = async () => {
-  //   try {
-  //     const result = await Alfarooq.get(`/income?page=${curPage - 1}`);
-  //     setData(result.data.data);
-  //     setCurPage(result.data.current_page);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // const fetchLastData = async () => {
-  //   try {
-  //     const result = await Alfarooq.get(`/income?page=${lastPage}`);
-  //     setData(result.data.data);
-  //     setCurPage(result.data.current_page);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // const fetchFirstData = async () => {
-  //   try {
-  //     const result = await Alfarooq.get(`/income?page=${1}`);
-  //     setData(result.data.data);
-  //     setCurPage(result.data.current_page);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   useEffect(() => {
     fetchExpensesTotal();
