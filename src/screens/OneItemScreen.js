@@ -7,10 +7,15 @@ import colors from '../functions/colors';
 import Btn from '../components/Btn';
 import Alfarooq from '../functions/Alfarooq';
 
+import { removeIncome } from '../Redux/Income/incomeSlice';
+import { useDispatch } from 'react-redux';
+
 export default function OneItemScreen({ route, navigation }) {
   const { id, name, money } = route.params;
   const [newName, setNewName] = useState(name);
   const [newMoney, setNewMoney] = useState(money);
+
+  const dispatch = useDispatch();
 
   function showToast() {
     ToastAndroid.show('معلومات حذف شول!', ToastAndroid.SHORT);
@@ -34,15 +39,11 @@ export default function OneItemScreen({ route, navigation }) {
 
   const deleteIncome = async () => {
     try {
-      const result = await Alfarooq.delete(`/income/${id}`);
-      if (result.data === 1) {
-        showToast();
+        dispatch(removeIncome(id))
         navigation.navigate('All Incomes')
-      }
-      return result;
+        return 1;
     } catch (error) {
       console.log(error)
-      showToastError();
       return error;
     }
   };

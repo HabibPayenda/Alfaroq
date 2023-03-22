@@ -7,11 +7,14 @@ import colors from '../functions/colors';
 import Btn from '../components/Btn';
 import { addIncome } from '../Redux/Income/incomeSlice';
 import { useDispatch } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 
 export default function AddIncomeScreen() {
 
   const [name, setName] = useState('');
   const [money, setMoney] = useState('');
+
+  const navigation = useNavigation();
 
   const dispatch = useDispatch();
 
@@ -43,6 +46,7 @@ export default function AddIncomeScreen() {
       dispatch(addIncome(data));
       setName('');
       setMoney('');
+      navigation.navigate('All Incomes')
     } catch (error) {
       return error;
     }

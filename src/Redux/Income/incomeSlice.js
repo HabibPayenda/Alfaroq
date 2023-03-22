@@ -52,7 +52,22 @@ export const addIncome = createAsyncThunk(
 
 export const removeIncome = createAsyncThunk('incomes/removeIncome', async (id) => {
  // Code 
+ try {
+  const result = await Alfarooq.delete(`/income/${id}`);
+  if (result.data === 1) {
+    ToastMaker('معلومات له منځه لاړل!')
+  }
+  return id;
+} catch (error) {
+  console.log(error)
+  ToastMaker('له سره هڅه وکړئ!')
+  return error;
+}
 });
+
+const deleteIncome = async () => {
+
+};
 
 export const fetchPageWithUrl = createAsyncThunk('incomes/fetchPageWithUrl', async (url) => {
  // Code 
@@ -116,12 +131,15 @@ export const incomeSlice = createSlice({
     builder.addCase(addIncome.fulfilled, (state, action) => {
       // Code
       console.log("new Data", action.payload)
-      state.incomes = [...state.incomes, action.payload]
+      state.incomes = [action.payload, ...state.incomes]
       state.totalIncome += (action.payload.amount * 1);
     });
 
     builder.addCase(removeIncome.fulfilled, (state, action) => {
       // Code
+      const item = state.incomes.filter((item) => item.id === action.payload);
+      state.totalIncome -= (item[0].amount * 1);
+      state.incomes = state.incomes.filter((item) => item.id !== action.payload);
     });
 
 
