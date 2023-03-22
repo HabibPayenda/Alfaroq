@@ -210,8 +210,7 @@ export default function IncomeScreen({ navigation }) {
         }}
         refreshing={refreshing}
         onRefresh={() => {
-          dispatch(getTotalIncome);
-          dispatch(getIncomes);
+          dispatch(fetchPageWithPageNumber(firstPage));
         }}
         style={{
           width: perWidth(100),

@@ -1,15 +1,19 @@
-import { StyleSheet, Text, ToastAndroid, TextInput, SafeAreaView, Button, View } from 'react-native';
+import { StyleSheet, Text, TextInput, SafeAreaView, View } from 'react-native';
 import React, { useState } from 'react';
 import { FontAwesome5 } from '@expo/vector-icons';
 
 import { perHeight, perWidth } from '../functions/heigthWidth';
 import colors from '../functions/colors';
-import Alfarooq from '../functions/Alfarooq';
 import Btn from '../components/Btn';
+import { addIncome } from '../Redux/Income/incomeSlice';
+import { useDispatch } from 'react-redux';
 
 export default function AddIncomeScreen() {
+
   const [name, setName] = useState('');
   const [money, setMoney] = useState('');
+
+  const dispatch = useDispatch();
 
   var date = new Date();
   var current_date = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
@@ -34,31 +38,12 @@ export default function AddIncomeScreen() {
     date: current_date,
   };
 
-  function showToast() {
-    ToastAndroid.show('معلومات ذخیره شول!', ToastAndroid.SHORT);
-  }
-  function showToastError() {
-    ToastAndroid.show('اشتباه!', ToastAndroid.SHORT);
-  }
-
   const AddIncome = async () => {
     try {
-      console.log(money);
-
-      const result = await Alfarooq.post('/income', data, {
-        onUploadProgress: (progress) => {
-          if (progress.loaded / progress.total === 1) {
-            showToast();
-            setName('');
-            setMoney('');
-          }
-        },
-      });
-
-      console.log(result);
-      return result;
+      dispatch(addIncome(data));
+      setName('');
+      setMoney('');
     } catch (error) {
-      showToastError();
       return error;
     }
   };

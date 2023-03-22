@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import Alfarooq from '../../functions/Alfarooq';
+import ToastMaker from '../../functions/ToastMaker';
 
 
 export const getTotalIncome = createAsyncThunk(
@@ -31,8 +32,21 @@ export const getIncomes = createAsyncThunk(
 
 export const addIncome = createAsyncThunk(
   'incomes/addIncome',
-  async (book) => {
+  async (data) => {
     // Code 
+    try {  
+      const result = await Alfarooq.post('/income', data, {
+        onUploadProgress: (progress) => {
+          if (progress.loaded / progress.total === 1) {
+            ToastMaker('معلومات ذخیره شول!')
+          }
+        },
+      });
+      return result.data;
+    } catch (error) {
+      ToastMaker('معلومات ناسم دي!')
+      return error;
+    }
   }
 );
 
@@ -101,6 +115,9 @@ export const incomeSlice = createSlice({
 
     builder.addCase(addIncome.fulfilled, (state, action) => {
       // Code
+      console.log("new Data", action.payload)
+      state.incomes = [...state.incomes, action.payload]
+      state.totalIncome += (action.payload.amount * 1);
     });
 
     builder.addCase(removeIncome.fulfilled, (state, action) => {

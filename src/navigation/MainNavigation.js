@@ -65,8 +65,8 @@ return (
    drawerContent={(props) => <DrawerContent {...props} setLocal={setLocal} />}
    >
   <Drawer.Screen name="مرستې" component={IncomeStack} />
-  <Drawer.Screen name="مصارف" component={ExpenseStack} />
-  <Drawer.Screen name="کارونکی" component={AddUserScreen} />
+  <Drawer.Screen name="لګونې" component={ExpenseStack} />
+  <Drawer.Screen name="کاروونکی" component={AddUserScreen} />
 </Drawer.Navigator>
 )}
 
