@@ -1,4 +1,4 @@
-import { StyleSheet, Text, SafeAreaView, View, TouchableOpacity, FlatList, Image, ImageBackground } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, View, TouchableOpacity, FlatList, Image, ImageBackground, ToastAndroid } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Entypo } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -12,8 +12,9 @@ import Alfarooq from '../functions/Alfarooq';
 import Btn from '../components/Btn';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { getTotalIncome, getIncomes } from '../Redux/Income/incomeSlice';
+import { getTotalIncome, getIncomes, fetchPageWithUrl } from '../Redux/Income/incomeSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import ToastMaker from '../functions/ToastMaker';
 
 
 export default function IncomeScreen({ navigation }) {
@@ -48,6 +49,7 @@ export default function IncomeScreen({ navigation }) {
   console.log("total income is ", totalIncome)
   console.log( "prev", prevPageUrl);
   console.log("next", nextPageUrl);
+  console.log("type", null === prevPageUrl)
 
   useEffect(() => {
     dispatch(getTotalIncome());
@@ -179,12 +181,12 @@ export default function IncomeScreen({ navigation }) {
             <View style={styles.navigationNums}>
               <Btn borderWidth={1} borderColor={colors.light} textColor={colors.light} text="1" color={colors.darkGray} width={30} height={30} />
             </View>
-            <Btn borderWidth={1} borderColor={colors.light} text={<MaterialCommunityIcons name="page-previous" size={24} color={colors.light} />}  color={colors.darkGray} width={perWidth(13)} />
+            <Btn borderWidth={1} borderColor={colors.light} onClick={() => prevPageUrl !== null ? dispatch(fetchPageWithUrl(prevPageUrl)) : ToastMaker('همدا لومړۍ صفحه ده!') } text={<MaterialCommunityIcons name="page-previous" size={24} color={colors.light} />}  color={colors.darkGray} width={perWidth(13)} />
 
             <View style={styles.navigationNums}>
               <Text style={[styles.curPageNum]}> {currPage} </Text>
             </View>
-            <Btn borderWidth={1} borderColor={colors.light} text={<MaterialCommunityIcons name="page-next" size={24} color={colors.light} />} color={colors.darkGray}  width={perWidth(13)} />
+            <Btn borderWidth={1} borderColor={colors.light} onClick={() => nextPageUrl !== null ? dispatch(fetchPageWithUrl(nextPageUrl)) : ToastMaker('همدا آخري صفحه ده!') } text={<MaterialCommunityIcons name="page-next"  size={24} color={colors.light} />} color={colors.darkGray}  width={perWidth(13)} />
             <View style={styles.navigationNums}>
               <Btn borderWidth={1} borderColor={colors.light} textColor={colors.light} text={lastPage}  color={colors.darkGray} width={30} height={30} />
             </View>

@@ -98,8 +98,21 @@ export const incomeSlice = createSlice({
     });
 
     builder.addCase(fetchPageWithUrl.fulfilled, (state, action) => {
-      // Code
-      console.log(action.payload)
+      state.currPage = action.payload.current_page;
+      state.lastPage = action.payload.last_page;
+      state.incomes = action.payload.data;
+
+      if (action.payload.next_page_url !== null) {
+        state.nextPageUrl = action.payload.next_page_url.slice(31);
+      } else {
+        state.nextPageUrl = action.payload.next_page_url;
+      }
+
+      if (action.payload.prev_page_url !== null) {
+        state.prevPageUrl = action.payload.prev_page_url.slice(31);
+      } else {
+        state.prevPageUrl = action.payload.prev_page_url;
+      }
     });
   },
 });
