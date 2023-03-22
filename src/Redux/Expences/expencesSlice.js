@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import Alfarooq from '../../functions/Alfarooq';
 
 
-export const getTotalIncome = createAsyncThunk(
+export const getTotalExpences = createAsyncThunk(
   'expences/getAllExpencesTotal',
   async () => {
    // Code 
@@ -15,12 +15,13 @@ export const getTotalIncome = createAsyncThunk(
   },
 );
 
+
 export const getExpences = createAsyncThunk(
   'expences/getAllExpences',
   async () => {
    // Code 
    try {
-    const result = await Alfarooq.get('/income');
+    const result = await Alfarooq.get('/expence')
     return result.data;
   } catch (error) {
     console.log(error);
@@ -75,7 +76,7 @@ export const expenseSlice = createSlice({
   name: 'expence',
   initialState,
   extraReducers: (builder) => {
-    builder.addCase(getTotalIncome.fulfilled, (state, action) => {
+    builder.addCase(getTotalExpences.fulfilled, (state, action) => {
       state.totalExpences = action.payload
     });
 

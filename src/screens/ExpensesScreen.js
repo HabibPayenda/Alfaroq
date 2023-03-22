@@ -5,22 +5,24 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 
 
-import Alfarooq from '../functions/Alfarooq';
 import { perHeight, perWidth } from '../functions/heigthWidth';
 import colors from '../functions/colors';
 import ExpenseCard from '../components/ExpensesCard';
 import Btn from '../components/Btn';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import {getExpences, getTotalExpences, fetchExpencePageWithPageNumber, fetchExpencePageWithUrl} from '../Redux/Expences/expencesSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import ToastMaker from '../functions/ToastMaker';
+
 export default function ExpensesScreen({ navigation }) {
-  const [data, setData] = useState([]);
-  const [newData, setNewData] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
-  const [curPage, setCurPage] = useState(0);
-  const [lastPage, setLastPage] = useState(0);
-  const [expenseTotal, setExpenseTotal] = useState(0);
-  const [moneyTotal, setMoneyTotal] = useState(0);
   const [role, setRoll] = useState(null);
+
+  const dispatch = useDispatch();
+  const { totalExpences, prevPageUrl, nextPageUrl, expences, currPage, lastPage, firstPage, loading } = useSelector((state) => state.expenseSlice);
+  const { totalIncome } = useSelector((state) => state.incomeSlice);
+
 const getUser = async () => {
   let user = await AsyncStorage.getItem('user');
   user = JSON.parse(user)
@@ -33,107 +35,106 @@ useEffect(() => {
   getUser()
 }, [role])
 
-  const fetchData = async () => {
-    try {
-      const result = await Alfarooq.get('/expence');
-      result.data.current_page ? setCurPage(result.data.current_page) : setCurPage(1);
-      result.data.last_page ? setLastPage(result.data.last_page) : setLastPage(1);
-      setData(result.data.data);
-      console.log(result.data.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const fetchData = async () => {
+  //   try {
+  //     const result = await Alfarooq.get('/expence');
+  //     result.data.current_page ? setCurPage(result.data.current_page) : setCurPage(1);
+  //     result.data.last_page ? setLastPage(result.data.last_page) : setLastPage(1);
+  //     setData(result.data.data);
+  //     console.log(result.data.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  const fetchETotal = async () => {
-    try {
-      const result = await Alfarooq.get('/income/total');
-      setMoneyTotal(result.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const fetchETotal = async () => {
+  //   try {
+  //     const result = await Alfarooq.get('/income/total');
+  //     setMoneyTotal(result.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  const fetchNextData = async () => {
-    try {
-      if (curPage === lastPage) {
-        const result = await Alfarooq.get(`/expence?page=${curPage - lastPage + 1}`);
-        setData(result.data.data);
-        setCurPage(1);
-      } else {
-        const result = await Alfarooq.get(`/expence?page=${curPage + 1}`);
-        setData(result.data.data);
-        setCurPage(result.data.current_page);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const fetchNextData = async () => {
+  //   try {
+  //     if (curPage === lastPage) {
+  //       const result = await Alfarooq.get(`/expence?page=${curPage - lastPage + 1}`);
+  //       setData(result.data.data);
+  //       setCurPage(1);
+  //     } else {
+  //       const result = await Alfarooq.get(`/expence?page=${curPage + 1}`);
+  //       setData(result.data.data);
+  //       setCurPage(result.data.current_page);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  const fetchPrevData = async () => {
-    try {
-      const result = await Alfarooq.get(`/expence?page=${curPage - 1}`);
-      setData(result.data.data);
-      setCurPage(result.data.current_page);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const fetchPrevData = async () => {
+  //   try {
+  //     const result = await Alfarooq.get(`/expence?page=${curPage - 1}`);
+  //     setData(result.data.data);
+  //     setCurPage(result.data.current_page);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  const fetchLastData = async () => {
-    try {
-      const result = await Alfarooq.get(`/expence?page=${lastPage}`);
-      setData(result.data.data);
-      setCurPage(result.data.current_page);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const fetchLastData = async () => {
+  //   try {
+  //     const result = await Alfarooq.get(`/expence?page=${lastPage}`);
+  //     setData(result.data.data);
+  //     setCurPage(result.data.current_page);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  const fetchTotal = async () => {
-    try {
-      const result = await Alfarooq.get('/expence/total');
-      setExpenseTotal(result.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const fetchTotal = async () => {
+  //   try {
+  //     const result = await Alfarooq.get('/expence/total');
+  //     setExpenseTotal(result.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  const fetchFirstData = async () => {
-    try {
-      const result = await Alfarooq.get(`/expence?page=${1}`);
-      setData(result.data.data);
-      setCurPage(result.data.current_page);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // const fetchFirstData = async () => {
+  //   try {
+  //     const result = await Alfarooq.get(`/expence?page=${1}`);
+  //     setData(result.data.data);
+  //     setCurPage(result.data.current_page);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   useEffect(() => {
-    fetchTotal();
-    fetchETotal();
+    dispatch(getExpences())
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getTotalExpences())
   }, []);
 
   const showScreen = () => {
     if(role === 3 ) {
       return (
-<View style={styles.topViewUser}>
+    <View style={styles.topViewUser}>
         <View style={styles.navigationUser}>
           <View style={styles.navigationNums}>
-            <Btn text="1" onClick={fetchFirstData} color={colors.blue} width={perWidth(13)} />
+            <Btn onClick={() => prevPageUrl !== null ? dispatch(fetchExpencePageWithPageNumber(firstPage)) : ToastMaker('همدا لومړۍ صفحه ده!') } text="1"  color={colors.blue} width={perWidth(13)} />
           </View>
-          <Btn text="Prev" onClick={fetchPrevData} color={colors.yellow} width={perWidth(13)} />
+          <Btn onClick={() => prevPageUrl !== null ? dispatch(fetchExpencePageWithUrl(prevPageUrl)) : ToastMaker('همدا لومړۍ صفحه ده!') } text="Prev" color={colors.yellow} width={perWidth(13)} />
 
           <View style={styles.navigationNums}>
-            <Text style={styles.curPageNum}> {curPage} </Text>
+            <Text style={styles.curPageNum}> {currPage} </Text>
           </View>
-          <Btn text="Next" onClick={fetchNextData} width={perWidth(13)} />
+          <Btn onClick={() => prevPageUrl !== null ? dispatch(fetchExpencePageWithUrl(nextPageUrl)) : ToastMaker('همدا آخري صفحه ده!') } text="Next"  width={perWidth(13)} />
           <View style={styles.navigationNums}>
-            <Btn text={lastPage} onClick={fetchLastData} color={colors.blue} width={perWidth(13)} />
+            <Btn onClick={() => prevPageUrl !== null ? dispatch(fetchExpencePageWithPageNumber(lastPage)) : ToastMaker('همدا آخري صفحه ده!') }  text={lastPage} color={colors.blue} width={perWidth(13)} />
           </View>
         </View>
         </View>)
@@ -151,7 +152,7 @@ useEffect(() => {
         </View>
         <View style={styles.totalExpenseContainerRight}>
           <Text style={styles.topViewText}>ټولې لګونې </Text>
-          <Text style={styles.topViewTextMoney}> {`${expenseTotal} افغانۍ`}</Text>
+          <Text style={styles.topViewTextMoney}> {`${totalExpences} افغانۍ`}</Text>
         </View>
       </View>
       <View style={styles.currentMoneyContainer}>
@@ -160,21 +161,21 @@ useEffect(() => {
         </View>
         <View style={styles.currentMoneyContainerRight}>
           <Text style={styles.topViewText}>اوسنۍ پیسې</Text>
-          <Text style={styles.topViewTextMoney}> {`${moneyTotal - expenseTotal} افغانۍ`}</Text>
+          <Text style={styles.topViewTextMoney}> {`${totalIncome - totalExpences} افغانۍ`}</Text>
         </View>
       </View>
       <View style={styles.navigation}>
         <View style={styles.navigationNums}>
-          <Btn borderWidth={1} borderColor={colors.light} textColor={colors.light} text="1" onClick={fetchFirstData} color={colors.darkGray} width={30} height={30} />
+          <Btn onClick={() => prevPageUrl !== null ? dispatch(fetchExpencePageWithPageNumber(firstPage)) : ToastMaker('همدا لومړۍ صفحه ده!') } borderWidth={1} borderColor={colors.light} textColor={colors.light} text="1" color={colors.darkGray} width={30} height={30} />
         </View>
-        <Btn borderWidth={1} borderColor={colors.light} text={<MaterialCommunityIcons name="page-previous" size={24} color={colors.light} />} onClick={fetchPrevData} color={colors.darkGray} width={perWidth(13)} />
+        <Btn onClick={() => prevPageUrl !== null ? dispatch(fetchExpencePageWithUrl(prevPageUrl)) : ToastMaker('همدا لومړۍ صفحه ده!') } borderWidth={1} borderColor={colors.light} text={<MaterialCommunityIcons name="page-previous" size={24} color={colors.light} />} color={colors.darkGray} width={perWidth(13)} />
 
         <View style={styles.navigationNums}>
-          <Text style={styles.curPageNum}> {curPage} </Text>
+          <Text style={styles.curPageNum}> {currPage} </Text>
         </View>
-        <Btn borderWidth={1} borderColor={colors.light} text={<MaterialCommunityIcons name="page-next" size={24} color={colors.light} />} color={colors.darkGray} onClick={fetchNextData} width={perWidth(13)} />
+        <Btn onClick={() => prevPageUrl !== null ? dispatch(fetchExpencePageWithUrl(nextPageUrl)) : ToastMaker('همدا آخري صفحه ده!') } borderWidth={1} borderColor={colors.light} text={<MaterialCommunityIcons name="page-next" size={24} color={colors.light} />} color={colors.darkGray} width={perWidth(13)} />
         <View style={styles.navigationNums}>
-          <Btn  borderWidth={1} borderColor={colors.light} textColor={colors.light} text={lastPage} onClick={fetchLastData} color={colors.darkGray} width={30} height={30} />
+          <Btn onClick={() => prevPageUrl !== null ? dispatch(fetchExpencePageWithPageNumber(lastPage)) : ToastMaker('همدا آخري صفحه ده!') }  borderWidth={1} borderColor={colors.light} textColor={colors.light} text={lastPage} color={colors.darkGray} width={30} height={30} />
         </View>
       </View>
       <View style={styles.icons}>
@@ -217,7 +218,7 @@ useEffect(() => {
     <SafeAreaView>
       {showScreen()}
       <FlatList
-        data={data}
+        data={expences}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
           return (
@@ -226,10 +227,7 @@ useEffect(() => {
         }}
         refreshing={refreshing}
         onRefresh={() => {
-          fetchData();
-          fetchTotal();
-          fetchETotal();
-          setCurPage(1);
+          dispatch(fetchExpencePageWithPageNumber(firstPage))
         }}
         style={{
           width: perWidth(100),
