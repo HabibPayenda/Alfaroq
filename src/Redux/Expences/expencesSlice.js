@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import Alfarooq from '../../functions/Alfarooq';
+import ToastMaker from '../../functions/ToastMaker';
 
 
 export const getTotalExpences = createAsyncThunk(
@@ -31,10 +32,29 @@ export const getExpences = createAsyncThunk(
 
 export const addExpence = createAsyncThunk(
   'expences/addExpence',
-  async (book) => {
+  async (params) => {
     // Code 
+    try {  
+      const result = await Alfarooq.post('/expence', params.data, {
+        onUploadProgress: (progress) => {
+          if (progress.loaded / progress.total === 1) {
+            ToastMaker('معلومات ذخیره شول!')
+            params.setDesc('');
+            params.setMoney('');
+          }
+        },
+      });
+        return result.data;
+    } catch (error) {
+      ToastMaker('له سره هڅه وکړئ!')
+      return error;
+    }
   }
 );
+
+const AddExpense = async () => {
+ 
+};
 
 export const removeExpence = createAsyncThunk('expences/removeExpence', async (id) => {
  // Code 
@@ -101,6 +121,8 @@ export const expenseSlice = createSlice({
 
     builder.addCase(addExpence.fulfilled, (state, action) => {
       // Code
+      state.expences = [action.payload, ...state.expences]
+      state.totalExpences += (action.payload.amount * 1);
     });
 
     builder.addCase(removeExpence.fulfilled, (state, action) => {

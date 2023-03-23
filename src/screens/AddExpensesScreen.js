@@ -6,10 +6,16 @@ import Alfarooq from '../functions/Alfarooq'
 import { perHeight, perWidth } from '../functions/heigthWidth'
 import colors from '../functions/colors'
 import Btn from '../components/Btn'
+import { useNavigation } from '@react-navigation/native';
+import { addExpence } from '../Redux/Expences/expencesSlice';
+import { useDispatch } from 'react-redux';
 
 export default function AddExpenseScreen() {
   const [desc, setDesc] = useState('');
   const [money, setMoney] = useState('');
+
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   var date = new Date();
   var current_date = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
@@ -39,25 +45,22 @@ export default function AddExpenseScreen() {
     ToastAndroid.show('اشتباه!', ToastAndroid.SHORT);
   }
 
+
+
   const AddExpense = async () => {
     try {
-      console.log(money);
+      const params = {
+        data: data,
+        setDesc: setDesc,
+        setMoney: setMoney
+      }
 
-      const result = await Alfarooq.post('/expence', data, {
-        onUploadProgress: (progress) => {
-          if (progress.loaded / progress.total === 1) {
-            showToast();
-            setDesc('');
-            setMoney('');
-          }
-        },
-      });
+      dispatch(addExpence(params));
+      navigation.navigate('All Expenses')
 
-      console.log(result);
-      return result;
     } catch (error) {
-      showToastError();
-      return error;
+      console.log(error);
+      return error
     }
   };
 
