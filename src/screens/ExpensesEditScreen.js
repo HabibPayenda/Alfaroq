@@ -1,5 +1,7 @@
 import { StyleSheet, Text, View, TextInput, ToastAndroid } from 'react-native';
 import React, { useState } from 'react';
+import { FontAwesome } from '@expo/vector-icons';
+
 
 import { perHeight, perWidth } from '../functions/heigthWidth';
 import colors from '../functions/colors';
@@ -69,13 +71,16 @@ export default function ExpensesEditScreen({ route, navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>د بدلون راوستل</Text>
+      <View style={styles.contentContainer}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>د بدلون راوستل</Text>
+        </View>
       <TextInput
         keyboardType="default"
         value={newMoney}
         onChangeText={(text) => {
           const updated = changeNumbers(text);
-          setNewMoney(updated);
+          newMoney(updated);
         }}
         style={styles.input}
       />
@@ -85,10 +90,14 @@ export default function ExpensesEditScreen({ route, navigation }) {
         onChangeText={(text) => setNewDiscription(text)}
         style={styles.inputArea}
       />
-      <Btn color={colors.yellow} onClick={updateIncome} text="بدلون" />
-      <Btn color={colors.red} onClick={deleteIncome} text="حذف" />
+      <View style={styles.btnContainer}>
+        <Btn icon={<FontAwesome name="edit" size={24} color={colors.darkGray} />} color={colors.light} textColor={colors.dark} width={80} onClick={updateIncome} text="بدلون" />
+        <Btn icon={<FontAwesome name="remove" size={24} color={colors.darkGray} />} color={colors.light} textColor={colors.dark} width={80} onClick={deleteIncome} text="حذف" />
+      </View>
+      </View>
     </View>
   );
+
 }
 
 const styles = StyleSheet.create({
@@ -98,13 +107,24 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     height: perHeight(90),
     paddingVertical: 30,
-    backgroundColor: colors.lightGray,
+    backgroundColor: colors.white,
+    position: 'relative'
+  },
+  contentContainer: {
+    backgroundColor: colors.darkGray,
+    marginTop: perHeight(10),
+    padding: 10,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 10,
+    borderRadius: 7
   },
   title: {
     fontWeight: 'bold',
     fontSize: 18,
     marginBottom: 20,
-    color: colors.darkGray,
+    color: colors.light,
   },
   input: {
     width: perWidth(80),
@@ -112,9 +132,16 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingHorizontal: 20,
     marginBottom: 10,
-    borderRadius: 30,
-    backgroundColor: colors.light,
+    borderRadius: 5,
+    backgroundColor: colors.white,
     elevation: 10,
+  },
+  btnContainer: {
+    display: 'flex',
+    width: 200,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   inputArea: {
     width: perWidth(80),
