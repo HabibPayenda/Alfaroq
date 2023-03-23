@@ -7,7 +7,7 @@ import colors from '../functions/colors';
 import Btn from '../components/Btn';
 import Alfarooq from '../functions/Alfarooq';
 
-import { removeIncome } from '../Redux/Income/incomeSlice';
+import { removeIncome, updateIncome } from '../Redux/Income/incomeSlice';
 import { useDispatch } from 'react-redux';
 
 export default function OneItemScreen({ route, navigation }) {
@@ -47,20 +47,15 @@ export default function OneItemScreen({ route, navigation }) {
       return error;
     }
   };
-
-  const updateIncome = async () => {
+  const UpdateIncome = () => {
     try {
-      const result = await Alfarooq.patch(`/income/${id}`, {name: newName, amount: newMoney}, {
-        onUploadProgress: (progress) => {
-          if (progress.loaded / progress.total === 1) {
-            showToast();
-            navigation.navigate('All Incomes');
-          }
-        },
-      });
-      return result;
+      const newData = {name: newName, amount: newMoney, id}
+      console.log(newName)
+      dispatch(updateIncome(newData))
+      navigation.navigate('All Incomes')
+      return 1;
     } catch (error) {
-      showToastError();
+      console.log(error);
       return error;
     }
   };
@@ -87,7 +82,7 @@ export default function OneItemScreen({ route, navigation }) {
         style={styles.input}
       />
       <View style={styles.btnContainer}>
-        <Btn icon={<FontAwesome name="edit" size={24} color={colors.darkGray} />} color={colors.light} textColor={colors.dark} width={80} onClick={updateIncome} text="بدلون" />
+        <Btn icon={<FontAwesome name="edit" size={24} color={colors.darkGray} />} color={colors.light} textColor={colors.dark} width={80} onClick={UpdateIncome} text="بدلون" />
         <Btn icon={<FontAwesome name="remove" size={24} color={colors.darkGray} />} color={colors.light} textColor={colors.dark} width={80} onClick={deleteIncome} text="حذف" />
       </View>
       </View>

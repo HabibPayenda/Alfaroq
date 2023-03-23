@@ -1,4 +1,4 @@
-import { StyleSheet, Text, SafeAreaView, View, TouchableOpacity, FlatList, Image, ImageBackground, ToastAndroid } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, View, TouchableOpacity, FlatList, ImageBackground } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Entypo } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -9,11 +9,11 @@ import Lottie from 'lottie-react-native';
 import IncomeCard from '../components/IncomeCard';
 import { perHeight, perWidth } from '../functions/heigthWidth';
 import colors from '../functions/colors';
-import Alfarooq from '../functions/Alfarooq';
 import Btn from '../components/Btn';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { getTotalIncome, getIncomes, fetchPageWithUrl, fetchPageWithPageNumber } from '../Redux/Income/incomeSlice';
+import { getTotalExpences } from '../Redux/Expences/expencesSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import ToastMaker from '../functions/ToastMaker';
 
@@ -21,7 +21,6 @@ import ToastMaker from '../functions/ToastMaker';
 export default function IncomeScreen({ navigation }) {
   const [isConnected, setIsConnected] = useState(true);
   const [refreshing] = useState(false);
-  const [etotal, setETotal] = useState(0);
   const [role, setRoll] = useState(null);
 
   const getUser = async () => {
@@ -34,14 +33,11 @@ export default function IncomeScreen({ navigation }) {
 
   const dispatch = useDispatch();
   const { totalIncome, prevPageUrl, nextPageUrl, incomes, currPage, lastPage, firstPage, loading } = useSelector((state) => state.incomeSlice);
-
-  console.log("total income is ", totalIncome)
-  console.log( "prev", prevPageUrl);
-  console.log("next", nextPageUrl);
-  console.log("type", null === prevPageUrl)
+  const { totalExpences } = useSelector((state) => state.expenseSlice);
 
   useEffect(() => {
     dispatch(getTotalIncome());
+    dispatch(getTotalExpences());
     dispatch(getIncomes());
   }, [dispatch]);
 
@@ -57,20 +53,6 @@ export default function IncomeScreen({ navigation }) {
   useEffect(() => {
     getNetworkStatus();
   });
-
-
-  const fetchExpensesTotal = async () => {
-    try {
-      const result = await Alfarooq.get('/expence/total');
-      setETotal(result.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchExpensesTotal();
-  }, []);
 
 
   const showScreen = () => {
@@ -115,7 +97,7 @@ export default function IncomeScreen({ navigation }) {
             </View>
             <View style={styles.currentMoneyContainerRight}>
               <Text style={styles.topViewText}>اوسنۍ پیسې</Text>
-              <Text style={styles.topViewTextMoney}> {`${totalIncome - etotal} افغانۍ`}</Text>
+              <Text style={styles.topViewTextMoney}> {`${totalIncome - totalExpences} افغانۍ`}</Text>
             </View>
 
           </View>
@@ -194,17 +176,17 @@ export default function IncomeScreen({ navigation }) {
         source={require('../../assets/lottie/loadingLottieLine.json')}
         style={{zIndex: 100}}
        />  : null}
-      <FlatList
+      {incomes.length > 0 ? <FlatList
         data={incomes}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item?.id}
         renderItem={({ item }) => {
           return (
             <IncomeCard
               navigation={navigation}
-              id={item.id}
-              name={item.name}
-              money={item.amount}
-              date={item.date}
+              id={item?.id}
+              name={item?.name}
+              money={item?.amount}
+              date={item?.date}
             />
           );
         }}
@@ -218,7 +200,7 @@ export default function IncomeScreen({ navigation }) {
           marginTop: role === 3 ? perHeight(5) : 0
         }}
         contentContainerStyle={styles.screen}
-      />
+      /> : null}
       </View>
     </SafeAreaView>
   );
