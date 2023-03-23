@@ -1,8 +1,7 @@
-import { StyleSheet, Text, ToastAndroid, TextInput, SafeAreaView, Button, View } from 'react-native'
+import { StyleSheet, Text, ToastAndroid, TextInput, SafeAreaView, View } from 'react-native'
 import React, {useState} from 'react';
 import { FontAwesome5 } from '@expo/vector-icons';
 
-import Alfarooq from '../functions/Alfarooq'
 import { perHeight, perWidth } from '../functions/heigthWidth'
 import colors from '../functions/colors'
 import Btn from '../components/Btn'
@@ -37,15 +36,6 @@ export default function AddExpenseScreen() {
       }
       return str;
     };
-
-  function showToast() {
-    ToastAndroid.show('معلومات ذخیره شول!', ToastAndroid.SHORT);
-  }
-  function showToastError() {
-    ToastAndroid.show('اشتباه!', ToastAndroid.SHORT);
-  }
-
-
 
   const AddExpense = async () => {
     try {
