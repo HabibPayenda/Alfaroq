@@ -5,13 +5,16 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 import colors from '../functions/colors'
+import { useDispatch } from 'react-redux';
+import { signOut } from '../Redux/User/userSlice';
 
-export default function Logout({setLocal, iconName}) {
+export default function Logout({iconName}) {
+  const dispatch = useDispatch();
+
   const logout = async () => {
-    await AsyncStorage.removeItem('user')
-    await AsyncStorage.removeItem('token')
-    setLocal(false)
+    dispatch(signOut())
   }
+  
   return (
     <TouchableWithoutFeedback
     onPress={() => {

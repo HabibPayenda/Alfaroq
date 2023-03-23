@@ -7,6 +7,9 @@ import colors from '../functions/colors'
 import Btn from '../components/Btn'
 import AlfarooqLogin from '../functions/AlfarooqLogin';
 
+import { signIn } from '../Redux/User/userSlice';
+import { useDispatch } from 'react-redux';
+
 export default function LoginScreen({setLocal}) {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
@@ -18,20 +21,13 @@ export default function LoginScreen({setLocal}) {
   function showToastError() {
     ToastAndroid.show('اشتباه!', ToastAndroid.SHORT);
   }
+  const dispatch = useDispatch();
 
   const handleLogin = async () => {
+    const data = {name: name, password: password};
     try {
-      const result = await AlfarooqLogin.post('/login', {name: name, password: password}, {
-        onUploadProgress: (progress) => {
-          if (progress.loaded / progress.total === 1) {
-            showToast();
-          }
-        },
-      });
-      result.data.token ? setLocal(true) : false;
-      await AsyncStorage.setItem('token', result.data.token);
-      await AsyncStorage.setItem('userId', JSON.stringify( result.data.user.id));
-      await AsyncStorage.setItem('user', JSON.stringify( result.data.user));
+     dispatch(signIn(data));
+     return 1;
     } catch (error) {
       console.log(error)
       showToastError();
