@@ -45,19 +45,4 @@ export default function TopNavigationContainer() {
       </NavigationContainer>
   );
   }
-
-  // if(token) {
-  //   return (
-  //     <NavigationContainer>
-  //       <MainNavigation />
-  //     </NavigationContainer>
-  // ); 
-    
-  // } else {
-  //   return (
-  //     <NavigationContainer>
-  //       <AuthNavigation />
-  //     </NavigationContainer>
-  // );
-  // }
 }

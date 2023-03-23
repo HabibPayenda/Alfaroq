@@ -36,12 +36,6 @@ export default function IncomeScreen({ navigation }) {
   const { totalExpences } = useSelector((state) => state.expenseSlice);
 
   useEffect(() => {
-    dispatch(getTotalIncome());
-    dispatch(getTotalExpences());
-    dispatch(getIncomes());
-  }, [dispatch]);
-
-  useEffect(() => {
     getUser()
   }, [role])
 

@@ -36,14 +36,6 @@ useEffect(() => {
   getUser()
 }, [role])
 
-  useEffect(() => {
-    dispatch(getExpences())
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(getTotalExpences())
-  }, []);
-
   const showScreen = () => {
     if(role === 3 ) {
       return (
