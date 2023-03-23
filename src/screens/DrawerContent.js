@@ -49,7 +49,7 @@ const adminOptions = () => {
         <MenuItem iconName='cash-plus' name='مرستې' path='مرستې' navigation={navigation} />
         <MenuItem iconName='cash-minus' name='لګونې' path='لګونې' navigation={navigation} />
         {adminOptions()}
-        <Logout iconName='logout' setLocal={setLocal} />
+        <Logout iconName='logout' />
       </View>
 
 

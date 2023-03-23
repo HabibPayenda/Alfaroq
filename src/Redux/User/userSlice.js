@@ -47,6 +47,7 @@ export const addUser = createAsyncThunk(
 const initialState = {
   user: {},
   token: null,
+  noToken: null,
   loading: 'idle',
 };
 
@@ -63,6 +64,7 @@ export const userSlice = createSlice({
 
     builder.addCase(localSignIn.fulfilled, (state, action) => {
       // Code
+      console.log(action.payload);
       state.token = action.payload
     });
 

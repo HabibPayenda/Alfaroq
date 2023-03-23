@@ -113,6 +113,7 @@ const initialState = {
   prevPageUrl: '',
   totalIncome: 0,
   loading: 'idle',
+  incomesDataLoaded: false
 };
 
 export const incomeSlice = createSlice({
@@ -139,6 +140,8 @@ export const incomeSlice = createSlice({
       } else {
         state.prevPageUrl = action.payload.prev_page_url;
       }
+
+      state.incomesDataLoaded = true;
 
     });
 

@@ -117,6 +117,7 @@ const initialState = {
   prevPageUrl: '',
   totalExpences: 0,
   loading: 'idle',
+  expencesDataLoaded: false,
 };
 
 export const expenseSlice = createSlice({
@@ -125,6 +126,7 @@ export const expenseSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getTotalExpences.fulfilled, (state, action) => {
       state.totalExpences = action.payload
+      state.expencesDataLoaded = true;
     });
 
     builder.addCase(getExpences.fulfilled, (state, action) => {
