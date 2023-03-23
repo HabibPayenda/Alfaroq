@@ -32,7 +32,7 @@ if(!role) {
 const adminOptions = () => {
   if(role === 1) {
     return (
-      <MenuItem iconName='account' name='کاروونکي' path='کارونکی' navigation={navigation} />
+      <MenuItem iconName='account' name='کاروونکي' path='کاروونکی' navigation={navigation} />
       )
   }
 }
@@ -47,7 +47,7 @@ const adminOptions = () => {
 
         </View>
         <MenuItem iconName='cash-plus' name='مرستې' path='مرستې' navigation={navigation} />
-        <MenuItem iconName='cash-minus' name='لګونې' path='مصارف' navigation={navigation} />
+        <MenuItem iconName='cash-minus' name='لګونې' path='لګونې' navigation={navigation} />
         {adminOptions()}
         <Logout iconName='logout' setLocal={setLocal} />
       </View>
