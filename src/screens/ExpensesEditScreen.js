@@ -7,11 +7,16 @@ import { perHeight, perWidth } from '../functions/heigthWidth';
 import colors from '../functions/colors';
 import Btn from '../components/Btn';
 import Alfarooq from '../functions/Alfarooq';
+import { removeExpence } from '../Redux/Expences/expencesSlice';
+import { useDispatch } from 'react-redux';
 
 export default function ExpensesEditScreen({ route, navigation }) {
   const { id, discription, money } = route.params;
   const [newDiscription, setNewDiscription] = useState(discription);
   const [newMoney, setNewMoney] = useState(money);
+
+  const dispatch = useDispatch();
+  
 
   function showToast() {
     ToastAndroid.show('معلومات ذخیره شول!', ToastAndroid.SHORT);
@@ -39,15 +44,11 @@ export default function ExpensesEditScreen({ route, navigation }) {
 
   const deleteIncome = async () => {
     try {
-      const result = await Alfarooq.delete(`/expence/${id}`);
-      if (result.data === 1) {
-        showToastDelete();
-        navigation.navigate('All Expenses')
-      }
-      return result;
+      dispatch(removeExpence(id));
+      navigation.navigate('All Expenses');
+      return 1;
     } catch (error) {
       console.log(error)
-      showToastError();
       return error;
     }
   };
@@ -147,11 +148,11 @@ const styles = StyleSheet.create({
   inputArea: {
     width: perWidth(80),
     height: 100,
-    padding: 10,
-    paddingHorizontal: 20,
+    padding: 5,
+    paddingHorizontal: 10,
     marginBottom: 10,
-    borderRadius: 20,
-    backgroundColor: colors.light,
+    borderRadius: 5,
+    backgroundColor: colors.white,
     elevation: 10,
     textAlign: 'right',
     textAlignVertical: 'top'

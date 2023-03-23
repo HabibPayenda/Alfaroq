@@ -52,13 +52,25 @@ export const addExpence = createAsyncThunk(
   }
 );
 
-const AddExpense = async () => {
- 
-};
 
 export const removeExpence = createAsyncThunk('expences/removeExpence', async (id) => {
  // Code 
+ try {
+  const result = await Alfarooq.delete(`/expence/${id}`);
+  if (result.data === 1) {
+    ToastMaker("معلومات له منځه لاړل!")
+  }
+  return id;
+} catch (error) {
+  console.log(error)
+  ToastMaker("له سره هڅه وکړئ!")
+  return error;
+}
 });
+
+const deleteIncome = async () => {
+  
+};
 
 export const fetchExpencePageWithUrl = createAsyncThunk('expences/fetchExpencePageWithUrl', async (url) => {
  // Code 
@@ -127,6 +139,9 @@ export const expenseSlice = createSlice({
 
     builder.addCase(removeExpence.fulfilled, (state, action) => {
       // Code
+      const item = state.expences.filter((item) => item.id === action.payload);
+      state.totalExpences -= (item[0].amount * 1);
+      state.expences = state.expences.filter((item) => item.id !== action.payload);
     });
 
 
