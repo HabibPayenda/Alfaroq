@@ -68,9 +68,24 @@ export const removeExpence = createAsyncThunk('expences/removeExpence', async (i
 }
 });
 
-const deleteIncome = async () => {
-  
-};
+export const updateExpence = createAsyncThunk('expences/updateExpence', async (data) => {
+  // Code 
+  try {
+    const result = await Alfarooq.patch(`/expence/${data.id}`,{discription: data.discription, amount: data.amount } , {
+      onUploadProgress: (progress) => {
+        if (progress.loaded / progress.total === 1) {
+          ToastMaker('معلوماتو بدلون وموند!')
+        }
+      },
+    });
+    return result.data;
+  } catch (error) {
+    ToastMaker('له سره هڅه وکړئ!')
+    return error;
+  }
+ });
+
+
 
 export const fetchExpencePageWithUrl = createAsyncThunk('expences/fetchExpencePageWithUrl', async (url) => {
  // Code 
@@ -142,6 +157,19 @@ export const expenseSlice = createSlice({
       const item = state.expences.filter((item) => item.id === action.payload);
       state.totalExpences -= (item[0].amount * 1);
       state.expences = state.expences.filter((item) => item.id !== action.payload);
+    });
+
+    builder.addCase(updateExpence.fulfilled, (state, action) => {
+      // Code
+      state.expences = state.expences.map((item) => {
+        if(item.id === action.payload.id) {
+          state.totalExpences -= (item.amount * 1);
+          item.amount = action.payload.amount;
+          state.totalExpences += (item.amount * 1);
+          item.discription = action.payload.discription;
+        }
+        return item;
+      })
     });
 
 

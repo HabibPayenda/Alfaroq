@@ -7,8 +7,9 @@ import { perHeight, perWidth } from '../functions/heigthWidth';
 import colors from '../functions/colors';
 import Btn from '../components/Btn';
 import Alfarooq from '../functions/Alfarooq';
-import { removeExpence } from '../Redux/Expences/expencesSlice';
+import { removeExpence, updateExpence } from '../Redux/Expences/expencesSlice';
 import { useDispatch } from 'react-redux';
+import ToastMaker from '../functions/ToastMaker';
 
 export default function ExpensesEditScreen({ route, navigation }) {
   const { id, discription, money } = route.params;
@@ -54,20 +55,14 @@ export default function ExpensesEditScreen({ route, navigation }) {
   };
 
   const updateIncome = async () => {
-    try {
-      const result = await Alfarooq.patch(`/expence/${id}`, {discription: newDiscription, amount: newMoney}, {
-        onUploadProgress: (progress) => {
-          if (progress.loaded / progress.total === 1) {
-            showToast();
-            navigation.navigate('All Expenses');
-          }
-        },
-      });
-      return result;
-    } catch (error) {
-      showToastError();
-      return error;
-    }
+    const data = {id: id, discription: newDiscription, amount: newMoney}
+   try {
+    dispatch(updateExpence(data));
+    navigation.navigate('All Expenses');
+    return 1;
+   } catch (error) {
+    return error;
+  }
   };
 
   return (
@@ -81,7 +76,7 @@ export default function ExpensesEditScreen({ route, navigation }) {
         value={newMoney}
         onChangeText={(text) => {
           const updated = changeNumbers(text);
-          newMoney(updated);
+          setNewMoney(updated);
         }}
         style={styles.input}
       />

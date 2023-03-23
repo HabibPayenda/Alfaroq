@@ -75,10 +75,8 @@ export const updateIncome = createAsyncThunk('incomes/updateIncome', async ({id,
       }
     },
   });
-  console.log(result.data)
   return result.data;
 } catch (error) {
-  console.log(error);
   ToastMaker('بیا هڅه وکړئ!')
   return error;
 }
@@ -161,7 +159,9 @@ export const incomeSlice = createSlice({
       // Code
       state.incomes = state.incomes.map((item) => {
         if(item.id === action.payload.id) {
+          state.totalIncome -= (item.amount * 1);
           item.amount = action.payload.amount;
+          state.totalIncome += (item.amount * 1);
           item.name = action.payload.name;
         }
         return item;
