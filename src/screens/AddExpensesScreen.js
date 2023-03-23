@@ -72,7 +72,7 @@ export default function AddExpenseScreen() {
             const newValu = changeNumbers(text);
             setMoney(newValu);
           } } placeholder='د لګونې مقدار په افغانیو' style={styles.input} />
-          <TextInput value={desc} onChangeText={(text) => setDesc(text)} placeholder='د لګونې معلومات' style={styles.inputArea} />
+          <TextInput multiline value={desc} onChangeText={(text) => setDesc(text)} placeholder='د لګونې معلومات' style={styles.inputArea} />
           <Btn icon={<FontAwesome5 name="check-circle" size={24} color={colors.darkGray} />}  text="ذخیره" color={colors.light} textColor={colors.dark} width={90} onClick={AddExpense} />
       </View>
     </SafeAreaView>

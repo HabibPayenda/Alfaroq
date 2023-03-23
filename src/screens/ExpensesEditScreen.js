@@ -89,6 +89,7 @@ export default function ExpensesEditScreen({ route, navigation }) {
         value={newDiscription}
         onChangeText={(text) => setNewDiscription(text)}
         style={styles.inputArea}
+        multiline
       />
       <View style={styles.btnContainer}>
         <Btn icon={<FontAwesome name="edit" size={24} color={colors.darkGray} />} color={colors.light} textColor={colors.dark} width={80} onClick={updateIncome} text="بدلون" />
