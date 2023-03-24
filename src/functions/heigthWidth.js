@@ -1,5 +1,5 @@
 import { Dimensions } from 'react-native';
-const { height, width } = Dimensions.get('screen');
+const { height, width } = Dimensions.get('window');
 
 export const perHeight = function heigthWidth(value = 1) {
   let result = 0;
