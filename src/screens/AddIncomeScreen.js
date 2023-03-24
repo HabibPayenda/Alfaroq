@@ -72,17 +72,7 @@ export default function AddIncomeScreen() {
         placeholder="د مرستې کونکي نوم"
         style={styles.input}
       />
-      <View style={styles.selectDateContainer}>
-        <TextInput
-        value={date}
-        onChangeText={(text) => setName(text)}
-        placeholder="د مرستې نېټه"
-        style={styles.dateInput}
-        editable={false}
-      />
-       <Btn marginVertical={0} icon={<FontAwesome name="calendar" size={24} color={colors.darkGray} />} color={colors.light} textColor={colors.dark} width={80}  text="جنتري" onClick={()=> setShowModal(true)} />
 
-      </View>
       <TextInput
         keyboardType="number-pad"
         value={money}
@@ -93,6 +83,18 @@ export default function AddIncomeScreen() {
         placeholder="د مرستې مقدار په افغانیو"
         style={styles.input}
       />
+      <View style={styles.selectDateContainer}>
+        <TextInput
+          value={date}
+          onChangeText={(text) => setName(text)}
+          placeholder="د مرستې نېټه"
+          style={styles.dateInput}
+          editable={false}
+        />
+        <Text style={{color: colors.light, fontSize: 18, fontWeight: 'bold'}}>تاریخ:</Text>
+       <Btn marginVertical={0} icon={<FontAwesome name="calendar" size={24} color={colors.darkGray} />} color={colors.light} textColor={colors.dark} width={80}  text="جنتري" onClick={()=> setShowModal(true)} />
+
+      </View>
       <Btn  icon={<FontAwesome5 name="check-circle" size={24} color={colors.darkGray} />} onClick={AddIncome} text="ذخیره" color={colors.light} textColor={colors.dark} width={90} />
 
       </View>
