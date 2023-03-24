@@ -7,7 +7,7 @@ import { perHeight, perWidth } from '../functions/heigthWidth'
 export default function ExpenseCard({ isAdmin ,money, discription, date, navigation, id }) {
   const newDate = date.split('-');
   return (
-    <TouchableWithoutFeedback onLongPress={() => isAdmin === 1 ?  navigation.navigate('ExpencesEdit', {id, discription, money}): null}>
+    <TouchableWithoutFeedback onLongPress={() => isAdmin === 1 || isAdmin === 2 ?  navigation.navigate('ExpencesEdit', {id, discription, money}): null}>
       <View style={styles.container}>
         <View style={styles.desccContainer}>
           <Text style={styles.expenseText}>{`${money} افغانۍ`}</Text>

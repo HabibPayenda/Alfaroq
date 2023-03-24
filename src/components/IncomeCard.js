@@ -7,7 +7,7 @@ import { perHeight, perWidth } from '../functions/heigthWidth';
 export default function IncomeCard({isAdmin, id, name, money, date, navigation }) {
   const newDate = date.split('-');
   return (
-    <TouchableWithoutFeedback onLongPress={() => isAdmin === 1 ? navigation.navigate('IncomeOneItem', {id, name, money}) : null} >
+    <TouchableWithoutFeedback onLongPress={() => isAdmin === 1 || isAdmin === 2 ? navigation.navigate('IncomeOneItem', {id, name, money}) : null} >
       <View style={styles.container}>
         <View style={styles.descContainer}>
           <View style={styles.nameContainer}>
