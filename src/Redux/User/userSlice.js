@@ -11,7 +11,7 @@ export const signIn = createAsyncThunk(
     const result = await AlfarooqLogin.post('/login', {name: data.name, password: data.password}, {
       onUploadProgress: (progress) => {
         if (progress.loaded / progress.total === 1) {
-          ToastMaker('ننوتل')
+          ToastMaker('صبر وکړئ!')
         }
       },
     });
@@ -20,7 +20,7 @@ export const signIn = createAsyncThunk(
     return result.data
   } catch (error) {
     console.log(error)
-    showToastError();
+    ToastMaker('له سره هڅه کړئ!')
     return error;
   }
   },

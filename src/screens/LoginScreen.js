@@ -2,7 +2,7 @@ import { StyleSheet, Text, Image, View, TextInput, Button, ToastAndroid, AsyncSt
 import React, {useState} from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { perWidth } from '../functions/heigthWidth'
+import { perHeight, perWidth } from '../functions/heigthWidth'
 import colors from '../functions/colors'
 import Btn from '../components/Btn'
 import AlfarooqLogin from '../functions/AlfarooqLogin';
@@ -29,8 +29,6 @@ export default function LoginScreen({setLocal}) {
      dispatch(signIn(data));
      return 1;
     } catch (error) {
-      console.log(error)
-      showToastError();
       return error;
     }
   };
@@ -38,11 +36,13 @@ export default function LoginScreen({setLocal}) {
 
   return (
     <View style={styles.loginScreen}>
-      <Image style={styles.logo} source={require('../../assets/logo.png')} />
+      <View style={styles.logoContainer}>
+        <Image style={styles.logo} source={require('../../assets/logo.png')} />
+      </View>
       <View style={styles.form}>
         <TextInput style={styles.input} value={name} onChangeText={(text) => setName(text)} placeholder='نوم' />
-        <TextInput style={styles.input} value={password} onChangeText={(text) => setPassword(text)} placeholder='پټه کلیمه' />
-        <Btn color={colors.midGray} text="ننوتل" onClick={() => handleLogin()}/>
+        <TextInput secureTextEntry style={styles.input} value={password} onChangeText={(text) => setPassword(text)} placeholder='پټه کلیمه' />
+        <Btn color={colors.darkGray} textColor={colors.light} text="ننوتل" onClick={() => handleLogin()}/>
       </View>
     </View>
   )
@@ -53,13 +53,25 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '100%'
+    height: '100%',
+    backgroundColor: colors.white
+   },
+   logoContainer: {
+    backgroundColor: colors.white,
+    marginBottom: perHeight(5),
+    borderColor: colors.darkGray,
+    borderWidth: 2,
+    height: perHeight(15),
+    width: perHeight(15),
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 100,
+    elevation: 5
    },
   logo: {
-    height: 100,
-    width: 100,
+    height: perHeight(14),
+    width: perHeight(14),
     borderRadius: 100,
-    marginBottom: 30
   },
   form: {
     display: 'flex',
@@ -72,8 +84,8 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingHorizontal: 20,
     marginBottom: 10,
-    borderRadius: 30,
-    backgroundColor: colors.light,
-    elevation: 10,
+    borderRadius: 5,
+    backgroundColor: colors.white,
+    elevation: 5
   },
 })
