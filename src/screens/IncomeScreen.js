@@ -1,4 +1,4 @@
-import { StyleSheet, Text, SafeAreaView, View, TouchableOpacity, FlatList, ImageBackground } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, View, TouchableOpacity, FlatList, ImageBackground, Dimensions } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Entypo } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -10,36 +10,20 @@ import IncomeCard from '../components/IncomeCard';
 import { perHeight, perWidth } from '../functions/heigthWidth';
 import colors from '../functions/colors';
 import Btn from '../components/Btn';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { getTotalIncome, getIncomes, fetchPageWithUrl, fetchPageWithPageNumber } from '../Redux/Income/incomeSlice';
-import { getTotalExpences } from '../Redux/Expences/expencesSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import ToastMaker from '../functions/ToastMaker';
+import { fetchPageWithPageNumber, fetchPageWithUrl } from '../Redux/Income/incomeSlice';
 
 
 export default function IncomeScreen({ navigation }) {
   const [isConnected, setIsConnected] = useState(true);
   const [refreshing] = useState(false);
-  const [role, setRoll] = useState(null);
-
-  const getUser = async () => {
-    let user = await AsyncStorage.getItem('user');
-    user = JSON.parse(user)
-    if (user) {
-      setRoll(user.isAdmin)
-    }
-  }
 
   const dispatch = useDispatch();
   const { totalIncome, prevPageUrl, nextPageUrl, incomes, currPage, lastPage, firstPage, loading } = useSelector((state) => state.incomeSlice);
   const { totalExpences } = useSelector((state) => state.expenseSlice);
   const { user } = useSelector((state) => state.userSlice);
-
-
-  useEffect(() => {
-    getUser()
-  }, [role])
 
   const getNetworkStatus = async () => {
     const { isInternetReachable } = await Network.getNetworkStateAsync();
@@ -50,23 +34,24 @@ export default function IncomeScreen({ navigation }) {
     getNetworkStatus();
   });
 
+  const deviceHeigth = Dimensions.get('window').height;
 
   const showScreen = () => {
-    if (role === 3) {
+    if (user.isAdmin === 3) {
       return (
         <View style={styles.topViewUser}>
-          <View style={styles.navigationUser}>
+          <View style={styles.navigation}>
             <View style={styles.navigationNums}>
-              <Btn text="1"  color={colors.blue} width={perWidth(13)} />
+              <Btn borderWidth={1} borderColor={colors.light} textColor={colors.light} text="1" color={colors.darkGray} width={30} height={30} onClick={() => currPage !== firstPage ? dispatch(fetchPageWithPageNumber(firstPage)) : ToastMaker('همدا لومړۍ صفحه ده!')} />
             </View>
-            <Btn text="Prev"  color={colors.yellow} width={perWidth(13)} />
+            <Btn borderWidth={1} borderColor={colors.light} onClick={() => prevPageUrl !== null ? dispatch(fetchPageWithUrl(prevPageUrl)) : ToastMaker('همدا لومړۍ صفحه ده!') } text={<MaterialCommunityIcons name="page-previous" size={24} color={colors.light} />}  color={colors.darkGray} width={perWidth(13)} />
 
             <View style={styles.navigationNums}>
-              <Text style={styles.curPageNum}> {currPage} </Text>
+              <Text style={[styles.curPageNum]}> {currPage} </Text>
             </View>
-            <MaterialCommunityIcons name="page-next" size={24} color="black" />
+            <Btn borderWidth={1} borderColor={colors.light} onClick={() => nextPageUrl !== null ? dispatch(fetchPageWithUrl(nextPageUrl)) : ToastMaker('همدا آخري صفحه ده!') } text={<MaterialCommunityIcons name="page-next"  size={24} color={colors.light} />} color={colors.darkGray}  width={perWidth(13)} />
             <View style={styles.navigationNums}>
-              <Btn text={lastPage}  color={colors.blue} width={perWidth(13)} />
+              <Btn borderWidth={1} borderColor={colors.light} textColor={colors.light} text={lastPage} onClick={() => currPage !== lastPage ? dispatch(fetchPageWithPageNumber(lastPage)) : ToastMaker('همدا آخري صفحه ده!')}  color={colors.darkGray} width={30} height={30} />
             </View>
           </View>
         </View>)
@@ -193,8 +178,8 @@ export default function IncomeScreen({ navigation }) {
         }}
         style={{
           width: perWidth(100),
-          height: role === 3 ? perHeight(100) : perHeight(50),
-          marginTop: role === 3 ? perHeight(5) : 0
+          height: user.isAdmin === 3 ? (deviceHeigth / 100) * 78 : perHeight(50),
+          marginTop: user.isAdmin === 3 ? perHeight(5) : 0
         }}
         contentContainerStyle={styles.screen}
       /> : null}
@@ -206,7 +191,7 @@ export default function IncomeScreen({ navigation }) {
 const styles = StyleSheet.create({
   topViewUser: {
     backgroundColor: colors.light,
-    height: perHeight(10),
+    height: 100,
     width: perWidth(100),
     display: 'flex',
     alignItems: 'center',
