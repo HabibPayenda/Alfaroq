@@ -2,10 +2,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { api } from '../../env.js'
 
-
-
-// eslint-disable-next-line import/no-mutable-exports
-
 const Alfarooq = axios.create({
   baseURL:
     api,
@@ -21,7 +17,6 @@ Alfarooq.interceptors.request.use(
   async (config) => {
     let token = await AsyncStorage.getItem('token');
     token = token.replace(/['"]+/g, '');
-    console.log(`Token in instance is: ${token}`);
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;

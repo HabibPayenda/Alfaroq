@@ -1,9 +1,5 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {api} from '../../env.js'
-
-
-// eslint-disable-next-line import/no-mutable-exports
 
 const AlfarooqLogin = axios.create({
   baseURL:
