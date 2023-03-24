@@ -1,4 +1,4 @@
-import { StyleSheet, Text, SafeAreaView, View, FlatList, TouchableOpacity, ImageBackground } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, View, FlatList, TouchableOpacity, ImageBackground, Dimensions } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Entypo } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -12,9 +12,13 @@ import ExpenseCard from '../components/ExpensesCard';
 import Btn from '../components/Btn';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import {getExpences, getTotalExpences, fetchExpencePageWithPageNumber, fetchExpencePageWithUrl} from '../Redux/Expences/expencesSlice';
+import { fetchExpencePageWithPageNumber, fetchExpencePageWithUrl} from '../Redux/Expences/expencesSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import ToastMaker from '../functions/ToastMaker';
+
+
+const deviceHeigth = Dimensions.get('window').height;
+
 
 export default function ExpensesScreen({ navigation }) {
   const [refreshing, setRefreshing] = useState(false);
@@ -42,20 +46,20 @@ useEffect(() => {
     if(role === 3 ) {
       return (
     <View style={styles.topViewUser}>
-        <View style={styles.navigationUser}>
-          <View style={styles.navigationNums}>
-            <Btn onClick={() => prevPageUrl !== null ? dispatch(fetchExpencePageWithPageNumber(firstPage)) : ToastMaker('همدا لومړۍ صفحه ده!') } text="1"  color={colors.blue} width={perWidth(13)} />
-          </View>
-          <Btn onClick={() => prevPageUrl !== null ? dispatch(fetchExpencePageWithUrl(prevPageUrl)) : ToastMaker('همدا لومړۍ صفحه ده!') } text="Prev" color={colors.yellow} width={perWidth(13)} />
-
-          <View style={styles.navigationNums}>
-            <Text style={styles.curPageNum}> {currPage} </Text>
-          </View>
-          <Btn onClick={() => prevPageUrl !== null ? dispatch(fetchExpencePageWithUrl(nextPageUrl)) : ToastMaker('همدا آخري صفحه ده!') } text="Next"  width={perWidth(13)} />
-          <View style={styles.navigationNums}>
-            <Btn onClick={() => prevPageUrl !== null ? dispatch(fetchExpencePageWithPageNumber(lastPage)) : ToastMaker('همدا آخري صفحه ده!') }  text={lastPage} color={colors.blue} width={perWidth(13)} />
-          </View>
+      <View style={styles.navigation}>
+        <View style={styles.navigationNums}>
+          <Btn onClick={() => prevPageUrl !== null ? dispatch(fetchExpencePageWithPageNumber(firstPage)) : ToastMaker('همدا لومړۍ صفحه ده!') } borderWidth={1} borderColor={colors.light} textColor={colors.light} text="1" color={colors.darkGray} width={30} height={30} />
         </View>
+        <Btn onClick={() => prevPageUrl !== null ? dispatch(fetchExpencePageWithUrl(prevPageUrl)) : ToastMaker('همدا لومړۍ صفحه ده!') } borderWidth={1} borderColor={colors.light} text={<MaterialCommunityIcons name="page-previous" size={24} color={colors.light} />} color={colors.darkGray} width={perWidth(13)} />
+
+        <View style={styles.navigationNums}>
+          <Text style={styles.curPageNum}> {currPage} </Text>
+        </View>
+        <Btn onClick={() => nextPageUrl !== null ? dispatch(fetchExpencePageWithUrl(nextPageUrl)) : ToastMaker('همدا آخري صفحه ده!') } borderWidth={1} borderColor={colors.light} text={<MaterialCommunityIcons name="page-next" size={24} color={colors.light} />} color={colors.darkGray} width={perWidth(13)} />
+        <View style={styles.navigationNums}>
+          <Btn onClick={() => nextPageUrl !== null ? dispatch(fetchExpencePageWithPageNumber(lastPage)) : ToastMaker('همدا آخري صفحه ده!') }  borderWidth={1} borderColor={colors.light} textColor={colors.light} text={lastPage} color={colors.darkGray} width={30} height={30} />
+        </View>
+      </View>
         </View>)
     } else { 
       return(
@@ -158,10 +162,8 @@ useEffect(() => {
         }}
         style={{
           width: perWidth(100),
-           height: role === 3 ? perHeight(100) : perHeight(50),
-           marginTop: role === 3 ? perHeight(5) : 0
-          }
-          }
+          height: user.isAdmin === 3 ? (deviceHeigth / 100) * 78 : (deviceHeigth / 100) * 50,
+        }}
         contentContainerStyle={styles.screen}
       >
         <ExpenseCard />
@@ -174,12 +176,13 @@ useEffect(() => {
 
 const styles = StyleSheet.create({
   topViewUser: {
-    backgroundColor: colors.light,
-    height: perHeight(10),
+    backgroundColor: colors.white,
+    height: (deviceHeigth / 100) * 10,
     width: perWidth(100),
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: (deviceHeigth / 100) * 3,
   },
   topView: {
     backgroundColor: colors.light,

@@ -182,7 +182,7 @@ export default function IncomeScreen({ navigation }) {
         }}
         style={{
           width: perWidth(100),
-          height: user.isAdmin === 3 ? (deviceHeigth / 100) * 78 : perHeight(50),
+          height: user.isAdmin === 3 ? (deviceHeigth / 100) * 78 : (deviceHeigth / 100) * 50,
         }}
         contentContainerStyle={styles.screen}
       /> : null}
