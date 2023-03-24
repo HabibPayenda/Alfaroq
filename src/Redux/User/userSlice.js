@@ -42,8 +42,26 @@ export const signOut = createAsyncThunk('user/signOut', async () => {
 
 export const addUser = createAsyncThunk(
   'user/addUser',
-  async (book) => {
+  async (data) => {
     // Code 
+    try {
+      const result = await AlfarooqLogin.post('/Newregister', {name: data.name, password: data.password, isAdmin: data.isAdmin}, {
+        onUploadProgress: (progress) => {
+          if (progress.loaded / progress.total === 1) {
+            ToastMaker("صبر وکړئ!")
+          }
+        },
+      });
+  
+      if(result.data.user) {
+        ToastMaker('نوی کاروونکی ذخیره شو!')
+      }
+      return 1;
+    } catch (error) {
+      console.log(error)
+      ToastMaker('معلومات ناسم دي!')
+      return error;
+    }
   }
 );
 

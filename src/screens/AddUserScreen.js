@@ -1,4 +1,4 @@
-import { StyleSheet, View, TextInput, ToastAndroid, Modal, Text,TouchableOpacity } from 'react-native';
+import { StyleSheet, View, TextInput, Modal, Text,TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
 import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -7,7 +7,8 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import Btn from '../components/Btn';
 import colors from '../functions/colors';
 import { perHeight, perWidth } from '../functions/heigthWidth';
-import AlfarooqLogin from '../functions/AlfarooqLogin';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../Redux/User/userSlice';
 
 export default function AddUserScreen() {
   const [name, setName] = useState('');
@@ -15,17 +16,7 @@ export default function AddUserScreen() {
   const [showModal, setShowModal] = useState(false);
   const [userType, setUserType] = useState(3);
 
-  function showToast() {
-    ToastAndroid.show('صبر وکړئ!', ToastAndroid.SHORT);
-  }
-
-  function showToastSuccess() {
-    ToastAndroid.show(`${name} اضافه شو!`, ToastAndroid.SHORT);
-  }
-
-  function showToastError() {
-    ToastAndroid.show('اشتباه!', ToastAndroid.SHORT);
-  }
+  const dispatch = useDispatch();
 
   const handleRegister = async () => {
     const data = {
@@ -33,25 +24,7 @@ export default function AddUserScreen() {
       password: password,
       isAdmin: userType
     }
-    console.log(data)
-    try {
-      const result = await AlfarooqLogin.post('/Newregister', data, {
-        onUploadProgress: (progress) => {
-          if (progress.loaded / progress.total === 1) {
-            showToast();
-          }
-        },
-      });
-
-      if(result.data.user) {
-        showToastSuccess()
-      }
-
-    } catch (error) {
-      console.log(error)
-      showToastError();
-      return error;
-    }
+    dispatch(addUser(data))
   };
 
   const setViewer = () => {

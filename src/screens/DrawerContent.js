@@ -16,6 +16,8 @@ const DrawerContent = ({ navigation }) => {
 
 const { user } = useSelector((state) => state.userSlice);
 
+console.log(user);
+
 const adminOptions = () => {
   if(user.isAdmin === 1) {
     return (
