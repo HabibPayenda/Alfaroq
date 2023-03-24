@@ -24,7 +24,7 @@ export default function IncomeCard({isAdmin, id, name, money, date, navigation }
  
     if(date.includes(140)) {
       newDate = date.split('/');
-      newDate[1] = months[newDate[(1)] * 1]
+      newDate[1] = months[newDate[1] * 1]
     } else {
       newDate = date.split('-');
     }
