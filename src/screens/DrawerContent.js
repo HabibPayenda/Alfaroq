@@ -9,17 +9,11 @@ import { DrawerContentScrollView } from "@react-navigation/drawer";
 import MenuItem from "../components/MenuItem";
 import Logout from "../components/logOut";
 import colors from "../functions/colors";
-import { useSelector } from "react-redux";
 
 
-const DrawerContent = ({ navigation }) => {
-
-const { user } = useSelector((state) => state.userSlice);
-
-console.log(user);
-
+const DrawerContent = ({ isAdmin, navigation }) => {
 const adminOptions = () => {
-  if(user.isAdmin === 1) {
+  if(isAdmin === 1) {
     return (
       <MenuItem iconName='account' name='کاروونکي' path='کاروونکی' navigation={navigation} />
       )

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import DrawerContent from "../screens/DrawerContent";
@@ -12,10 +12,10 @@ import AddExpenseScreen from "../screens/AddExpensesScreen";
 import ExpensesSearchScreen from "../screens/ExpensesSearchScreen";
 import ExpensesSearchDateScreen from "../screens/ExpensesSearchDateScreen";
 import ExpensesEditScreen from "../screens/ExpensesEditScreen";
-import LoginScreen from "../screens/LoginScreen";
 import AddUserScreen from "../screens/AddUserScreen";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import UserExpensesScreen from "../screens/UserExpensesScreen";
+import { useSelector } from "react-redux";
+
+
 const Stack = createStackNavigator();
 
 function IncomeStack() {
@@ -57,12 +57,13 @@ const Drawer = createDrawerNavigator();
 
 
 
-const DrawerNavigator = ({ setLocal }) => {
+const DrawerNavigator = () => {
+const { user } = useSelector((state) => state.userSlice);
 
 return (
   <Drawer.Navigator
    defaultScreenOptions={IncomeStack}
-   drawerContent={(props) => <DrawerContent {...props} setLocal={setLocal} />}
+   drawerContent={(props) => <DrawerContent {...props} isAdmin={user.isAdmin} />}
    >
   <Drawer.Screen name="مرستې" component={IncomeStack} />
   <Drawer.Screen name="لګونې" component={ExpenseStack} />
