@@ -16,6 +16,11 @@ import ToastMaker from '../functions/ToastMaker';
 import { fetchPageWithPageNumber, fetchPageWithUrl } from '../Redux/Income/incomeSlice';
 
 
+
+const deviceHeigth = Dimensions.get('window').height;
+
+
+
 export default function IncomeScreen({ navigation }) {
   const [isConnected, setIsConnected] = useState(true);
   const [refreshing] = useState(false);
@@ -34,7 +39,6 @@ export default function IncomeScreen({ navigation }) {
     getNetworkStatus();
   });
 
-  const deviceHeigth = Dimensions.get('window').height;
 
   const showScreen = () => {
     if (user.isAdmin === 3) {
@@ -179,7 +183,6 @@ export default function IncomeScreen({ navigation }) {
         style={{
           width: perWidth(100),
           height: user.isAdmin === 3 ? (deviceHeigth / 100) * 78 : perHeight(50),
-          marginTop: user.isAdmin === 3 ? perHeight(5) : 0
         }}
         contentContainerStyle={styles.screen}
       /> : null}
@@ -190,12 +193,13 @@ export default function IncomeScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   topViewUser: {
-    backgroundColor: colors.light,
-    height: 100,
+    backgroundColor: colors.white,
+    height: (deviceHeigth / 100) * 10,
     width: perWidth(100),
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: (deviceHeigth / 100) * 3,
   },
   topView: {
     backgroundColor: colors.light,
