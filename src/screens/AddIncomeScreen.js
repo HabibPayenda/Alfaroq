@@ -1,8 +1,9 @@
-import { StyleSheet, Text, TextInput, SafeAreaView, View } from 'react-native';
+import { StyleSheet, Text, TextInput, SafeAreaView, View, Modal, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
 import { FontAwesome5 } from '@expo/vector-icons';
 import JalaliCalendarPicker from 'react-native-persian-jalali-calendar-picker';
 import { FontAwesome } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 
 
 import { perHeight, perWidth } from '../functions/heigthWidth';
@@ -11,14 +12,15 @@ import Btn from '../components/Btn';
 import { addIncome } from '../Redux/Income/incomeSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
-import { ScrollView } from 'react-native-gesture-handler';
 import moment from 'moment-jalaali';
+import { ScrollView } from 'react-native-gesture-handler';
 
 export default function AddIncomeScreen() {
 
   const [name, setName] = useState('');
   const [money, setMoney] = useState('');
   const [date, setDate] = useState(moment().format('jYYYY/jMM/jDD'));
+  const [showModal, setShowModal] = useState(false);
 
   const navigation = useNavigation();
 
@@ -78,7 +80,7 @@ export default function AddIncomeScreen() {
         style={styles.dateInput}
         editable={false}
       />
-       <Btn marginVertical={0} icon={<FontAwesome name="calendar" size={24} color={colors.darkGray} />} color={colors.light} textColor={colors.dark} width={80}  text="جنتري" />
+       <Btn marginVertical={0} icon={<FontAwesome name="calendar" size={24} color={colors.darkGray} />} color={colors.light} textColor={colors.dark} width={80}  text="جنتري" onClick={()=> setShowModal(true)} />
 
       </View>
       <TextInput
@@ -94,9 +96,32 @@ export default function AddIncomeScreen() {
       <Btn  icon={<FontAwesome5 name="check-circle" size={24} color={colors.darkGray} />} onClick={AddIncome} text="ذخیره" color={colors.light} textColor={colors.dark} width={90} />
 
       </View>
-      <ScrollView>
-        <JalaliCalendarPicker  onDateChange={date => setDate(date) }/>
-      </ScrollView>
+      
+     
+        <Modal
+        animationType='slide'
+        visible={showModal}
+        onRequestClose={() => setShowModal(false)}
+        transparent={true}
+      >
+        <View style={styles.modal}>
+          <View style={styles.modalContent}>
+            <View style={styles.modalContentTop}>
+              <TouchableOpacity onPress={() => setShowModal(false)}>
+                 <AntDesign name="closecircleo" size={24} color={colors.dark} />
+              </TouchableOpacity>
+            </View>
+            <View style={styles.modalContentBottom}>
+              <ScrollView>
+                <JalaliCalendarPicker   onDateChange={date => {
+                  setDate(date);
+                  setShowModal(false)
+                } }/>
+              </ScrollView>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -153,5 +178,28 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     elevation: 10,
     color: colors.darkGray
-  }
+  },
+  modal: {
+    width: perWidth(100),
+    height: perHeight(40),
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    marginTop: perHeight(20),
+    zIndex: 100
+  },
+  modalContent: {
+    backgroundColor: colors.light,
+    padding: 15, 
+    borderRadius: 5,
+    borderColor: colors.light,
+    borderWidth: 1,
+    elevation: 10
+  },
+  modalContentTop: {
+    alignItems: 'flex-end'
+  },
+  modalContentBottom: {
+    marginTop: 10
+  },
 });
