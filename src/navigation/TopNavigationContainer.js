@@ -8,6 +8,7 @@ import AuthNavigation from './AuthNavigation';
 import { localSignIn } from '../Redux/User/userSlice';
 import { getExpences, getTotalExpences } from '../Redux/Expences/expencesSlice';
 import { getIncomes, getTotalIncome } from '../Redux/Income/incomeSlice';
+import { StatusBar } from 'expo-status-bar';
 
 export default function TopNavigationContainer() {
   const { token } = useSelector((state) => state.userSlice);
@@ -26,23 +27,27 @@ export default function TopNavigationContainer() {
     dispatch(localSignIn())
   }, []);
 
-  console.log(totalExpences);
-
   if (token && !incomesDataLoaded) {
     init();
   }
   else if(token && incomesDataLoaded) {
     return (
+      <>
+      <StatusBar style='dark' />
       <NavigationContainer>
         <MainNavigation />
       </NavigationContainer>
+      </>
   ); 
     
   } else if (!token) {
     return (
+      <>
+      <StatusBar style='dark' />
       <NavigationContainer>
         <AuthNavigation />
       </NavigationContainer>
+      </>
   );
   }
 }
