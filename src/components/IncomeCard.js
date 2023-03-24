@@ -5,7 +5,30 @@ import colors from '../functions/colors';
 import { perHeight, perWidth } from '../functions/heigthWidth';
 
 export default function IncomeCard({isAdmin, id, name, money, date, navigation }) {
-  const newDate = date.split('-');
+  let newDate;
+
+  const months = {
+    1: 'حمل',
+    2: 'ثور',
+    3: 'جوزا',
+    4: 'سرطان',
+    5: 'اسد',
+    6: 'سنبله',
+    7: 'میزان',
+    8: 'عقرب',
+    9: 'قوس',
+    10: 'جدی',
+    11: 'دلو',
+    12: 'حوت',
+  }
+ 
+    if(date.includes(140)) {
+      newDate = date.split('/');
+      newDate[1] = months[newDate[(1)] * 1]
+    } else {
+      newDate = date.split('-');
+    }
+  
   return (
     <TouchableWithoutFeedback onLongPress={() => isAdmin === 1 || isAdmin === 2 ? navigation.navigate('IncomeOneItem', {id, name, money}) : null} >
       <View style={styles.container}>

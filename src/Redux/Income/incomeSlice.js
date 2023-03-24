@@ -147,6 +147,7 @@ export const incomeSlice = createSlice({
 
     builder.addCase(addIncome.fulfilled, (state, action) => {
       // Code
+      console.log(action.payload)
       state.incomes = [action.payload, ...state.incomes]
       state.totalIncome += (action.payload.amount * 1);
     });
