@@ -1,36 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   StyleSheet,
   View,
   Image
 } from "react-native";
 
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { DrawerContentScrollView } from "@react-navigation/drawer";
 import MenuItem from "../components/MenuItem";
 import Logout from "../components/logOut";
 import colors from "../functions/colors";
+import { useSelector } from "react-redux";
 
 
-const DrawerContent = ({navigation, setLocal}) => {
-const [role, setRoll] = useState(null);
-const getUser = async () => {
-  const user = await AsyncStorage.getItem('user');
-  console.log(user)
-  if(user) {
-    const userObj = JSON.parse(user);
-    setRoll(userObj.isAdmin)
-    console.log(role)
-  }
-}
-if(!role) {
-  getUser()
-}
+const DrawerContent = ({ navigation }) => {
 
-
+const { user } = useSelector((state) => state.userSlice);
 
 const adminOptions = () => {
-  if(role === 1) {
+  if(user.isAdmin === 1) {
     return (
       <MenuItem iconName='account' name='کاروونکي' path='کاروونکی' navigation={navigation} />
       )

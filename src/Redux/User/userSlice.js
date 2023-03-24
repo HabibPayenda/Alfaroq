@@ -16,6 +16,7 @@ export const signIn = createAsyncThunk(
       },
     });
     await AsyncStorage.setItem('token', result.data.token);
+    await AsyncStorage.setItem('user', JSON.stringify(result.data.user));
     return result.data
   } catch (error) {
     console.log(error)
@@ -28,12 +29,14 @@ export const signIn = createAsyncThunk(
 export const localSignIn = createAsyncThunk('user/localSignIn', async () => {
  // Code 
  const token = await AsyncStorage.getItem('token');
- return token;
+ const user = await AsyncStorage.getItem('user');
+ return {token, user};
 });
 
 export const signOut = createAsyncThunk('user/signOut', async () => {
  // Code 
  await AsyncStorage.removeItem('token');
+ await AsyncStorage.removeItem('user');
  return null;
 });
 
@@ -49,6 +52,7 @@ const initialState = {
   token: null,
   noToken: null,
   loading: 'idle',
+  role: null,
 };
 
 export const userSlice = createSlice({
@@ -59,18 +63,18 @@ export const userSlice = createSlice({
      // Code
      state.token = action.payload.token;
      state.user = action.payload.user;
-      console.log(action.payload)
     });
 
     builder.addCase(localSignIn.fulfilled, (state, action) => {
       // Code
-      console.log(action.payload);
-      state.token = action.payload
+      state.token = action.payload.token;
+      state.user = action.payload.user;
     });
 
     builder.addCase(signOut.fulfilled, (state, action) => {
       // Code
       state.token = action.payload;
+      state.user = {};
     });
 
     builder.addCase(addUser.fulfilled, (state, action) => {

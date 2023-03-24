@@ -12,7 +12,6 @@ import { StatusBar } from 'expo-status-bar';
 
 export default function TopNavigationContainer() {
   const { token } = useSelector((state) => state.userSlice);
-  const { totalExpences } = useSelector((state) => state.expenseSlice);
   const { incomesDataLoaded } = useSelector((state) => state.incomeSlice);
   const dispatch = useDispatch();
   
