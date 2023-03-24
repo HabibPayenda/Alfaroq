@@ -12,3 +12,4 @@ export const perWidth = function heigthWidth(value) {
   result = (width / 100 ) * value;
   return result;
 };
+

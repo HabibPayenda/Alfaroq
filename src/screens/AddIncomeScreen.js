@@ -1,6 +1,9 @@
 import { StyleSheet, Text, TextInput, SafeAreaView, View } from 'react-native';
 import React, { useState } from 'react';
 import { FontAwesome5 } from '@expo/vector-icons';
+import JalaliCalendarPicker from 'react-native-persian-jalali-calendar-picker';
+import { FontAwesome } from '@expo/vector-icons';
+
 
 import { perHeight, perWidth } from '../functions/heigthWidth';
 import colors from '../functions/colors';
@@ -8,18 +11,21 @@ import Btn from '../components/Btn';
 import { addIncome } from '../Redux/Income/incomeSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
+import { ScrollView } from 'react-native-gesture-handler';
+import moment from 'moment-jalaali';
 
 export default function AddIncomeScreen() {
 
   const [name, setName] = useState('');
   const [money, setMoney] = useState('');
+  const [date, setDate] = useState(moment().format('jYYYY/jMM/jDD'));
 
   const navigation = useNavigation();
 
   const dispatch = useDispatch();
 
-  var date = new Date();
-  var current_date = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+  // var date = new Date();
+  // var current_date = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
 
   var afghanNumbers = ['۰', '۱', /۲/g, /۳/g, /٤/g, /۴/g, /۵/g, /٦/g, /۶/g, /۷/g, /۸/g, /۹/g],
   englishNumbers = [0, 1, 2, 3, 4, 4, 5, 6, 6, 7, 8, 9],
@@ -38,7 +44,7 @@ export default function AddIncomeScreen() {
   const data = {
     name: name,
     amount: money,
-    date: current_date,
+    date: date,
   };
 
   const AddIncome = async () => {
@@ -64,6 +70,17 @@ export default function AddIncomeScreen() {
         placeholder="د مرستې کونکي نوم"
         style={styles.input}
       />
+      <View style={styles.selectDateContainer}>
+        <TextInput
+        value={date}
+        onChangeText={(text) => setName(text)}
+        placeholder="د مرستې نېټه"
+        style={styles.dateInput}
+        editable={false}
+      />
+       <Btn marginVertical={0} icon={<FontAwesome name="calendar" size={24} color={colors.darkGray} />} color={colors.light} textColor={colors.dark} width={80}  text="جنتري" />
+
+      </View>
       <TextInput
         keyboardType="number-pad"
         value={money}
@@ -74,8 +91,12 @@ export default function AddIncomeScreen() {
         placeholder="د مرستې مقدار په افغانیو"
         style={styles.input}
       />
-      <Btn icon={<FontAwesome5 name="check-circle" size={24} color={colors.darkGray} />} onClick={AddIncome} text="ذخیره" color={colors.light} textColor={colors.dark} width={90} />
+      <Btn  icon={<FontAwesome5 name="check-circle" size={24} color={colors.darkGray} />} onClick={AddIncome} text="ذخیره" color={colors.light} textColor={colors.dark} width={90} />
+
       </View>
+      <ScrollView>
+        <JalaliCalendarPicker  onDateChange={date => setDate(date) }/>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -116,4 +137,21 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     elevation: 10
   },
+  selectDateContainer: {
+    flexDirection: 'row',
+    alignItems: 'center', 
+    justifyContent: "space-between",
+    width: perWidth(80)
+  },
+  dateInput: {
+    width: perWidth(30),
+    height: 40,
+    padding: 10,
+    paddingHorizontal: 20,
+    marginBottom: 10,
+    borderRadius: 5,
+    backgroundColor: colors.white,
+    elevation: 10,
+    color: colors.darkGray
+  }
 });
