@@ -4,10 +4,10 @@ import React from 'react';
 import colors from '../functions/colors';
 import { perHeight, perWidth } from '../functions/heigthWidth';
 
-export default function IncomeCard({ id, name, money, date, navigation }) {
+export default function IncomeCard({isAdmin, id, name, money, date, navigation }) {
   const newDate = date.split('-');
   return (
-    <TouchableWithoutFeedback onLongPress={() => navigation.navigate('IncomeOneItem', {id, name, money})} >
+    <TouchableWithoutFeedback onLongPress={() => isAdmin === 1 ? navigation.navigate('IncomeOneItem', {id, name, money}) : null} >
       <View style={styles.container}>
         <View style={styles.descContainer}>
           <View style={styles.nameContainer}>

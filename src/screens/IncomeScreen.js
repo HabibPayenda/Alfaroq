@@ -34,6 +34,8 @@ export default function IncomeScreen({ navigation }) {
   const dispatch = useDispatch();
   const { totalIncome, prevPageUrl, nextPageUrl, incomes, currPage, lastPage, firstPage, loading } = useSelector((state) => state.incomeSlice);
   const { totalExpences } = useSelector((state) => state.expenseSlice);
+  const { user } = useSelector((state) => state.userSlice);
+
 
   useEffect(() => {
     getUser()
@@ -176,6 +178,7 @@ export default function IncomeScreen({ navigation }) {
         renderItem={({ item }) => {
           return (
             <IncomeCard
+              isAdmin={user.isAdmin}
               navigation={navigation}
               id={item?.id}
               name={item?.name}

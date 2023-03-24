@@ -4,10 +4,10 @@ import React from 'react';
 import colors from '../functions/colors'
 import { perHeight, perWidth } from '../functions/heigthWidth'
 
-export default function ExpenseCard({money, discription, date, navigation, id}) {
+export default function ExpenseCard({ isAdmin ,money, discription, date, navigation, id }) {
   const newDate = date.split('-');
   return (
-    <TouchableWithoutFeedback onLongPress={() => navigation.navigate('ExpencesEdit', {id, discription, money})}>
+    <TouchableWithoutFeedback onLongPress={() => isAdmin === 1 ?  navigation.navigate('ExpencesEdit', {id, discription, money}): null}>
       <View style={styles.container}>
         <View style={styles.desccContainer}>
           <Text style={styles.expenseText}>{`${money} افغانۍ`}</Text>

@@ -23,6 +23,8 @@ export default function ExpensesScreen({ navigation }) {
   const dispatch = useDispatch();
   const { totalExpences, prevPageUrl, nextPageUrl, expences, currPage, lastPage, firstPage, loading } = useSelector((state) => state.expenseSlice);
   const { totalIncome } = useSelector((state) => state.incomeSlice);
+  const { user } = useSelector((state) => state.userSlice);
+
 
 const getUser = async () => {
   let user = await AsyncStorage.getItem('user');
@@ -147,7 +149,7 @@ useEffect(() => {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
           return (
-            <ExpenseCard navigation={navigation} id={item.id} discription={item.discription} money={item.amount} date={item.date} />
+            <ExpenseCard isAdmin={user.isAdmin} navigation={navigation} id={item.id} discription={item.discription} money={item.amount} date={item.date} />
           );
         }}
         refreshing={refreshing}
