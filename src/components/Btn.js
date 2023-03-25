@@ -25,7 +25,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10,
-    elevation: 10
+    elevation: 10,
+    margin: 0
   },
   title: {
     fontWeight: 'bold',

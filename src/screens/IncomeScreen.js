@@ -45,7 +45,7 @@ export default function IncomeScreen({ navigation }) {
 
   const searchIncome = async () => {
     try {
-      const response = await Alfarooq.get(`/income/search/${name}`, null , {
+      const response = await Alfarooq.get(`/income/search/${name}`, null, {
         onUploadProgress: (progress) => {
           if (progress.loaded / progress.total === 1) {
             ToastMaker('صبر وکړئ!')
@@ -67,8 +67,10 @@ export default function IncomeScreen({ navigation }) {
             <View style={styles.titleContainer} >
               <Text style={styles.title}>د مرستو لټون</Text>
             </View>
-            <TextInput placeholder='د مرسته کوونکي نوم د ننه کړئ!' keyboardType='default' style={styles.input} value={name} onChangeText={(text) => setName(text)} />
-            <Btn icon={<FontAwesome name="search" size={24} color={colors.darkGray} />} text="لټون" color={colors.light} textColor={colors.dark} width={80} onClick={searchIncome} />
+            <View style={styles.searchInputContainer}>
+              <Btn marginVertical={0.0001} icon={<FontAwesome name="search" size={24} color={colors.darkGray} />} text="لټون" color={colors.light} textColor={colors.dark} width={80} onClick={searchIncome} />
+              <TextInput placeholder='د مرسته کوونکي نوم د ننه کړئ!' keyboardType='default' style={styles.input} value={name} onChangeText={(text) => setName(text)} />
+            </View>
           </View>
           <View style={styles.navigation}>
             <View style={styles.navigationNums}>
@@ -220,20 +222,20 @@ export default function IncomeScreen({ navigation }) {
 const styles = StyleSheet.create({
   topViewUser: {
     backgroundColor: colors.white,
-    height: perHeight(20),
+    height: perHeight(22),
     width: perWidth(100),
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: (deviceHeigth / 100) * 3,
+    justifyContent: 'flex-start',
+    marginBottom: perHeight(1)
   },
   contenttContainer: {
     backgroundColor: colors.darkGray,
-    marginTop: perHeight(5),
+    marginTop: perHeight(1),
     padding: 10,
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     elevation: 10,
     borderRadius: 7,
     marginBottom: perHeight(1)
@@ -244,15 +246,18 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     color: colors.light,
   },
+  searchInputContainer: {
+    flexDirection: 'row',
+    backgroundColor: colors.white,
+    borderRadius: 5
+  },
   input: {
-    width: perWidth(80),
+    width: perWidth(60),
     height: 40,
     padding: 10,
-    paddingHorizontal: 20,
-    marginBottom: 10,
+    paddingHorizontal: 10,
     borderRadius: 5,
     backgroundColor: colors.white,
-    elevation: 10
   },
   topView: {
     backgroundColor: colors.light,

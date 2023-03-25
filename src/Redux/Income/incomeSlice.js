@@ -103,6 +103,23 @@ export const fetchPageWithPageNumber = createAsyncThunk('incomes/fetchPageWithPa
   }
 });
 
+export const searchIncome = createAsyncThunk('incomes/searchIncome', async (name) => {
+ // Code 
+ try {
+  const response = await Alfarooq.get(`/income/search/${name}`, {
+    onUploadProgress: (progress) => {
+      if (progress.loaded / progress.total === 1) {
+        ToastMaker('صبر وکړئ!')
+      }
+    },
+  });
+  return response.data;
+} catch (error) {
+  console.log(error);
+  ToastMaker('اشتباه!')
+}
+});
+
 
 const initialState = {
   incomes: [],
@@ -170,6 +187,16 @@ export const incomeSlice = createSlice({
         }
         return item;
       })
+    });
+
+    builder.addCase(searchIncome.pending, (state, action) => {
+      // Code
+      state.loading = "loading"
+    });
+
+    builder.addCase(searchIncome.fulfilled, (state, action) => {
+      // Code
+      state.incomes = action.payload;
     });
 
     builder.addCase(fetchPageWithUrl.pending, (state, action) => {
