@@ -47,13 +47,13 @@ export default function ExpensesScreen({ navigation }) {
 
   const searchExpencesByDate = async () => {
     try {
-      if(date === '') {
+      if (date === '') {
         dispatch(fetchExpencePageWithPageNumber(firstPage))
       } else {
         dispatch(searchExpences(date))
       }
     } catch (error) {
-     return error
+      return error
     }
   };
 
@@ -61,16 +61,7 @@ export default function ExpensesScreen({ navigation }) {
     if (role === 3) {
       return (
         <View style={styles.topViewUser}>
-          <View style={styles.contenttContainer} >
-            <View style={styles.titleContainer} >
-              <Text style={styles.title}>د لګښت لټون</Text>
-            </View>
-            <View style={styles.searchInputContainer}>
-              <Btn marginVertical={0.0001} icon={<FontAwesome name="search" size={24} color={colors.darkGray} />} text="لټون" color={colors.light} textColor={colors.dark} width={80} onClick={searchExpencesByDate} />
-              <TextInput placeholder='د لګښت نېټه د ننه کړئ!' keyboardType='default' style={styles.input} value={date} onChangeText={(text) => setDate(text)} />
-            </View>
-          </View>
-          <View style={styles.navigation}>
+          <View style={styles.userNavigation}>
             <View style={styles.navigationNums}>
               <Btn onClick={() => prevPageUrl !== null ? dispatch(fetchExpencePageWithPageNumber(firstPage)) : ToastMaker('همدا لومړۍ صفحه ده!')} borderWidth={1} borderColor={colors.light} textColor={colors.light} text="1" color={colors.darkGray} width={30} height={30} />
             </View>
@@ -82,6 +73,12 @@ export default function ExpensesScreen({ navigation }) {
             <Btn onClick={() => nextPageUrl !== null ? dispatch(fetchExpencePageWithUrl(nextPageUrl)) : ToastMaker('همدا آخري صفحه ده!')} borderWidth={1} borderColor={colors.light} text={<MaterialCommunityIcons name="page-next" size={24} color={colors.light} />} color={colors.darkGray} width={perWidth(13)} />
             <View style={styles.navigationNums}>
               <Btn onClick={() => nextPageUrl !== null ? dispatch(fetchExpencePageWithPageNumber(lastPage)) : ToastMaker('همدا آخري صفحه ده!')} borderWidth={1} borderColor={colors.light} textColor={colors.light} text={lastPage} color={colors.darkGray} width={30} height={30} />
+            </View>
+          </View>
+          <View style={styles.contenttContainer} >
+            <View style={styles.searchInputContainer}>
+              <Btn marginVertical={0.0001} icon={<FontAwesome name="search" size={24} color={colors.darkGray} />} text="لټون" color={colors.light} textColor={colors.dark} width={80} onClick={searchExpencesByDate} />
+              <TextInput placeholder='د لګښت نېټه د ننه کړئ!' keyboardType='default' style={styles.input} value={date} onChangeText={(text) => setDate(text)} />
             </View>
           </View>
         </View>)
@@ -186,7 +183,7 @@ export default function ExpensesScreen({ navigation }) {
           }}
           style={{
             width: perWidth(100),
-            height: user.isAdmin === 3 ?  perHeight(70) : perHeight(55),
+            height: user.isAdmin === 3 ? perHeight(77) : perHeight(55),
           }}
           contentContainerStyle={styles.screen}
         >
@@ -200,24 +197,22 @@ export default function ExpensesScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   topViewUser: {
-    backgroundColor: colors.white,
-    height: perHeight(22),
+    backgroundColor: colors.light,
+    height: perHeight(15),
     width: perWidth(100),
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'flex-end',
     marginBottom: perHeight(1)
   },
   contenttContainer: {
     backgroundColor: colors.darkGray,
-    marginTop: perHeight(1),
     padding: 10,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-start',
     elevation: 10,
     borderRadius: 7,
-    marginBottom: perHeight(1)
   },
   title: {
     fontWeight: 'bold',
@@ -363,6 +358,15 @@ const styles = StyleSheet.create({
     marginTop: 30,
     position: 'absolute',
     bottom: 0,
+    backgroundColor: colors.darkGray,
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+    borderBottomColor: colors.gray,
+    borderBottomWidth: 1
+  },
+  userNavigation: {
+    display: 'flex',
+    flexDirection: 'row',
     backgroundColor: colors.darkGray,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
