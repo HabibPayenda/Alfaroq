@@ -11,7 +11,7 @@ import { getIncomes, getTotalIncome } from '../Redux/Income/incomeSlice';
 import { StatusBar } from 'expo-status-bar';
 
 export default function TopNavigationContainer() {
-  const { token } = useSelector((state) => state.userSlice);
+  const { token, user } = useSelector((state) => state.userSlice);
   const { incomesDataLoaded } = useSelector((state) => state.incomeSlice);
   const dispatch = useDispatch();
   
@@ -34,7 +34,7 @@ export default function TopNavigationContainer() {
       <>
       <StatusBar style='dark' />
       <NavigationContainer>
-        <MainNavigation />
+        <MainNavigation user={user} />
       </NavigationContainer>
       </>
   ); 

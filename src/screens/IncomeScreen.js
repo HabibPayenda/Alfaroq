@@ -34,11 +34,11 @@ export default function IncomeScreen({ navigation }) {
   const { totalExpences } = useSelector((state) => state.expenseSlice);
   const { user } = useSelector((state) => state.userSlice);
 
+
   const getNetworkStatus = async () => {
     const { isInternetReachable } = await Network.getNetworkStateAsync();
     setIsConnected(isInternetReachable);
   };
-
   useEffect(() => {
     getNetworkStatus();
   });
@@ -58,9 +58,6 @@ export default function IncomeScreen({ navigation }) {
       ToastMaker('اشتباه!')
     }
   };
-
-  console.log(user)
-
 
   const showScreen = () => {
     if (user.isAdmin === 3) {
@@ -229,6 +226,33 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: (deviceHeigth / 100) * 3,
+  },
+  contenttContainer: {
+    backgroundColor: colors.darkGray,
+    marginTop: perHeight(5),
+    padding: 10,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 10,
+    borderRadius: 7,
+    marginBottom: perHeight(1)
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginBottom: 20,
+    color: colors.light,
+  },
+  input: {
+    width: perWidth(80),
+    height: 40,
+    padding: 10,
+    paddingHorizontal: 20,
+    marginBottom: 10,
+    borderRadius: 5,
+    backgroundColor: colors.white,
+    elevation: 10
   },
   topView: {
     backgroundColor: colors.light,

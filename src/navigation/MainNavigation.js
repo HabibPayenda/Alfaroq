@@ -18,7 +18,7 @@ import { useSelector } from "react-redux";
 
 const Stack = createStackNavigator();
 
-function IncomeStack() {
+function IncomeStack(user) {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -57,8 +57,7 @@ const Drawer = createDrawerNavigator();
 
 
 
-const DrawerNavigator = () => {
-const { user } = useSelector((state) => state.userSlice);
+const DrawerNavigator = (user) => {
 
 return (
   <Drawer.Navigator
