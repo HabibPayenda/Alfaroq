@@ -1,7 +1,7 @@
 import { Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import moment from 'moment-jalaali';
-import colors from '../../../src/functions/colors';
+import moment from '../../moment-jalaali/index';
+import colors from '../../colors';
 
 const main_style = {
     wrap: {

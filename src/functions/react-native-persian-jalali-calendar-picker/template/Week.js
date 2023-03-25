@@ -1,7 +1,6 @@
 import {Text, View} from 'react-native';
 import React from 'react';
-import colors from '../../../src/functions/colors';
-
+import colors from '../../colors';
 const main_style = {
     wrap: {
         flex: 1,

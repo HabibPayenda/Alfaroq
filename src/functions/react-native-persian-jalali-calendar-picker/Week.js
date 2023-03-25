@@ -12,7 +12,6 @@ const main_style = {
         borderRadius: 5,
     },
     text: {
-        fontFamily: 'Shabnam-Light-FD',
         fontSize: 14,
         color: '#ffffff',
         flex: 1,

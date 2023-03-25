@@ -7,8 +7,9 @@ import GestureRecognizer from './lib/GestureRecognizer';
 import Month from './template/Month';
 import Year from './template/Year';
 import Clock from './template/Clock';
-import colors from '../../src/functions/colors';
-import { perWidth } from '../../src/functions/heigthWidth';
+
+import {perHeight, perWidth} from '../heigthWidth';
+import colors from '../colors';
 
 const main_style = {
     wrap: {

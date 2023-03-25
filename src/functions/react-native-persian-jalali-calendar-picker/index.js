@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import moment from 'moment-jalaali';
+import moment from '../moment-jalaali/index';
 import Template from './Tepmlate';
 import fa from 'moment/src/locale/fa';
 

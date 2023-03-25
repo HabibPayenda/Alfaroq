@@ -1,6 +1,6 @@
 import {ScrollView, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import moment from 'moment-jalaali';
+import moment from '../../moment-jalaali/index';
 
 const main_style = {
     wrap: {
