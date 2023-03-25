@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TextInput, SafeAreaView, View, Modal, TouchableOpacity } from 'react-native'
 import React, {useState} from 'react';
 import { FontAwesome5 } from '@expo/vector-icons';
-import JalaliCalendarPicker from 'react-native-persian-jalali-calendar-picker';
+import JalaliCalendarPicker from '../functions/react-native-persian-jalali-calendar-picker/index';
 import { FontAwesome } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 
