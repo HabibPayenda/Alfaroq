@@ -1,9 +1,10 @@
-import { StyleSheet, Text, SafeAreaView, View, FlatList, TouchableOpacity, ImageBackground, Dimensions } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, View, FlatList, TouchableOpacity, ImageBackground, Dimensions, TextInput } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Entypo } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import Lottie from 'lottie-react-native';
+import { FontAwesome } from '@expo/vector-icons';
 
 
 import { perHeight, perWidth } from '../functions/heigthWidth';
@@ -12,7 +13,7 @@ import ExpenseCard from '../components/ExpensesCard';
 import Btn from '../components/Btn';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { fetchExpencePageWithPageNumber, fetchExpencePageWithUrl} from '../Redux/Expences/expencesSlice';
+import { fetchExpencePageWithPageNumber, fetchExpencePageWithUrl, searchExpences } from '../Redux/Expences/expencesSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import ToastMaker from '../functions/ToastMaker';
 
@@ -23,6 +24,8 @@ const deviceHeigth = Dimensions.get('window').height;
 export default function ExpensesScreen({ navigation }) {
   const [refreshing, setRefreshing] = useState(false);
   const [role, setRoll] = useState(null);
+  const [date, setDate] = useState('');
+
 
   const dispatch = useDispatch();
   const { totalExpences, prevPageUrl, nextPageUrl, expences, currPage, lastPage, firstPage, loading } = useSelector((state) => state.expenseSlice);
@@ -30,109 +33,130 @@ export default function ExpensesScreen({ navigation }) {
   const { user } = useSelector((state) => state.userSlice);
 
 
-const getUser = async () => {
-  let user = await AsyncStorage.getItem('user');
-  user = JSON.parse(user)
-  if(user) {
-    setRoll(user.isAdmin)
+  const getUser = async () => {
+    let user = await AsyncStorage.getItem('user');
+    user = JSON.parse(user)
+    if (user) {
+      setRoll(user.isAdmin)
+    }
   }
-}
 
-useEffect(() => {
-  getUser()
-}, [role])
+  useEffect(() => {
+    getUser()
+  }, [role])
+
+  const searchExpencesByDate = async () => {
+    try {
+      if(date === '') {
+        dispatch(fetchExpencePageWithPageNumber(firstPage))
+      } else {
+        dispatch(searchExpences(date))
+      }
+    } catch (error) {
+     return error
+    }
+  };
 
   const showScreen = () => {
-    if(role === 3 ) {
+    if (role === 3) {
       return (
-    <View style={styles.topViewUser}>
-      <View style={styles.navigation}>
-        <View style={styles.navigationNums}>
-          <Btn onClick={() => prevPageUrl !== null ? dispatch(fetchExpencePageWithPageNumber(firstPage)) : ToastMaker('همدا لومړۍ صفحه ده!') } borderWidth={1} borderColor={colors.light} textColor={colors.light} text="1" color={colors.darkGray} width={30} height={30} />
-        </View>
-        <Btn onClick={() => prevPageUrl !== null ? dispatch(fetchExpencePageWithUrl(prevPageUrl)) : ToastMaker('همدا لومړۍ صفحه ده!') } borderWidth={1} borderColor={colors.light} text={<MaterialCommunityIcons name="page-previous" size={24} color={colors.light} />} color={colors.darkGray} width={perWidth(13)} />
+        <View style={styles.topViewUser}>
+          <View style={styles.contenttContainer} >
+            <View style={styles.titleContainer} >
+              <Text style={styles.title}>د لګښت لټون</Text>
+            </View>
+            <View style={styles.searchInputContainer}>
+              <Btn marginVertical={0.0001} icon={<FontAwesome name="search" size={24} color={colors.darkGray} />} text="لټون" color={colors.light} textColor={colors.dark} width={80} onClick={searchExpencesByDate} />
+              <TextInput placeholder='د لګښت نېټه د ننه کړئ!' keyboardType='default' style={styles.input} value={date} onChangeText={(text) => setDate(text)} />
+            </View>
+          </View>
+          <View style={styles.navigation}>
+            <View style={styles.navigationNums}>
+              <Btn onClick={() => prevPageUrl !== null ? dispatch(fetchExpencePageWithPageNumber(firstPage)) : ToastMaker('همدا لومړۍ صفحه ده!')} borderWidth={1} borderColor={colors.light} textColor={colors.light} text="1" color={colors.darkGray} width={30} height={30} />
+            </View>
+            <Btn onClick={() => prevPageUrl !== null ? dispatch(fetchExpencePageWithUrl(prevPageUrl)) : ToastMaker('همدا لومړۍ صفحه ده!')} borderWidth={1} borderColor={colors.light} text={<MaterialCommunityIcons name="page-previous" size={24} color={colors.light} />} color={colors.darkGray} width={perWidth(13)} />
 
-        <View style={styles.navigationNums}>
-          <Text style={styles.curPageNum}> {currPage} </Text>
-        </View>
-        <Btn onClick={() => nextPageUrl !== null ? dispatch(fetchExpencePageWithUrl(nextPageUrl)) : ToastMaker('همدا آخري صفحه ده!') } borderWidth={1} borderColor={colors.light} text={<MaterialCommunityIcons name="page-next" size={24} color={colors.light} />} color={colors.darkGray} width={perWidth(13)} />
-        <View style={styles.navigationNums}>
-          <Btn onClick={() => nextPageUrl !== null ? dispatch(fetchExpencePageWithPageNumber(lastPage)) : ToastMaker('همدا آخري صفحه ده!') }  borderWidth={1} borderColor={colors.light} textColor={colors.light} text={lastPage} color={colors.darkGray} width={30} height={30} />
-        </View>
-      </View>
+            <View style={styles.navigationNums}>
+              <Text style={styles.curPageNum}> {currPage} </Text>
+            </View>
+            <Btn onClick={() => nextPageUrl !== null ? dispatch(fetchExpencePageWithUrl(nextPageUrl)) : ToastMaker('همدا آخري صفحه ده!')} borderWidth={1} borderColor={colors.light} text={<MaterialCommunityIcons name="page-next" size={24} color={colors.light} />} color={colors.darkGray} width={perWidth(13)} />
+            <View style={styles.navigationNums}>
+              <Btn onClick={() => nextPageUrl !== null ? dispatch(fetchExpencePageWithPageNumber(lastPage)) : ToastMaker('همدا آخري صفحه ده!')} borderWidth={1} borderColor={colors.light} textColor={colors.light} text={lastPage} color={colors.darkGray} width={30} height={30} />
+            </View>
+          </View>
         </View>)
-    } else { 
-      return(
+    } else {
+      return (
         <ImageBackground source={require('../img/bg.jpg')} style={styles.topView}>
-      <View style={styles.totalExpenseContainer}>
-        <View style={styles.totalExpenseContainerLeft}>
-          <MaterialCommunityIcons
+          <View style={styles.totalExpenseContainer}>
+            <View style={styles.totalExpenseContainerLeft}>
+              <MaterialCommunityIcons
                 style={styles.totalMoneyIcon}
                 name='cash-plus'
                 size={30}
                 color={colors.light}
               />
-        </View>
-        <View style={styles.totalExpenseContainerRight}>
-          <Text style={styles.topViewText}>ټولې لګونې </Text>
-          <Text style={styles.topViewTextMoney}> {`${totalExpences} افغانۍ`}</Text>
-        </View>
-      </View>
-      <View style={styles.currentMoneyContainer}>
-        <View style={styles.currentMoneyContainerLeft}>
-        <Ionicons  style={styles.totalMoneyIcon} color={colors.light} name="ios-wallet" size={30} />
-        </View>
-        <View style={styles.currentMoneyContainerRight}>
-          <Text style={styles.topViewText}>اوسنۍ پیسې</Text>
-          <Text style={styles.topViewTextMoney}> {`${totalIncome - totalExpences} افغانۍ`}</Text>
-        </View>
-      </View>
-      <View style={styles.navigation}>
-        <View style={styles.navigationNums}>
-          <Btn onClick={() => prevPageUrl !== null ? dispatch(fetchExpencePageWithPageNumber(firstPage)) : ToastMaker('همدا لومړۍ صفحه ده!') } borderWidth={1} borderColor={colors.light} textColor={colors.light} text="1" color={colors.darkGray} width={30} height={30} />
-        </View>
-        <Btn onClick={() => prevPageUrl !== null ? dispatch(fetchExpencePageWithUrl(prevPageUrl)) : ToastMaker('همدا لومړۍ صفحه ده!') } borderWidth={1} borderColor={colors.light} text={<MaterialCommunityIcons name="page-previous" size={24} color={colors.light} />} color={colors.darkGray} width={perWidth(13)} />
+            </View>
+            <View style={styles.totalExpenseContainerRight}>
+              <Text style={styles.topViewText}>ټولې لګونې </Text>
+              <Text style={styles.topViewTextMoney}> {`${totalExpences} افغانۍ`}</Text>
+            </View>
+          </View>
+          <View style={styles.currentMoneyContainer}>
+            <View style={styles.currentMoneyContainerLeft}>
+              <Ionicons style={styles.totalMoneyIcon} color={colors.light} name="ios-wallet" size={30} />
+            </View>
+            <View style={styles.currentMoneyContainerRight}>
+              <Text style={styles.topViewText}>اوسنۍ پیسې</Text>
+              <Text style={styles.topViewTextMoney}> {`${totalIncome - totalExpences} افغانۍ`}</Text>
+            </View>
+          </View>
+          <View style={styles.navigation}>
+            <View style={styles.navigationNums}>
+              <Btn onClick={() => prevPageUrl !== null ? dispatch(fetchExpencePageWithPageNumber(firstPage)) : ToastMaker('همدا لومړۍ صفحه ده!')} borderWidth={1} borderColor={colors.light} textColor={colors.light} text="1" color={colors.darkGray} width={30} height={30} />
+            </View>
+            <Btn onClick={() => prevPageUrl !== null ? dispatch(fetchExpencePageWithUrl(prevPageUrl)) : ToastMaker('همدا لومړۍ صفحه ده!')} borderWidth={1} borderColor={colors.light} text={<MaterialCommunityIcons name="page-previous" size={24} color={colors.light} />} color={colors.darkGray} width={perWidth(13)} />
 
-        <View style={styles.navigationNums}>
-          <Text style={styles.curPageNum}> {currPage} </Text>
-        </View>
-        <Btn onClick={() => nextPageUrl !== null ? dispatch(fetchExpencePageWithUrl(nextPageUrl)) : ToastMaker('همدا آخري صفحه ده!') } borderWidth={1} borderColor={colors.light} text={<MaterialCommunityIcons name="page-next" size={24} color={colors.light} />} color={colors.darkGray} width={perWidth(13)} />
-        <View style={styles.navigationNums}>
-          <Btn onClick={() => nextPageUrl !== null ? dispatch(fetchExpencePageWithPageNumber(lastPage)) : ToastMaker('همدا آخري صفحه ده!') }  borderWidth={1} borderColor={colors.light} textColor={colors.light} text={lastPage} color={colors.darkGray} width={30} height={30} />
-        </View>
-      </View>
-      <View style={styles.icons}>
+            <View style={styles.navigationNums}>
+              <Text style={styles.curPageNum}> {currPage} </Text>
+            </View>
+            <Btn onClick={() => nextPageUrl !== null ? dispatch(fetchExpencePageWithUrl(nextPageUrl)) : ToastMaker('همدا آخري صفحه ده!')} borderWidth={1} borderColor={colors.light} text={<MaterialCommunityIcons name="page-next" size={24} color={colors.light} />} color={colors.darkGray} width={perWidth(13)} />
+            <View style={styles.navigationNums}>
+              <Btn onClick={() => nextPageUrl !== null ? dispatch(fetchExpencePageWithPageNumber(lastPage)) : ToastMaker('همدا آخري صفحه ده!')} borderWidth={1} borderColor={colors.light} textColor={colors.light} text={lastPage} color={colors.darkGray} width={30} height={30} />
+            </View>
+          </View>
+          <View style={styles.icons}>
 
-        <TouchableOpacity
-          style={styles.searchDateIcon}
-          onPress={() => navigation.navigate('ExpencesSearchDate')}
-        >
-          <MaterialCommunityIcons
-            style={{ color: colors.light }}
-            name="archive-search"
-            size={24}
-            color="black"
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.searchIcon}
-          onPress={() => navigation.navigate('ExpencesSearch')}
-        >
-          <MaterialCommunityIcons
-            style={{ color: colors.light }}
-            name="database-search"
-            size={24}
-            color="black"
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.addIcon}
-          onPress={() => navigation.navigate('Add Expense')}
-        >
-          <Entypo style={{ color: colors.light }} name="add-to-list" size={24} color="black" />
-        </TouchableOpacity>
-      </View>
-    </ImageBackground>)
+            <TouchableOpacity
+              style={styles.searchDateIcon}
+              onPress={() => navigation.navigate('ExpencesSearchDate')}
+            >
+              <MaterialCommunityIcons
+                style={{ color: colors.light }}
+                name="archive-search"
+                size={24}
+                color="black"
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.searchIcon}
+              onPress={() => navigation.navigate('ExpencesSearch')}
+            >
+              <MaterialCommunityIcons
+                style={{ color: colors.light }}
+                name="database-search"
+                size={24}
+                color="black"
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.addIcon}
+              onPress={() => navigation.navigate('Add Expense')}
+            >
+              <Entypo style={{ color: colors.light }} name="add-to-list" size={24} color="black" />
+            </TouchableOpacity>
+          </View>
+        </ImageBackground>)
     }
   }
 
@@ -140,35 +164,35 @@ useEffect(() => {
   return (
     <SafeAreaView>
       {showScreen()}
-      <View style={{alignItems: 'center'}}>
-      {loading === "loading" ?
-        <Lottie
-        autoPlay
-        loop 
-        source={require('../../assets/lottie/loadingLottieLine.json')}
-        style={{zIndex: 100}}
-       />  : null}
-      <FlatList
-        data={expences}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => {
-          return (
-            <ExpenseCard isAdmin={user.isAdmin} navigation={navigation} id={item.id} discription={item.discription} money={item.amount} date={item.date} />
-          );
-        }}
-        refreshing={refreshing}
-        onRefresh={() => {
-          dispatch(fetchExpencePageWithPageNumber(firstPage))
-        }}
-        style={{
-          width: perWidth(100),
-          height: user.isAdmin === 3 ? (deviceHeigth / 100) * 78 : perHeight(55),
-        }}
-        contentContainerStyle={styles.screen}
-      >
-        <ExpenseCard />
-        <ExpenseCard />
-      </FlatList>
+      <View style={{ alignItems: 'center' }}>
+        {loading === "loading" ?
+          <Lottie
+            autoPlay
+            loop
+            source={require('../../assets/lottie/loadingLottieLine.json')}
+            style={{ zIndex: 100 }}
+          /> : null}
+        <FlatList
+          data={expences}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => {
+            return (
+              <ExpenseCard isAdmin={user.isAdmin} navigation={navigation} id={item.id} discription={item.discription} money={item.amount} date={item.date} />
+            );
+          }}
+          refreshing={refreshing}
+          onRefresh={() => {
+            dispatch(fetchExpencePageWithPageNumber(firstPage))
+          }}
+          style={{
+            width: perWidth(100),
+            height: user.isAdmin === 3 ?  perHeight(70) : perHeight(55),
+          }}
+          contentContainerStyle={styles.screen}
+        >
+          <ExpenseCard />
+          <ExpenseCard />
+        </FlatList>
       </View>
     </SafeAreaView>
   );
@@ -177,12 +201,42 @@ useEffect(() => {
 const styles = StyleSheet.create({
   topViewUser: {
     backgroundColor: colors.white,
-    height: (deviceHeigth / 100) * 10,
+    height: perHeight(22),
     width: perWidth(100),
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: (deviceHeigth / 100) * 3,
+    justifyContent: 'flex-start',
+    marginBottom: perHeight(1)
+  },
+  contenttContainer: {
+    backgroundColor: colors.darkGray,
+    marginTop: perHeight(1),
+    padding: 10,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    elevation: 10,
+    borderRadius: 7,
+    marginBottom: perHeight(1)
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginBottom: 20,
+    color: colors.light,
+  },
+  searchInputContainer: {
+    flexDirection: 'row',
+    backgroundColor: colors.white,
+    borderRadius: 5
+  },
+  input: {
+    width: perWidth(60),
+    height: 40,
+    padding: 10,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    backgroundColor: colors.white,
   },
   topView: {
     backgroundColor: colors.light,

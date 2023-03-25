@@ -85,6 +85,22 @@ export const updateExpence = createAsyncThunk('expences/updateExpence', async (d
   }
  });
 
+export const searchExpences = createAsyncThunk('expences/searchExpence', async (date) => {
+  // Code 
+  try {
+    const response = await Alfarooq.get(`/expence/search/${date}`, null , {
+      onUploadProgress: (progress) => {
+        if (progress.loaded / progress.total === 1) {
+          ToastMaker('صبر وکړئ!')
+        }
+      },
+    });
+    return response.data
+  } catch (error) {
+    console.log(error);
+    ToastMaker('له سره هڅه وکړئ!')
+  }
+ });
 
 
 export const fetchExpencePageWithUrl = createAsyncThunk('expences/fetchExpencePageWithUrl', async (url) => {
@@ -152,6 +168,17 @@ export const expenseSlice = createSlice({
       // Code
       state.expences = [action.payload, ...state.expences]
       state.totalExpences += (action.payload.amount * 1);
+    });
+    
+    builder.addCase(searchExpences.pending, (state, action) => {
+      // Code
+      state.loading = 'loading';
+    });
+
+    builder.addCase(searchExpences.fulfilled, (state, action) => {
+      // Code
+      state.expences = action.payload;
+      state.loading = 'ideal';
     });
 
     builder.addCase(removeExpence.fulfilled, (state, action) => {

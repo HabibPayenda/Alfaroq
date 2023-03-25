@@ -18,11 +18,6 @@ import ToastMaker from '../functions/ToastMaker';
 import { fetchPageWithPageNumber, fetchPageWithUrl, searchIncome } from '../Redux/Income/incomeSlice';
 
 
-
-const deviceHeigth = Dimensions.get('window').height;
-
-
-
 export default function IncomeScreen({ navigation }) {
   const [isConnected, setIsConnected] = useState(true);
   const [refreshing] = useState(false);
