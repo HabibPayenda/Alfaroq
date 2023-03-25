@@ -26,8 +26,6 @@ export default function AddIncomeScreen() {
 
   const dispatch = useDispatch();
 
-  // var date = new Date();
-  // var current_date = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
 
   var afghanNumbers = ['۰', '۱', /۲/g, /۳/g, /٤/g, /۴/g, /۵/g, /٦/g, /۶/g, /۷/g, /۸/g, /۹/g],
   englishNumbers = [0, 1, 2, 3, 4, 4, 5, 6, 6, 7, 8, 9],
