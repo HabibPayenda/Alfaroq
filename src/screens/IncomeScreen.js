@@ -15,7 +15,7 @@ import Btn from '../components/Btn';
 
 import { useDispatch, useSelector } from 'react-redux';
 import ToastMaker from '../functions/ToastMaker';
-import { fetchPageWithPageNumber, fetchPageWithUrl } from '../Redux/Income/incomeSlice';
+import { fetchPageWithPageNumber, fetchPageWithUrl, searchIncome } from '../Redux/Income/incomeSlice';
 
 
 
@@ -43,19 +43,15 @@ export default function IncomeScreen({ navigation }) {
     getNetworkStatus();
   });
 
-  const searchIncome = async () => {
+  const searchIncomeByName = async () => {
     try {
-      const response = await Alfarooq.get(`/income/search/${name}`, null, {
-        onUploadProgress: (progress) => {
-          if (progress.loaded / progress.total === 1) {
-            ToastMaker('صبر وکړئ!')
-          }
-        },
-      });
-      console.log(response)
+      if(name === '') {
+        dispatch(fetchPageWithPageNumber(firstPage))
+      } else {
+        dispatch(searchIncome(name))
+      }
     } catch (error) {
-      console.log(error);
-      ToastMaker('اشتباه!')
+     return error
     }
   };
 
@@ -68,7 +64,7 @@ export default function IncomeScreen({ navigation }) {
               <Text style={styles.title}>د مرستو لټون</Text>
             </View>
             <View style={styles.searchInputContainer}>
-              <Btn marginVertical={0.0001} icon={<FontAwesome name="search" size={24} color={colors.darkGray} />} text="لټون" color={colors.light} textColor={colors.dark} width={80} onClick={searchIncome} />
+              <Btn marginVertical={0.0001} icon={<FontAwesome name="search" size={24} color={colors.darkGray} />} text="لټون" color={colors.light} textColor={colors.dark} width={80} onClick={searchIncomeByName} />
               <TextInput placeholder='د مرسته کوونکي نوم د ننه کړئ!' keyboardType='default' style={styles.input} value={name} onChangeText={(text) => setName(text)} />
             </View>
           </View>

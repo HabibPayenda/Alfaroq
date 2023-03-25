@@ -197,6 +197,7 @@ export const incomeSlice = createSlice({
     builder.addCase(searchIncome.fulfilled, (state, action) => {
       // Code
       state.incomes = action.payload;
+      state.loading = "ideal"
     });
 
     builder.addCase(fetchPageWithUrl.pending, (state, action) => {
