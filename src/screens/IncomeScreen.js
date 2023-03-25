@@ -1,8 +1,10 @@
-import { StyleSheet, Text, SafeAreaView, View, TouchableOpacity, FlatList, ImageBackground, Dimensions } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, View, TouchableOpacity, FlatList, ImageBackground, Dimensions, TextInput } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { Entypo } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
+
 import * as Network from 'expo-network';
 import Lottie from 'lottie-react-native';
 
@@ -24,6 +26,8 @@ const deviceHeigth = Dimensions.get('window').height;
 export default function IncomeScreen({ navigation }) {
   const [isConnected, setIsConnected] = useState(true);
   const [refreshing] = useState(false);
+  const [name, setName] = useState('');
+
 
   const dispatch = useDispatch();
   const { totalIncome, prevPageUrl, nextPageUrl, incomes, currPage, lastPage, firstPage, loading } = useSelector((state) => state.incomeSlice);
@@ -39,23 +43,48 @@ export default function IncomeScreen({ navigation }) {
     getNetworkStatus();
   });
 
+  const searchIncome = async () => {
+    try {
+      const response = await Alfarooq.get(`/income/search/${name}`, null , {
+        onUploadProgress: (progress) => {
+          if (progress.loaded / progress.total === 1) {
+            ToastMaker('صبر وکړئ!')
+          }
+        },
+      });
+      console.log(response)
+    } catch (error) {
+      console.log(error);
+      ToastMaker('اشتباه!')
+    }
+  };
+
+  console.log(user)
+
 
   const showScreen = () => {
     if (user.isAdmin === 3) {
       return (
         <View style={styles.topViewUser}>
+          <View style={styles.contenttContainer} >
+            <View style={styles.titleContainer} >
+              <Text style={styles.title}>د مرستو لټون</Text>
+            </View>
+            <TextInput placeholder='د مرسته کوونکي نوم د ننه کړئ!' keyboardType='default' style={styles.input} value={name} onChangeText={(text) => setName(text)} />
+            <Btn icon={<FontAwesome name="search" size={24} color={colors.darkGray} />} text="لټون" color={colors.light} textColor={colors.dark} width={80} onClick={searchIncome} />
+          </View>
           <View style={styles.navigation}>
             <View style={styles.navigationNums}>
               <Btn borderWidth={1} borderColor={colors.light} textColor={colors.light} text="1" color={colors.darkGray} width={30} height={30} onClick={() => currPage !== firstPage ? dispatch(fetchPageWithPageNumber(firstPage)) : ToastMaker('همدا لومړۍ صفحه ده!')} />
             </View>
-            <Btn borderWidth={1} borderColor={colors.light} onClick={() => prevPageUrl !== null ? dispatch(fetchPageWithUrl(prevPageUrl)) : ToastMaker('همدا لومړۍ صفحه ده!') } text={<MaterialCommunityIcons name="page-previous" size={24} color={colors.light} />}  color={colors.darkGray} width={perWidth(13)} />
+            <Btn borderWidth={1} borderColor={colors.light} onClick={() => prevPageUrl !== null ? dispatch(fetchPageWithUrl(prevPageUrl)) : ToastMaker('همدا لومړۍ صفحه ده!')} text={<MaterialCommunityIcons name="page-previous" size={24} color={colors.light} />} color={colors.darkGray} width={perWidth(13)} />
 
             <View style={styles.navigationNums}>
               <Text style={[styles.curPageNum]}> {currPage} </Text>
             </View>
-            <Btn borderWidth={1} borderColor={colors.light} onClick={() => nextPageUrl !== null ? dispatch(fetchPageWithUrl(nextPageUrl)) : ToastMaker('همدا آخري صفحه ده!') } text={<MaterialCommunityIcons name="page-next"  size={24} color={colors.light} />} color={colors.darkGray}  width={perWidth(13)} />
+            <Btn borderWidth={1} borderColor={colors.light} onClick={() => nextPageUrl !== null ? dispatch(fetchPageWithUrl(nextPageUrl)) : ToastMaker('همدا آخري صفحه ده!')} text={<MaterialCommunityIcons name="page-next" size={24} color={colors.light} />} color={colors.darkGray} width={perWidth(13)} />
             <View style={styles.navigationNums}>
-              <Btn borderWidth={1} borderColor={colors.light} textColor={colors.light} text={lastPage} onClick={() => currPage !== lastPage ? dispatch(fetchPageWithPageNumber(lastPage)) : ToastMaker('همدا آخري صفحه ده!')}  color={colors.darkGray} width={30} height={30} />
+              <Btn borderWidth={1} borderColor={colors.light} textColor={colors.light} text={lastPage} onClick={() => currPage !== lastPage ? dispatch(fetchPageWithPageNumber(lastPage)) : ToastMaker('همدا آخري صفحه ده!')} color={colors.darkGray} width={30} height={30} />
             </View>
           </View>
         </View>)
@@ -90,14 +119,14 @@ export default function IncomeScreen({ navigation }) {
             <View style={styles.navigationNums}>
               <Btn borderWidth={1} borderColor={colors.light} textColor={colors.light} text="1" color={colors.darkGray} width={30} height={30} onClick={() => currPage !== firstPage ? dispatch(fetchPageWithPageNumber(firstPage)) : ToastMaker('همدا لومړۍ صفحه ده!')} />
             </View>
-            <Btn borderWidth={1} borderColor={colors.light} onClick={() => prevPageUrl !== null ? dispatch(fetchPageWithUrl(prevPageUrl)) : ToastMaker('همدا لومړۍ صفحه ده!') } text={<MaterialCommunityIcons name="page-previous" size={24} color={colors.light} />}  color={colors.darkGray} width={perWidth(13)} />
+            <Btn borderWidth={1} borderColor={colors.light} onClick={() => prevPageUrl !== null ? dispatch(fetchPageWithUrl(prevPageUrl)) : ToastMaker('همدا لومړۍ صفحه ده!')} text={<MaterialCommunityIcons name="page-previous" size={24} color={colors.light} />} color={colors.darkGray} width={perWidth(13)} />
 
             <View style={styles.navigationNums}>
               <Text style={[styles.curPageNum]}> {currPage} </Text>
             </View>
-            <Btn borderWidth={1} borderColor={colors.light} onClick={() => nextPageUrl !== null ? dispatch(fetchPageWithUrl(nextPageUrl)) : ToastMaker('همدا آخري صفحه ده!') } text={<MaterialCommunityIcons name="page-next"  size={24} color={colors.light} />} color={colors.darkGray}  width={perWidth(13)} />
+            <Btn borderWidth={1} borderColor={colors.light} onClick={() => nextPageUrl !== null ? dispatch(fetchPageWithUrl(nextPageUrl)) : ToastMaker('همدا آخري صفحه ده!')} text={<MaterialCommunityIcons name="page-next" size={24} color={colors.light} />} color={colors.darkGray} width={perWidth(13)} />
             <View style={styles.navigationNums}>
-              <Btn borderWidth={1} borderColor={colors.light} textColor={colors.light} text={lastPage} onClick={() => currPage !== lastPage ? dispatch(fetchPageWithPageNumber(lastPage)) : ToastMaker('همدا آخري صفحه ده!')}  color={colors.darkGray} width={30} height={30} />
+              <Btn borderWidth={1} borderColor={colors.light} textColor={colors.light} text={lastPage} onClick={() => currPage !== lastPage ? dispatch(fetchPageWithPageNumber(lastPage)) : ToastMaker('همدا آخري صفحه ده!')} color={colors.darkGray} width={30} height={30} />
             </View>
           </View>
           <View style={styles.icons}>
@@ -153,39 +182,39 @@ export default function IncomeScreen({ navigation }) {
           له انټرنېټ سره اړیکه نشته!
         </Text>
       ) : null}
-      <View style={{alignItems: 'center'}}>
-      {loading === "loading" ?
-        <Lottie
-        autoPlay
-        loop 
-        source={require('../../assets/lottie/loadingLottieLine.json')}
-        style={{zIndex: 100}}
-       />  : null}
-      {incomes.length > 0 ? <FlatList
-        data={incomes}
-        keyExtractor={(item) => item?.id}
-        renderItem={({ item }) => {
-          return (
-            <IncomeCard
-              isAdmin={user.isAdmin}
-              navigation={navigation}
-              id={item?.id}
-              name={item?.name}
-              money={item?.amount}
-              date={item?.date}
-            />
-          );
-        }}
-        refreshing={refreshing}
-        onRefresh={() => {
-          dispatch(fetchPageWithPageNumber(firstPage));
-        }}
-        style={{
-          width: perWidth(100),
-          height: user.isAdmin === 3 ? (deviceHeigth / 100) * 78 : perHeight(55),
-        }}
-        contentContainerStyle={styles.screen}
-      /> : null}
+      <View style={{ alignItems: 'center' }}>
+        {loading === "loading" ?
+          <Lottie
+            autoPlay
+            loop
+            source={require('../../assets/lottie/loadingLottieLine.json')}
+            style={{ zIndex: 100 }}
+          /> : null}
+        {incomes.length > 0 ? <FlatList
+          data={incomes}
+          keyExtractor={(item) => item?.id}
+          renderItem={({ item }) => {
+            return (
+              <IncomeCard
+                isAdmin={user.isAdmin}
+                navigation={navigation}
+                id={item?.id}
+                name={item?.name}
+                money={item?.amount}
+                date={item?.date}
+              />
+            );
+          }}
+          refreshing={refreshing}
+          onRefresh={() => {
+            dispatch(fetchPageWithPageNumber(firstPage));
+          }}
+          style={{
+            width: perWidth(100),
+            height: user.isAdmin === 3 ? perHeight(70) : perHeight(55),
+          }}
+          contentContainerStyle={styles.screen}
+        /> : null}
       </View>
     </SafeAreaView>
   );
@@ -194,7 +223,7 @@ export default function IncomeScreen({ navigation }) {
 const styles = StyleSheet.create({
   topViewUser: {
     backgroundColor: colors.white,
-    height: (deviceHeigth / 100) * 10,
+    height: perHeight(20),
     width: perWidth(100),
     display: 'flex',
     alignItems: 'center',
