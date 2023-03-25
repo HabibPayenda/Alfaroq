@@ -18,18 +18,20 @@ export default function TopNavigationContainer() {
   const init = () => {
     dispatch(getTotalIncome());
     dispatch(getTotalExpences());
-    dispatch(getIncomes());
     dispatch(getExpences());
+    dispatch(getIncomes());
   }
+
  
   useEffect(() => {
-    dispatch(localSignIn())
-  }, []);
+    if (!token) {
+      dispatch(localSignIn())
+    } else if (token && !incomesDataLoaded) {
+      init();
+    }
+  }, [token, incomesDataLoaded]);
 
-  if (token && !incomesDataLoaded) {
-    init();
-  }
-  else if(token && incomesDataLoaded) {
+  if (token && incomesDataLoaded) {
     return (
       <>
       <StatusBar style='dark' />

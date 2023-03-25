@@ -86,7 +86,7 @@ export const userSlice = createSlice({
     builder.addCase(localSignIn.fulfilled, (state, action) => {
       // Code
       state.token = action.payload.token;
-      state.user = action.payload.user;
+      state.user = JSON.parse(action.payload.user);
     });
 
     builder.addCase(signOut.fulfilled, (state, action) => {

@@ -12,6 +12,7 @@ import colors from "../functions/colors";
 
 
 const DrawerContent = ({ isAdmin, navigation }) => {
+
 const adminOptions = () => {
   if(isAdmin === 1) {
     return (
@@ -31,7 +32,7 @@ const adminOptions = () => {
         </View>
         <MenuItem iconName='cash-plus' name='مرستې' path='مرستې' navigation={navigation} />
         <MenuItem iconName='cash-minus' name='لګونې' path='لګونې' navigation={navigation} />
-        {adminOptions()}
+        { adminOptions()}
         <Logout iconName='logout' />
       </View>
 

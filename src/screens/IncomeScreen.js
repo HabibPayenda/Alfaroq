@@ -40,13 +40,13 @@ export default function IncomeScreen({ navigation }) {
 
   const searchIncomeByName = async () => {
     try {
-      if(name === '') {
+      if (name === '') {
         dispatch(fetchPageWithPageNumber(firstPage))
       } else {
         dispatch(searchIncome(name))
       }
     } catch (error) {
-     return error
+      return error
     }
   };
 
@@ -54,16 +54,7 @@ export default function IncomeScreen({ navigation }) {
     if (user.isAdmin === 3) {
       return (
         <View style={styles.topViewUser}>
-          <View style={styles.contenttContainer} >
-            <View style={styles.titleContainer} >
-              <Text style={styles.title}>د مرستو لټون</Text>
-            </View>
-            <View style={styles.searchInputContainer}>
-              <Btn marginVertical={0.0001} icon={<FontAwesome name="search" size={24} color={colors.darkGray} />} text="لټون" color={colors.light} textColor={colors.dark} width={80} onClick={searchIncomeByName} />
-              <TextInput placeholder='د مرسته کوونکي نوم د ننه کړئ!' keyboardType='default' style={styles.input} value={name} onChangeText={(text) => setName(text)} />
-            </View>
-          </View>
-          <View style={styles.navigation}>
+          <View style={styles.userNavigation}>
             <View style={styles.navigationNums}>
               <Btn borderWidth={1} borderColor={colors.light} textColor={colors.light} text="1" color={colors.darkGray} width={30} height={30} onClick={() => currPage !== firstPage ? dispatch(fetchPageWithPageNumber(firstPage)) : ToastMaker('همدا لومړۍ صفحه ده!')} />
             </View>
@@ -75,6 +66,12 @@ export default function IncomeScreen({ navigation }) {
             <Btn borderWidth={1} borderColor={colors.light} onClick={() => nextPageUrl !== null ? dispatch(fetchPageWithUrl(nextPageUrl)) : ToastMaker('همدا آخري صفحه ده!')} text={<MaterialCommunityIcons name="page-next" size={24} color={colors.light} />} color={colors.darkGray} width={perWidth(13)} />
             <View style={styles.navigationNums}>
               <Btn borderWidth={1} borderColor={colors.light} textColor={colors.light} text={lastPage} onClick={() => currPage !== lastPage ? dispatch(fetchPageWithPageNumber(lastPage)) : ToastMaker('همدا آخري صفحه ده!')} color={colors.darkGray} width={30} height={30} />
+            </View>
+          </View>
+          <View style={styles.contenttContainer} >
+            <View style={styles.searchInputContainer}>
+              <Btn marginVertical={0.0001} icon={<FontAwesome name="search" size={24} color={colors.darkGray} />} text="لټون" color={colors.light} textColor={colors.dark} width={80} onClick={searchIncomeByName} />
+              <TextInput placeholder='د مرسته کوونکي نوم د ننه کړئ!' keyboardType='default' style={styles.input} value={name} onChangeText={(text) => setName(text)} />
             </View>
           </View>
         </View>)
@@ -201,7 +198,7 @@ export default function IncomeScreen({ navigation }) {
           }}
           style={{
             width: perWidth(100),
-            height: user.isAdmin === 3 ? perHeight(70) : perHeight(55),
+            height: user.isAdmin === 3 ? perHeight(77) : perHeight(55),
           }}
           contentContainerStyle={styles.screen}
         /> : null}
@@ -212,24 +209,22 @@ export default function IncomeScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   topViewUser: {
-    backgroundColor: colors.white,
-    height: perHeight(22),
+    backgroundColor: colors.light,
+    height: perHeight(15),
     width: perWidth(100),
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'flex-end',
     marginBottom: perHeight(1)
   },
   contenttContainer: {
     backgroundColor: colors.darkGray,
-    marginTop: perHeight(1),
     padding: 10,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-start',
     elevation: 10,
     borderRadius: 7,
-    marginBottom: perHeight(1)
   },
   title: {
     fontWeight: 'bold',
@@ -375,6 +370,15 @@ const styles = StyleSheet.create({
     marginTop: 30,
     position: 'absolute',
     bottom: 0,
+    backgroundColor: colors.darkGray,
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+    borderBottomColor: colors.gray,
+    borderBottomWidth: 1
+  },
+  userNavigation: {
+    display: 'flex',
+    flexDirection: 'row',
     backgroundColor: colors.darkGray,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import DrawerContent from "../screens/DrawerContent";
@@ -57,12 +57,13 @@ const Drawer = createDrawerNavigator();
 
 
 
-const DrawerNavigator = (user) => {
+const DrawerNavigator = () => {
+  const { user } = useSelector((state) => state.userSlice);
 
 return (
   <Drawer.Navigator
    defaultScreenOptions={IncomeStack}
-   drawerContent={(props) => <DrawerContent {...props} isAdmin={user.isAdmin} />}
+   drawerContent={(props) => <DrawerContent {...props} isAdmin={user?.isAdmin} />}
    >
   <Drawer.Screen name="مرستې" component={IncomeStack} />
   <Drawer.Screen name="لګونې" component={ExpenseStack} />
