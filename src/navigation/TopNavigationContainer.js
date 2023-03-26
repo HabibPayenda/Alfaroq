@@ -42,7 +42,6 @@ export default function TopNavigationContainer() {
   } else if (!token) {
     return (
       <>
-      <StatusBar style='dark' />
       <NavigationContainer>
         <AuthNavigation />
       </NavigationContainer>
