@@ -22,12 +22,17 @@ export default function ExpenseCard({ isAdmin ,money, discription, date, navigat
     12: 'حوت',
   }
  
-    if(date.includes(140)) {
+  if(date.includes(140)) {
+    if(date.includes('/')) {
       newDate = date.split('/');
       newDate[1] = months[newDate[1] * 1]
     } else {
       newDate = date.split('-');
+      newDate[1] = months[newDate[1] * 1]
     }
+  } else {
+    newDate = date.split('-');
+  }
 
   return (
     <TouchableWithoutFeedback onLongPress={() => isAdmin === 1 || isAdmin === 2 ?  navigation.navigate('ExpencesEdit', {id, discription, money}): null}>

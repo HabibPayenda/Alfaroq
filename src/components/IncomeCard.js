@@ -23,8 +23,13 @@ export default function IncomeCard({isAdmin, id, name, money, date, navigation }
   }
  
     if(date.includes(140)) {
-      newDate = date.split('/');
-      newDate[1] = months[newDate[1] * 1]
+      if(date.includes('/')) {
+        newDate = date.split('/');
+        newDate[1] = months[newDate[1] * 1]
+      } else {
+        newDate = date.split('-');
+        newDate[1] = months[newDate[1] * 1]
+      }
     } else {
       newDate = date.split('-');
     }
@@ -43,9 +48,9 @@ export default function IncomeCard({isAdmin, id, name, money, date, navigation }
           </View>
         </View>
         <View style={styles.dateContainer}>
-          <Text style={styles.dateDay}>{newDate[2]}</Text>
-          <Text style={styles.dateMonth}>{newDate[1]}</Text>
-          <Text style={styles.dateYear}>{newDate[0]}</Text>
+          <Text style={styles.dateDay}>{newDate && newDate[2]}</Text>
+          <Text style={styles.dateMonth}>{newDate && newDate[1]}</Text>
+          <Text style={styles.dateYear}>{ newDate && newDate[0]}</Text>
         </View>
       </View>
     </TouchableWithoutFeedback>
